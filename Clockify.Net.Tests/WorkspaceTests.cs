@@ -8,7 +8,7 @@ namespace Clockify.Net.Tests {
 		private readonly ClockifyClient _client;
 
 		public WorkspaceTests() {
-			_client = new ClockifyClient("asda");
+			_client = new ClockifyClient();
 		}
 
 		[Fact]

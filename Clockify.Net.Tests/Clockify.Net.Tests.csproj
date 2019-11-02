@@ -18,4 +18,8 @@
     <ProjectReference Include="..\Clockify.Net\Clockify.Net.csproj" />
   </ItemGroup>
 
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="SET CAPI_KEY RunSettings" />
+  </Target>
+
 </Project>

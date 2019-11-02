@@ -22,7 +22,7 @@ namespace Clockify.Net {
 		/// Uses value from environment variable named "CAPI_KEY"
 		/// </summary>
 		public ClockifyClient() {
-			var apiKey = Environment.GetEnvironmentVariable(ApiKeyVariableName, EnvironmentVariableTarget.Process);
+			var apiKey = Environment.GetEnvironmentVariable(ApiKeyVariableName);
 			if (apiKey == null) throw new ArgumentException($"Environment variable {ApiKeyVariableName} is not set.");
 			_client = new RestClient(BaseUrl);
 			_client.AddDefaultHeader(ApiKeyHeaderName, apiKey);
