@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Clockify.Net.Models;
 using RestSharp;
 using RestSharp.Authenticators;
+using RestSharp.Serialization.Json;
 
 namespace Clockify.Net {
 	public class ClockifyClient {
@@ -26,14 +28,19 @@ namespace Clockify.Net {
 			if (apiKey == null) throw new ArgumentException($"Environment variable {ApiKeyVariableName} is not set.");
 			_client = new RestClient(BaseUrl);
 			_client.AddDefaultHeader(ApiKeyHeaderName, apiKey);
+//			_client.AddHandler("application/json", () => {
+//				var jsonSerializer = new JsonSerializer();
+//				return jsonSerializer;
+//			});
 		}
 
+		/// <summary>
+		/// Find workspaces for currently logged in user
+		/// </summary>
 		public async Task<IList<WorkspaceDto>> GetWorkspaces() {
 			var request = new RestRequest("workspaces");
-			var res = _client.Get(request);
-			return new List<WorkspaceDto>() {
-				new WorkspaceDto()
-			};
+			var res = _client.Get<List<WorkspaceDto>>(request);
+			return res.Data;
 		}
 	}
 }
