@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/Morasiu/Clockify.Net.svg?branch=master)](https://travis-ci.org/Morasiu/Clockify.Net)
 [![GitHub issues](https://img.shields.io/github/issues/Morasiu/Termgine.svg)](https://GitHub.com/Morasiu/Termgine/issues/)
 [![GitHub license](https://img.shields.io/github/license/Morasiu/Termgine.svg)](https://github.com/Morasiu/Termgine/blob/master/LICENSE)
 
