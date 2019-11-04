@@ -5,7 +5,7 @@
 # <img src="https://clockify.me/assets/images/clockify-logo.png" width="25"> Clockify.Net
 Clockify C# Client. 
 
-Made as .Net Standard 2.0 librar
+Made as .Net Standard 2.0 library.
 
 Soon on Nuget.
 
