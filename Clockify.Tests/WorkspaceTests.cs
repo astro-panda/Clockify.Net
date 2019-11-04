@@ -1,18 +1,18 @@
-using System;
+using System.Threading.Tasks;
+using Clockify.Net;
 using FluentAssertions;
-using Xunit;
+using NUnit.Framework;
 
-namespace Clockify.Net.Tests {
-	public class WorkspaceTests : IClassFixture<EnvironmentFixture> {
-
+namespace Clockify.Tests {
+	public class WorkspaceTests {
 		private readonly ClockifyClient _client;
 
 		public WorkspaceTests() {
 			_client = new ClockifyClient();
 		}
 
-		[Fact]
-		public async void GetWorkspaces_ShouldReturnWorkspaceDtoList() {
+		[Test]
+		public async Task GetWorkspaces_ShouldReturnWorkspaceDtoList() {
 			var workspaces = await _client.GetWorkspaces();
 			workspaces.Should().NotBeNullOrEmpty();
 		}
