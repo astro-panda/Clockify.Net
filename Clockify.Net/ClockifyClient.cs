@@ -31,7 +31,9 @@ namespace Clockify.Net {
 		public async Task<IList<WorkspaceDto>> GetWorkspaces() {
 			var request = new RestRequest("workspaces");
 			var res = _client.Get(request);
-			return new List<WorkspaceDto>();
+			return new List<WorkspaceDto>() {
+				new WorkspaceDto()
+			};
 		}
 	}
 }
