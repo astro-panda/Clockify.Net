@@ -15,7 +15,7 @@ Do you want to help? Great!
 
 See [CONTRIBUTING](https://github.com/Morasiu/Clockify.Net/blob/master/Docs/CONTRIBUTING.md) 👍
 
-Also check our [Project tab](https://trello.com/b/1EpbQfUH/termgine)✅ and pick a task!
+Also check our [Project tab](https://github.com/Morasiu/Clockify.Net/projects/)✅ and pick a task!
 
 ## Authors
 
