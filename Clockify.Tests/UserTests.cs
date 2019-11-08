@@ -41,7 +41,7 @@ namespace Clockify.Tests {
 
 		[Test]
 		public async Task FindAllUsersOnWorkspace_GoodWorkspace_ShouldReturnCurrentUser() {
-			var response = await _client.FindAllUsersOnWorkspace(_workspaceId);
+			var response = await _client.FindAllUsersOnWorkspaceAsync(_workspaceId);
 			response.IsSuccessful.Should().BeTrue();
 			response.Data.Should().NotBeNullOrEmpty();
 		}

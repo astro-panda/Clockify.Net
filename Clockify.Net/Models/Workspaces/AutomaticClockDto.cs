@@ -1,10 +1,24 @@
-﻿namespace Clockify.Net.Models.Workspaces {
+﻿using Clockify.Net.Models.Users;
+
+namespace Clockify.Net.Models.Workspaces {
 	public class AutomaticClockDto {
-		public string ChangeDay { get; set; }
-		public string DayOfMonth { get; set; }
-		public string FirstDay { get; set; }
-		public string OlderThanPeriod { get; set; }
-		public string OlderThanValue { get; set; }
-		public string Type { get; set; }
+		public Week? ChangeDay { get; set; }
+		public int? DayOfMonth { get; set; }
+		public Week? FirstDay { get; set; }
+		public OlderThanPeriod? OlderThanPeriod { get; set; }
+		public int? OlderThanValue { get; set; }
+		public AutomaticClockType Type { get; set; }
+	}
+
+	public enum AutomaticClockType {
+		Weekly,
+		Monthly,
+		OlderThan
+	}
+
+	public enum OlderThanPeriod {
+		Days,
+		Weeks,
+		Months
 	}
 }

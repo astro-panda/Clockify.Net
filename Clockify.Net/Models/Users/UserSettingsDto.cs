@@ -13,11 +13,11 @@
 		public string TimeFormat { get; set; }
 		public bool? TimeTrackingManual { get; set; }
 		public string TimeZone { get; set; }
-		public WeekStart? WeekStart { get; set; }
+		public Week? Week { get; set; }
 		public bool? WeeklyUpdates { get; set; }
 	}
 
-	public enum WeekStart {
+	public enum Week {
 		Monday,
 		Tuesday,
 		Wednesday,

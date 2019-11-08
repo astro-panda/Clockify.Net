@@ -32,17 +32,10 @@ namespace Clockify.Net {
 			InitClients(apiKey);
 		}
 
-		/// <summary>
-		/// Find workspaces for currently logged in user
-		/// </summary>
-		public async Task<IRestResponse<List<WorkspaceDto>>> GetWorkspacesAsync() {
-			var request = new RestRequest("workspaces");
-			var response = await _client.ExecuteGetTaskAsync<List<WorkspaceDto>>(request);
-			return response;
-		}
+		#region User
 
 		/// <summary>
-		/// Get currently logged in user's info
+		/// Find all users on workspace
 		/// </summary>
 		public async Task<IRestResponse<List<UserDto>>> FindAllUsersOnWorkspaceAsync(string workspaceId) {
 			var request = new RestRequest($"workspaces/{workspaceId}/users");
@@ -56,6 +49,19 @@ namespace Clockify.Net {
 		public async Task<IRestResponse<CurrentUserDto>> GetCurrentUserAsync() {
 			var request = new RestRequest("user");
 			var response = await _client.ExecuteGetTaskAsync<CurrentUserDto>(request);
+			return response;
+		}
+
+		#endregion
+
+		#region Workspace
+
+		/// <summary>
+		/// Find workspaces for currently logged in user
+		/// </summary>
+		public async Task<IRestResponse<List<WorkspaceDto>>> GetWorkspacesAsync() {
+			var request = new RestRequest("workspaces");
+			var response = await _client.ExecuteGetTaskAsync<List<WorkspaceDto>>(request);
 			return response;
 		}
 
@@ -78,6 +84,8 @@ namespace Clockify.Net {
 			var response = await _experimentalClient.ExecuteTaskAsync(request);
 			return response;
 		}
+
+		#endregion
 
 		#region Private methods
 
