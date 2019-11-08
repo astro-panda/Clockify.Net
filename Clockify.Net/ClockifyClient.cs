@@ -44,7 +44,7 @@ namespace Clockify.Net {
 		/// <summary>
 		/// Get currently logged in user's info
 		/// </summary>
-		public async Task<IRestResponse<List<UserDto>>> FindAllUsersOnWorkspace(string workspaceId) {
+		public async Task<IRestResponse<List<UserDto>>> FindAllUsersOnWorkspaceAsync(string workspaceId) {
 			var request = new RestRequest($"workspaces/{workspaceId}/users");
 			var response = await _client.ExecuteGetTaskAsync<List<UserDto>>(request);
 			return response;
