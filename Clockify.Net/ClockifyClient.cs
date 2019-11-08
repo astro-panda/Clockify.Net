@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Clockify.Net.Configuration;
+using Clockify.Net.Models.Clients;
 using Clockify.Net.Models.Users;
 using Clockify.Net.Models.Workspaces;
 using RestSharp;
@@ -86,6 +87,30 @@ namespace Clockify.Net {
 		}
 
 		#endregion
+
+		#region Client
+
+		/// <summary>
+		/// Find clients on workspace
+		/// </summary>
+		public async Task<IRestResponse<List<ClientDto>>> FindAllClientsOnWorkspaceAsync(string workspaceId) {
+			var request = new RestRequest($"workspaces/{workspaceId}/clients");
+			var response = await _client.ExecuteGetTaskAsync<List<ClientDto>>(request);
+			return response;
+		}
+
+		/// <summary>
+		/// Add a new client to workspace.
+		/// </summary>
+		public async Task<IRestResponse<ClientDto>> CreateClientAsync(string workspaceId, ClientRequest clientRequest) {
+			var request = new RestRequest($"workspaces/{workspaceId}/clients", Method.POST);
+			request.AddJsonBody(clientRequest);
+			var response = await _client.ExecutePostTaskAsync<ClientDto>(request);
+			return response;
+		}
+
+		#endregion
+
 
 		#region Private methods
 
