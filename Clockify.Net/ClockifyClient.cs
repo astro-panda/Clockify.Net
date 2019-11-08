@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Clockify.Net.Configuration;
+using Clockify.Net.Models.Users;
 using Clockify.Net.Models.Workspaces;
 using RestSharp;
 using RestSharp.Authenticators;
@@ -34,16 +35,35 @@ namespace Clockify.Net {
 		/// <summary>
 		/// Find workspaces for currently logged in user
 		/// </summary>
-		public async Task<IRestResponse<List<WorkspaceDto>>> GetWorkspaces() {
+		public async Task<IRestResponse<List<WorkspaceDto>>> GetWorkspacesAsync() {
 			var request = new RestRequest("workspaces");
 			var response = await _client.ExecuteGetTaskAsync<List<WorkspaceDto>>(request);
 			return response;
 		}
 
 		/// <summary>
+		/// Get currently logged in user's info
+		/// </summary>
+		public async Task<IRestResponse<List<UserDto>>> FindAllUsersOnWorkspace(string workspaceId) {
+			var request = new RestRequest($"workspaces/{workspaceId}/users");
+			var response = await _client.ExecuteGetTaskAsync<List<UserDto>>(request);
+			return response;
+		}
+
+		/// <summary>
+		/// Get currently logged in user's info
+		/// </summary>
+		public async Task<IRestResponse<CurrentUserDto>> GetCurrentUserAsync() {
+			var request = new RestRequest("user");
+			var response = await _client.ExecuteGetTaskAsync<CurrentUserDto>(request);
+			return response;
+		}
+
+
+		/// <summary>
 		/// Creates new workspace.
 		/// </summary>
-		public async Task<IRestResponse<WorkspaceDto>> CreateWorkspace(WorkspaceRequest workspaceRequest) {
+		public async Task<IRestResponse<WorkspaceDto>> CreateWorkspaceAsync(WorkspaceRequest workspaceRequest) {
 			var request = new RestRequest("workspaces", Method.POST);
 			request.AddJsonBody(workspaceRequest); 
 			var response = await _client.ExecutePostTaskAsync<WorkspaceDto>(request);
@@ -53,7 +73,7 @@ namespace Clockify.Net {
 		/// <summary>
 		/// Delete workspace with Id.
 		/// </summary>
-		public async Task<IRestResponse> DeleteWorkspace(string id) {
+		public async Task<IRestResponse> DeleteWorkspaceAsync(string id) {
 			var request = new RestRequest($"workspaces/{id}", Method.DELETE);
 			var response = await _experimentalClient.ExecuteTaskAsync(request);
 			return response;
