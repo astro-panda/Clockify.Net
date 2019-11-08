@@ -7,3 +7,9 @@ script:
     - dotnet restore
     - dotnet build
     - dotnet test
+
+# safelist
+branches:
+  only:
+  - master
+  - develop
