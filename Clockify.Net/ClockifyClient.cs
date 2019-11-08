@@ -11,13 +11,14 @@ using RestSharp.Serialization.Json;
 namespace Clockify.Net {
 	public class ClockifyClient {
 		private const string BaseUrl = "https://api.clockify.me/api/v1";
+		private const string ExperimentalApiUrl = "https://api.clockify.me/api/";
 		private const string ApiKeyHeaderName = "X-Api-Key";
 		private const string ApiKeyVariableName = "CAPI_KEY";
-		private readonly IRestClient _client;
+		private IRestClient _client;
+		private IRestClient _experimentalClient;
 
 		public ClockifyClient(string apiKey) {
-			_client = new RestClient(BaseUrl);
-			_client.AddDefaultHeader(ApiKeyHeaderName, apiKey);
+			InitClients(apiKey);
 		}
 
 		/// <summary>
@@ -27,9 +28,7 @@ namespace Clockify.Net {
 		public ClockifyClient() {
 			var apiKey = Environment.GetEnvironmentVariable(ApiKeyVariableName);
 			if (apiKey == null) throw new ArgumentException($"Environment variable {ApiKeyVariableName} is not set.");
-			SimpleJson.CurrentJsonSerializerStrategy = new CamelCaseSerializerStrategy();
-			_client = new RestClient(BaseUrl);
-			_client.AddDefaultHeader(ApiKeyHeaderName, apiKey);
+			InitClients(apiKey);
 		}
 
 		/// <summary>
@@ -43,15 +42,27 @@ namespace Clockify.Net {
 
 		public async Task<IRestResponse<WorkspaceDto>> CreateWorkspace(WorkspaceRequest workspaceRequest) {
 			var request = new RestRequest("workspaces", Method.POST);
-			request.AddJsonBody(workspaceRequest);
+			request.AddJsonBody(workspaceRequest); 
 			var response = await _client.ExecutePostTaskAsync<WorkspaceDto>(request);
 			return response;
 		}
 
 		public async Task<IRestResponse> DeleteWorkspace(string id) {
 			var request = new RestRequest($"workspaces/{id}", Method.DELETE);
-			var response = await _client.ExecuteTaskAsync(request);
+			var response = await _experimentalClient.ExecuteTaskAsync(request);
 			return response;
 		}
+
+		#region Private methods
+
+		private void InitClients(string apiKey) {
+			_client = new RestClient(BaseUrl);
+			_client.AddDefaultHeader(ApiKeyHeaderName, apiKey);
+			_experimentalClient = new RestClient(ExperimentalApiUrl);
+			_experimentalClient.AddDefaultHeader(ApiKeyHeaderName, apiKey);
+			SimpleJson.CurrentJsonSerializerStrategy = new CamelCaseSerializerStrategy();
+		}
+
+		#endregion
 	}
 }
