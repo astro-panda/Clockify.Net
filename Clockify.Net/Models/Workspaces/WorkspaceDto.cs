@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Clockify.Net.Models {
+namespace Clockify.Net.Models.Workspaces {
 	public class WorkspaceDto {
 		public HourlyRateDto HourlyRate { get; set; }
 		public string Id { get; set; }

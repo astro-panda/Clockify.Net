@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Clockify.Net.Models;
+using Clockify.Net.Configuration;
+using Clockify.Net.Models.Workspaces;
 using RestSharp;
 using RestSharp.Authenticators;
 using RestSharp.Serialization.Json;
@@ -26,21 +27,31 @@ namespace Clockify.Net {
 		public ClockifyClient() {
 			var apiKey = Environment.GetEnvironmentVariable(ApiKeyVariableName);
 			if (apiKey == null) throw new ArgumentException($"Environment variable {ApiKeyVariableName} is not set.");
+			SimpleJson.CurrentJsonSerializerStrategy = new CamelCaseSerializerStrategy();
 			_client = new RestClient(BaseUrl);
 			_client.AddDefaultHeader(ApiKeyHeaderName, apiKey);
-//			_client.AddHandler("application/json", () => {
-//				var jsonSerializer = new JsonSerializer();
-//				return jsonSerializer;
-//			});
 		}
 
 		/// <summary>
 		/// Find workspaces for currently logged in user
 		/// </summary>
-		public async Task<IList<WorkspaceDto>> GetWorkspaces() {
+		public async Task<IRestResponse<List<WorkspaceDto>>> GetWorkspaces() {
 			var request = new RestRequest("workspaces");
-			var res = _client.Get<List<WorkspaceDto>>(request);
-			return res.Data;
+			var response = await _client.ExecuteGetTaskAsync<List<WorkspaceDto>>(request);
+			return response;
+		}
+
+		public async Task<IRestResponse<WorkspaceDto>> CreateWorkspace(WorkspaceRequest workspaceRequest) {
+			var request = new RestRequest("workspaces", Method.POST);
+			request.AddJsonBody(workspaceRequest);
+			var response = await _client.ExecutePostTaskAsync<WorkspaceDto>(request);
+			return response;
+		}
+
+		public async Task<IRestResponse> DeleteWorkspace(string id) {
+			var request = new RestRequest($"workspaces/{id}", Method.DELETE);
+			var response = await _client.ExecuteTaskAsync(request);
+			return response;
 		}
 	}
 }
