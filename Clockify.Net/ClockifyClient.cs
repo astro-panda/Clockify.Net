@@ -40,6 +40,9 @@ namespace Clockify.Net {
 			return response;
 		}
 
+		/// <summary>
+		/// Creates new workspace.
+		/// </summary>
 		public async Task<IRestResponse<WorkspaceDto>> CreateWorkspace(WorkspaceRequest workspaceRequest) {
 			var request = new RestRequest("workspaces", Method.POST);
 			request.AddJsonBody(workspaceRequest); 
@@ -47,6 +50,9 @@ namespace Clockify.Net {
 			return response;
 		}
 
+		/// <summary>
+		/// Delete workspace with Id.
+		/// </summary>
 		public async Task<IRestResponse> DeleteWorkspace(string id) {
 			var request = new RestRequest($"workspaces/{id}", Method.DELETE);
 			var response = await _experimentalClient.ExecuteTaskAsync(request);
