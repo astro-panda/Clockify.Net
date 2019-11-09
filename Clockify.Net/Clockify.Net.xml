@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Clockify.Net</name>
+    </assembly>
+    <members>
+        <member name="M:Clockify.Net.ClockifyClient.#ctor">
+            <summary>
+            Creates new <see cref="T:Clockify.Net.ClockifyClient"/>.
+            Uses value from environment variable named "CAPI_KEY"
+            </summary>
+        </member>
+        <member name="M:Clockify.Net.ClockifyClient.FindAllUsersOnWorkspaceAsync(System.String)">
+            <summary>
+            Find all users on workspace
+            </summary>
+        </member>
+        <member name="M:Clockify.Net.ClockifyClient.GetCurrentUserAsync">
+            <summary>
+            Get currently logged in user's info
+            </summary>
+        </member>
+        <member name="M:Clockify.Net.ClockifyClient.GetWorkspacesAsync">
+            <summary>
+            Find workspaces for currently logged in user
+            </summary>
+        </member>
+        <member name="M:Clockify.Net.ClockifyClient.CreateWorkspaceAsync(Clockify.Net.Models.Workspaces.WorkspaceRequest)">
+            <summary>
+            Creates new workspace.
+            </summary>
+        </member>
+        <member name="M:Clockify.Net.ClockifyClient.DeleteWorkspaceAsync(System.String)">
+            <summary>
+            Delete workspace with Id.
+            </summary>
+        </member>
+        <member name="M:Clockify.Net.ClockifyClient.FindAllClientsOnWorkspaceAsync(System.String)">
+            <summary>
+            Find clients on workspace
+            </summary>
+        </member>
+        <member name="M:Clockify.Net.ClockifyClient.CreateClientAsync(System.String,Clockify.Net.Models.Clients.ClientRequest)">
+            <summary>
+            Add a new client to workspace.
+            </summary>
+        </member>
+    </members>
+</doc>
