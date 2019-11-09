@@ -10,6 +10,14 @@ Made as .Net Standard 2.0 library.
 
 Now on Nuget!
 
+Stable API docs:
+
+https://clockify.me/developers-api
+
+EXPERIMENTAL API
+
+https://clockify.github.io/clockify_api_docs/
+
 ## Development
 
 Do you want to help? Great!
