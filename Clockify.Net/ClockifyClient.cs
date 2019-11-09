@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Clockify.Net.Configuration;
 using Clockify.Net.Models.Clients;
+using Clockify.Net.Models.Projects;
 using Clockify.Net.Models.Users;
 using Clockify.Net.Models.Workspaces;
 using RestSharp;
-using RestSharp.Authenticators;
-using RestSharp.Serialization.Json;
+using RestSharp.Validation;
 
 namespace Clockify.Net {
 	public class ClockifyClient {
@@ -38,19 +37,17 @@ namespace Clockify.Net {
 		/// <summary>
 		/// Find all users on workspace
 		/// </summary>
-		public async Task<IRestResponse<List<UserDto>>> FindAllUsersOnWorkspaceAsync(string workspaceId) {
+		public Task<IRestResponse<List<UserDto>>> FindAllUsersOnWorkspaceAsync(string workspaceId) {
 			var request = new RestRequest($"workspaces/{workspaceId}/users");
-			var response = await _client.ExecuteGetTaskAsync<List<UserDto>>(request);
-			return response;
+			return _client.ExecuteGetTaskAsync<List<UserDto>>(request);
 		}
 
 		/// <summary>
 		/// Get currently logged in user's info
 		/// </summary>
-		public async Task<IRestResponse<CurrentUserDto>> GetCurrentUserAsync() {
+		public Task<IRestResponse<CurrentUserDto>> GetCurrentUserAsync() {
 			var request = new RestRequest("user");
-			var response = await _client.ExecuteGetTaskAsync<CurrentUserDto>(request);
-			return response;
+			return _client.ExecuteGetTaskAsync<CurrentUserDto>(request);
 		}
 
 		#endregion
@@ -60,30 +57,27 @@ namespace Clockify.Net {
 		/// <summary>
 		/// Find workspaces for currently logged in user
 		/// </summary>
-		public async Task<IRestResponse<List<WorkspaceDto>>> GetWorkspacesAsync() {
+		public Task<IRestResponse<List<WorkspaceDto>>> GetWorkspacesAsync() {
 			var request = new RestRequest("workspaces");
-			var response = await _client.ExecuteGetTaskAsync<List<WorkspaceDto>>(request);
-			return response;
+			return _client.ExecuteGetTaskAsync<List<WorkspaceDto>>(request);
 		}
 
 
 		/// <summary>
 		/// Creates new workspace.
 		/// </summary>
-		public async Task<IRestResponse<WorkspaceDto>> CreateWorkspaceAsync(WorkspaceRequest workspaceRequest) {
+		public Task<IRestResponse<WorkspaceDto>> CreateWorkspaceAsync(WorkspaceRequest workspaceRequest) {
 			var request = new RestRequest("workspaces", Method.POST);
-			request.AddJsonBody(workspaceRequest); 
-			var response = await _client.ExecutePostTaskAsync<WorkspaceDto>(request);
-			return response;
+			request.AddJsonBody(workspaceRequest);
+			return _client.ExecutePostTaskAsync<WorkspaceDto>(request);
 		}
 
 		/// <summary>
 		/// Delete workspace with Id.
 		/// </summary>
-		public async Task<IRestResponse> DeleteWorkspaceAsync(string id) {
+		public Task<IRestResponse> DeleteWorkspaceAsync(string id) {
 			var request = new RestRequest($"workspaces/{id}", Method.DELETE);
-			var response = await _experimentalClient.ExecuteTaskAsync(request);
-			return response;
+			return _experimentalClient.ExecuteTaskAsync(request);
 		}
 
 		#endregion
@@ -93,24 +87,54 @@ namespace Clockify.Net {
 		/// <summary>
 		/// Find clients on workspace
 		/// </summary>
-		public async Task<IRestResponse<List<ClientDto>>> FindAllClientsOnWorkspaceAsync(string workspaceId) {
+		public Task<IRestResponse<List<ClientDto>>> FindAllClientsOnWorkspaceAsync(string workspaceId) {
 			var request = new RestRequest($"workspaces/{workspaceId}/clients");
-			var response = await _client.ExecuteGetTaskAsync<List<ClientDto>>(request);
-			return response;
+			return _client.ExecuteGetTaskAsync<List<ClientDto>>(request);
 		}
 
 		/// <summary>
 		/// Add a new client to workspace.
 		/// </summary>
-		public async Task<IRestResponse<ClientDto>> CreateClientAsync(string workspaceId, ClientRequest clientRequest) {
+		public Task<IRestResponse<ClientDto>> CreateClientAsync(string workspaceId, ClientRequest clientRequest) {
+			if (clientRequest == null) throw new ArgumentNullException(nameof(clientRequest));
 			var request = new RestRequest($"workspaces/{workspaceId}/clients", Method.POST);
 			request.AddJsonBody(clientRequest);
-			var response = await _client.ExecutePostTaskAsync<ClientDto>(request);
-			return response;
+			return _client.ExecutePostTaskAsync<ClientDto>(request);
 		}
 
 		#endregion
 
+		#region Projects
+
+		/// <summary>
+		/// Find projects on workspace.
+		/// </summary>
+		public Task<IRestResponse<List<ProjectDtoImpl>>> FindAllProjectsOnWorkspaceAsync(string workspaceId) {
+			var request = new RestRequest($"workspaces/{workspaceId}/projects");
+			return _client.ExecuteGetTaskAsync<List<ProjectDtoImpl>>(request);
+		}
+
+		/// <summary>
+		/// Add a new client to workspace.
+		/// </summary>
+		public Task<IRestResponse<ProjectDtoImpl>> CreateProjectAsync(string workspaceId, ProjectRequest projectRequest) {
+			if (projectRequest == null) throw new ArgumentNullException(nameof(projectRequest));
+			Require.Argument(nameof(projectRequest.Name), projectRequest.Name);
+			Require.Argument(nameof(projectRequest.Color), projectRequest.Color);
+			var request = new RestRequest($"workspaces/{workspaceId}/projects", Method.POST);
+			request.AddJsonBody(projectRequest);
+			return _client.ExecutePostTaskAsync<ProjectDtoImpl>(request);
+		}
+
+		/// <summary>
+		/// Delete project with Id.
+		/// </summary>
+		public Task<IRestResponse> DeleteProjectAsync(string workspaceId, string id) {
+			var request = new RestRequest($"workspaces/{workspaceId}/projects/{id}", Method.DELETE);
+			return _experimentalClient.ExecuteTaskAsync(request);
+		}
+
+		#endregion
 
 		#region Private methods
 

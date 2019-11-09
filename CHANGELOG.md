@@ -8,9 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.0]
 ### Added
-- Implementation api/workspace
-### Changed
-### Removed
+- Workspace support
+- User support
+- Client support
+- Projects support
 
 <!-- 
 ===== Template =====

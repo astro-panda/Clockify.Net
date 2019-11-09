@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Clockify.Net.Models.Memberships;
 using Clockify.Net.Models.Workspaces;
 
 namespace Clockify.Net.Models.Users {
