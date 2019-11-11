@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Drawing;
-using System.Net;
 using System.Threading.Tasks;
 using Clockify.Net;
-using Clockify.Net.Models.Clients;
 using Clockify.Net.Models.Projects;
 using Clockify.Net.Models.Workspaces;
 using FluentAssertions;

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Clockify.Net.Models.Estimates;
 using Clockify.Net.Models.HourlyRates;
 using Clockify.Net.Models.Memberships;
-using Clockify.Net.Models.Workspaces;
 
 namespace Clockify.Net.Models.Projects {
 	public class ProjectDtoImpl {

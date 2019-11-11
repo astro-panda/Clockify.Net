@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - User support
 - Client support
 - Projects support
+- Tag support
 
 <!-- 
 ===== Template =====

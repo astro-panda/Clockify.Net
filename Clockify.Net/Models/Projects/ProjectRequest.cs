@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
 using Clockify.Net.Models.Estimates;
 using Clockify.Net.Models.HourlyRates;
 using Clockify.Net.Models.Memberships;
 using Clockify.Net.Models.Tasks;
-using Clockify.Net.Models.Workspaces;
 
 namespace Clockify.Net.Models.Projects {
 	public class ProjectRequest {

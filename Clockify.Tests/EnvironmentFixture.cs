@@ -1,6 +1,5 @@
 ﻿using System;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 namespace Clockify.Tests {
 	[SetUpFixture]

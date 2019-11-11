@@ -1,5 +1,4 @@
-﻿using System.Net;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Clockify.Net;
 using Clockify.Net.Models.Workspaces;
 using FluentAssertions;

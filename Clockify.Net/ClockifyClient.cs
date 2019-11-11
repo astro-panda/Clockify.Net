@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Clockify.Net.Configuration;
 using Clockify.Net.Models.Clients;
 using Clockify.Net.Models.Projects;
+using Clockify.Net.Models.Tags;
 using Clockify.Net.Models.Users;
 using Clockify.Net.Models.Workspaces;
 using RestSharp;
@@ -132,6 +133,30 @@ namespace Clockify.Net {
 		public Task<IRestResponse> DeleteProjectAsync(string workspaceId, string id) {
 			var request = new RestRequest($"workspaces/{workspaceId}/projects/{id}", Method.DELETE);
 			return _experimentalClient.ExecuteTaskAsync(request);
+		}
+
+		#endregion
+
+		#region Tags
+
+
+		/// <summary>
+		/// Find tags on workspace.
+		/// </summary>
+		public Task<IRestResponse<List<TagDto>>> FindAllTagsOnWorkspaceAsync(string workspaceId) {
+			var request = new RestRequest($"workspaces/{workspaceId}/tags");
+			return _client.ExecuteGetTaskAsync<List<TagDto>>(request);
+		}
+
+		/// <summary>
+		/// Add a new client to workspace.
+		/// </summary>
+		public Task<IRestResponse<TagDto>> CreateTagAsync(string workspaceId, TagRequest projectRequest) {
+			if (projectRequest == null) throw new ArgumentNullException(nameof(projectRequest));
+			Require.Argument(nameof(projectRequest.Name), projectRequest.Name);
+			var request = new RestRequest($"workspaces/{workspaceId}/tags", Method.POST);
+			request.AddJsonBody(projectRequest);
+			return _client.ExecutePostTaskAsync<TagDto>(request);
 		}
 
 		#endregion
