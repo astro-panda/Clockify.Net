@@ -5,6 +5,7 @@ using Clockify.Net.Configuration;
 using Clockify.Net.Models.Clients;
 using Clockify.Net.Models.Projects;
 using Clockify.Net.Models.Tags;
+using Clockify.Net.Models.Templates;
 using Clockify.Net.Models.Users;
 using Clockify.Net.Models.Workspaces;
 using RestSharp;
@@ -118,7 +119,8 @@ namespace Clockify.Net {
 		/// <summary>
 		/// Add a new client to workspace.
 		/// </summary>
-		public Task<IRestResponse<ProjectDtoImpl>> CreateProjectAsync(string workspaceId, ProjectRequest projectRequest) {
+		public Task<IRestResponse<ProjectDtoImpl>>
+			CreateProjectAsync(string workspaceId, ProjectRequest projectRequest) {
 			if (projectRequest == null) throw new ArgumentNullException(nameof(projectRequest));
 			Require.Argument(nameof(projectRequest.Name), projectRequest.Name);
 			Require.Argument(nameof(projectRequest.Color), projectRequest.Color);
@@ -139,7 +141,6 @@ namespace Clockify.Net {
 
 		#region Tags
 
-
 		/// <summary>
 		/// Find tags on workspace.
 		/// </summary>
@@ -157,6 +158,45 @@ namespace Clockify.Net {
 			var request = new RestRequest($"workspaces/{workspaceId}/tags", Method.POST);
 			request.AddJsonBody(projectRequest);
 			return _client.ExecutePostTaskAsync<TagDto>(request);
+		}
+
+		#endregion
+
+		#region Timesheet templates
+
+		/// <summary>
+		/// Find all templates on workspace. See Clockify docs for query params explanation.
+		/// </summary>
+		public Task<IRestResponse<List<TemplateDto>>> FindAllTemplatesOnWorkspaceAsync(string workspaceId,
+			string name = "", bool cleansed = false, bool hydrated = false, int page = 1, int pageSize = 1) {
+			var request = new RestRequest($"workspaces/{workspaceId}/templates");
+			request.AddQueryParameter(nameof(name), name);
+			request.AddQueryParameter(nameof(cleansed), cleansed.ToString());
+			request.AddQueryParameter(nameof(hydrated), hydrated.ToString());
+			request.AddQueryParameter(nameof(page), page.ToString());
+			request.AddQueryParameter("page-size", pageSize.ToString());
+			return _client.ExecuteGetTaskAsync<List<TemplateDto>>(request);
+		}
+
+		/// <summary>
+		/// Add a new client to workspace.
+		/// </summary>
+		public Task<IRestResponse<ProjectDtoImpl>> CreateTemplateAsync(string workspaceId,
+			ProjectRequest projectRequest) {
+			if (projectRequest == null) throw new ArgumentNullException(nameof(projectRequest));
+			Require.Argument(nameof(projectRequest.Name), projectRequest.Name);
+			Require.Argument(nameof(projectRequest.Color), projectRequest.Color);
+			var request = new RestRequest($"workspaces/{workspaceId}/projects", Method.POST);
+			request.AddJsonBody(projectRequest);
+			return _client.ExecutePostTaskAsync<ProjectDtoImpl>(request);
+		}
+
+		/// <summary>
+		/// Delete project with Id.
+		/// </summary>
+		public Task<IRestResponse> DeleteTemplateAsync(string workspaceId, string id) {
+			var request = new RestRequest($"workspaces/{workspaceId}/projects/{id}", Method.DELETE);
+			return _experimentalClient.ExecuteTaskAsync(request);
 		}
 
 		#endregion
