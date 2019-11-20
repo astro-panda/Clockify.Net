@@ -74,7 +74,7 @@ namespace Clockify.Tests {
 		}
 
 		[Test]
-		public async Task CreateWorkspace_ShouldCreateWorkspace() {
+		public async Task DeleteProjectAsync_ShouldDeleteProject() {
 			// Create project to delete
 			var projectRequest = new ProjectRequest { Name = "DeleteProjectTest" , Color = "#FFFFFF"};
 			var response = await _client.CreateProjectAsync(_workspaceId, projectRequest);
