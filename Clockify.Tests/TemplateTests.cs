@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Clockify.Net;
+using Clockify.Net.Models.Projects;
 using Clockify.Net.Models.Tags;
 using Clockify.Net.Models.Templates;
 using Clockify.Net.Models.Workspaces;
@@ -18,15 +20,15 @@ namespace Clockify.Tests {
 
 		[SetUp]
 		public async Task Setup() {
-			var result = await _client.CreateWorkspaceAsync(new WorkspaceRequest { Name = "TemplateWorkspace" });
-			result.IsSuccessful.Should().BeTrue();
-			_workspaceId = result.Data.Id;
+			var workspaceResponse = await _client.CreateWorkspaceAsync(new WorkspaceRequest { Name = "TemplateWorkspace" });
+			workspaceResponse.IsSuccessful.Should().BeTrue();
+			_workspaceId = workspaceResponse.Data.Id;
 		}
 
 		[TearDown]
 		public async Task Cleanup() {
-			var result = await _client.DeleteWorkspaceAsync(_workspaceId);
-			result.IsSuccessful.Should().BeTrue();
+			var workspaceResponse = await _client.DeleteWorkspaceAsync(_workspaceId);
+			workspaceResponse.IsSuccessful.Should().BeTrue();
 		}
 
 		[Test]
@@ -37,8 +39,20 @@ namespace Clockify.Tests {
 
 		[Test]
 		public async Task CreateTemplatesAsync_ShouldCreteTemplateAndReturnTemplateDto() {
+			// Create project for test
+			var projectRequest = new ProjectRequest { Name = "Template tet project", Color = "#FFFFFF"};
+			var projectResponse = await _client.CreateProjectAsync(_workspaceId, projectRequest);
+			projectResponse.IsSuccessful.Should().BeTrue();
+			var projectId = projectResponse.Data.Id;
+
 			var templatePatchRequest = new TemplateRequest() {
 				Name = "Test template",
+				ProjectsAndTasks = new List<ProjectsTaskTupleRequest>() {
+					new ProjectsTaskTupleRequest {
+						ProjectId = projectId,
+						TaskId = Guid.NewGuid().ToString()
+					}
+				}
 			};
 			var createResult = await _client.CreateTemplatesAsync(_workspaceId, templatePatchRequest);
 			createResult.IsSuccessful.Should().BeTrue();
@@ -56,7 +70,18 @@ namespace Clockify.Tests {
 			};
 			Func<Task> create = () => _client.CreateTemplatesAsync(_workspaceId, templatePatchRequest);
 			await create.Should().ThrowAsync<ArgumentException>()
-				.WithMessage($"Argument cannot be null. (Parameter '{nameof(TagRequest.Name)}')");
+				.WithMessage($"Argument cannot be null. (Parameter '{nameof(TemplateRequest.Name)}')");
+		}
+
+		[Test]
+		public async Task CreateTemplatesAsync_NullProjectsAndTasks_ShouldThrowArgumentException() {
+			var templatePatchRequest = new TemplateRequest() {
+				Name = "Test name",
+				ProjectsAndTasks = null
+			};
+			Func<Task> create = () => _client.CreateTemplatesAsync(_workspaceId, templatePatchRequest);
+			await create.Should().ThrowAsync<ArgumentException>()
+				.WithMessage($"Argument cannot be null. (Parameter '{nameof(TemplateRequest.ProjectsAndTasks)}')");
 		}
 	}
 }

@@ -185,6 +185,7 @@ namespace Clockify.Net {
 			if (projectRequests == null) throw new ArgumentNullException(nameof(projectRequests));
 			foreach (var templatePatchRequest in projectRequests) {
 				Require.Argument(nameof(templatePatchRequest.Name), templatePatchRequest.Name);
+				Require.Argument(nameof(templatePatchRequest.ProjectsAndTasks), templatePatchRequest.ProjectsAndTasks);
 				foreach (var projectsAndTask in templatePatchRequest.ProjectsAndTasks) {
 					Require.Argument(nameof(projectsAndTask.ProjectId), projectsAndTask.ProjectId);
 					Require.Argument(nameof(projectsAndTask.TaskId), projectsAndTask.TaskId);
