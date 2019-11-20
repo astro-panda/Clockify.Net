@@ -5,6 +5,7 @@ using Clockify.Net.Configuration;
 using Clockify.Net.Models.Clients;
 using Clockify.Net.Models.Projects;
 using Clockify.Net.Models.Tags;
+using Clockify.Net.Models.Tasks;
 using Clockify.Net.Models.Users;
 using Clockify.Net.Models.Workspaces;
 using RestSharp;
@@ -32,6 +33,34 @@ namespace Clockify.Net {
 			if (apiKey == null) throw new ArgumentException($"Environment variable {ApiKeyVariableName} is not set.");
 			InitClients(apiKey);
 		}
+
+		#region Tasks
+
+		/// <summary>
+		/// Find tasks on project.
+		/// </summary>
+		public Task<IRestResponse<List<TaskDto>>> FindAllTasksAsync(string workspaceId, string projectId,
+			bool? isActive = null, string name = null, int page = 1, int pageSize = 50) {
+			var request = new RestRequest($"workspaces/{workspaceId}/projects/{projectId}/tasks");
+			request.AddQueryParameter("is-active", isActive.ToString());
+			request.AddQueryParameter(nameof(name), name);
+			request.AddQueryParameter(nameof(page), page.ToString());
+			request.AddQueryParameter("page-size", pageSize.ToString());
+			return _client.ExecuteGetTaskAsync<List<TaskDto>>(request);
+		}
+
+		/// <summary>
+		/// Add a new client to workspace.
+		/// </summary>
+		public Task<IRestResponse<TaskDto>> CreateTaskAsync(string workspaceId, string projectId, TaskRequest taskRequest) {
+			if (taskRequest == null) throw new ArgumentNullException(nameof(taskRequest));
+			Require.Argument(nameof(taskRequest.Name), taskRequest.Name);
+			var request = new RestRequest($"workspaces/{workspaceId}/projects/{projectId}/tasks", Method.POST);
+			request.AddJsonBody(taskRequest);
+			return _client.ExecutePostTaskAsync<TaskDto>(request);
+		}
+
+		#endregion
 
 		#region User
 
@@ -118,7 +147,8 @@ namespace Clockify.Net {
 		/// <summary>
 		/// Add a new client to workspace.
 		/// </summary>
-		public Task<IRestResponse<ProjectDtoImpl>> CreateProjectAsync(string workspaceId, ProjectRequest projectRequest) {
+		public Task<IRestResponse<ProjectDtoImpl>>
+			CreateProjectAsync(string workspaceId, ProjectRequest projectRequest) {
 			if (projectRequest == null) throw new ArgumentNullException(nameof(projectRequest));
 			Require.Argument(nameof(projectRequest.Name), projectRequest.Name);
 			Require.Argument(nameof(projectRequest.Color), projectRequest.Color);
@@ -138,7 +168,6 @@ namespace Clockify.Net {
 		#endregion
 
 		#region Tags
-
 
 		/// <summary>
 		/// Find tags on workspace.
