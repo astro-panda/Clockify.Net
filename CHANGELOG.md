@@ -6,13 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.1.0]
+## [1.0.0]
 ### Added
 - Workspace support
 - User support
 - Client support
 - Projects support
 - Tag support
+- Task support
 
 <!-- 
 ===== Template =====
