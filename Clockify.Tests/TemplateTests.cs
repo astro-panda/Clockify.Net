@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Clockify.Net;
 using Clockify.Net.Models.Projects;
 using Clockify.Net.Models.Tags;
+using Clockify.Net.Models.Tasks;
 using Clockify.Net.Models.Templates;
 using Clockify.Net.Models.Workspaces;
 using FluentAssertions;
@@ -44,23 +45,29 @@ namespace Clockify.Tests {
 			var projectResponse = await _client.CreateProjectAsync(_workspaceId, projectRequest);
 			projectResponse.IsSuccessful.Should().BeTrue();
 			var projectId = projectResponse.Data.Id;
+			// Create task
+			var taskRequest = new TaskRequest { Name = "Template create task" };
+			var taskResponse = await _client.CreateTaskAsync(_workspaceId, projectId, taskRequest);
+			taskResponse.IsSuccessful.Should().BeTrue();
+			var taskId = taskResponse.Data.Id;
 
 			var templatePatchRequest = new TemplateRequest() {
 				Name = "Test template",
 				ProjectsAndTasks = new List<ProjectsTaskTupleRequest>() {
 					new ProjectsTaskTupleRequest {
 						ProjectId = projectId,
-						TaskId = Guid.NewGuid().ToString()
+						TaskId = taskId
 					}
 				}
 			};
+
 			var createResult = await _client.CreateTemplatesAsync(_workspaceId, templatePatchRequest);
 			createResult.IsSuccessful.Should().BeTrue();
 			createResult.Data.Should().NotBeNull();
 
 			var findResult = await _client.FindAllTemplatesOnWorkspaceAsync(_workspaceId);
 			findResult.IsSuccessful.Should().BeTrue();
-			findResult.Data.Should().ContainEquivalentOf(createResult.Data);
+			findResult.Data.Should().BeEquivalentTo(createResult.Data);
 		}
 
 		[Test]
