@@ -33,6 +33,19 @@ namespace Clockify.Net {
 			InitClients(apiKey);
 		}
 
+		#region Tasks
+
+		/// <summary>
+		/// Find tasks on workspace.
+		/// </summary>
+		public Task<IRestResponse<List<ProjectDtoImpl>>> FindAllTasksAsync(string workspaceId, string projectId,
+			bool? isActive = null, string name = null, int page = 1, int pageSize = 50) {
+			var request = new RestRequest($"workspaces/{workspaceId}/projects/{projectId}/tasks");
+			return _client.ExecuteGetTaskAsync<List<ProjectDtoImpl>>(request);
+		}
+
+		#endregion
+
 		#region User
 
 		/// <summary>
@@ -118,7 +131,8 @@ namespace Clockify.Net {
 		/// <summary>
 		/// Add a new client to workspace.
 		/// </summary>
-		public Task<IRestResponse<ProjectDtoImpl>> CreateProjectAsync(string workspaceId, ProjectRequest projectRequest) {
+		public Task<IRestResponse<ProjectDtoImpl>>
+			CreateProjectAsync(string workspaceId, ProjectRequest projectRequest) {
 			if (projectRequest == null) throw new ArgumentNullException(nameof(projectRequest));
 			Require.Argument(nameof(projectRequest.Name), projectRequest.Name);
 			Require.Argument(nameof(projectRequest.Color), projectRequest.Color);
@@ -138,7 +152,6 @@ namespace Clockify.Net {
 		#endregion
 
 		#region Tags
-
 
 		/// <summary>
 		/// Find tags on workspace.
