@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Clockify.Net.Configuration;
 using Clockify.Net.Models.Clients;
@@ -208,14 +209,24 @@ namespace Clockify.Net {
 		}
 
 		/// <summary>
+		/// Get template from workspace. See Clockify docs for query params explanation.
+		/// </summary>
+		public Task<IRestResponse<TemplateDto>> GetTemplatesOnWorkspaceAsync(string workspaceId, string templateId, bool cleansed = false, bool hydrated = false) {
+			var request = new RestRequest($"workspaces/{workspaceId}/templates/{templateId}");
+			request.AddQueryParameter(nameof(cleansed), cleansed.ToString());
+			request.AddQueryParameter(nameof(hydrated), hydrated.ToString());
+			return _client.ExecuteGetTaskAsync<TemplateDto>(request);
+		}
+
+		/// <summary>
 		/// Save templates to workspace.
 		/// </summary>
 		public Task<IRestResponse<List<TemplateDto>>> CreateTemplatesAsync(string workspaceId, params TemplateRequest[] projectRequests) {
 			if (projectRequests == null) throw new ArgumentNullException(nameof(projectRequests));
-			foreach (var templatePatchRequest in projectRequests) {
-				Require.Argument(nameof(templatePatchRequest.Name), templatePatchRequest.Name);
-				Require.Argument(nameof(templatePatchRequest.ProjectsAndTasks), templatePatchRequest.ProjectsAndTasks);
-				foreach (var projectsAndTask in templatePatchRequest.ProjectsAndTasks) {
+			foreach (var templateRequest in projectRequests) {
+				Require.Argument(nameof(templateRequest.Name), templateRequest.Name);
+				Require.Argument(nameof(templateRequest.ProjectsAndTasks), templateRequest.ProjectsAndTasks);
+				foreach (var projectsAndTask in templateRequest.ProjectsAndTasks) {
 					Require.Argument(nameof(projectsAndTask.ProjectId), projectsAndTask.ProjectId);
 					Require.Argument(nameof(projectsAndTask.TaskId), projectsAndTask.TaskId);
 				}
@@ -228,9 +239,20 @@ namespace Clockify.Net {
 		/// <summary>
 		/// Delete template with id.
 		/// </summary>
-		public Task<IRestResponse> DeleteTemplateAsync(string workspaceId, string id) {
-			var request = new RestRequest($"workspaces/{workspaceId}/templates/{id}", Method.DELETE);
-			return _experimentalClient.ExecuteTaskAsync(request);
+		public Task<IRestResponse<TemplateDto>> DeleteTemplateAsync(string workspaceId, string templateId) {
+			var request = new RestRequest($"workspaces/{workspaceId}/templates/{templateId}", Method.DELETE);
+			return _client.ExecuteTaskAsync<TemplateDto>(request);
+		}
+
+		/// <summary>
+		/// Delete template with id.
+		/// </summary>
+		public Task<IRestResponse<TemplateDto>> UpdateTemplateAsync(string workspaceId, string templateId, TemplatePatchRequest templatePatchRequest) {
+			if (templatePatchRequest == null) throw new ArgumentNullException(nameof(templatePatchRequest));
+			Require.Argument(nameof(templatePatchRequest.Name), templatePatchRequest.Name);
+			var request = new RestRequest($"workspaces/{workspaceId}/templates/{templateId}", Method.PATCH);
+			request.AddJsonBody(templatePatchRequest);
+			return _client.ExecuteTaskAsync<TemplateDto>(request);
 		}
 
 		#endregion
