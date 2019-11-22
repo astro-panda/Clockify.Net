@@ -17,15 +17,15 @@ namespace Clockify.Tests {
 
 		[SetUp]
 		public async Task Setup() {
-			var result = await _client.CreateWorkspaceAsync(new WorkspaceRequest { Name = "ClientTestWorkspace" });
-			result.IsSuccessful.Should().BeTrue();
-			_workspaceId = result.Data.Id;
+			var workspaceResponse = await _client.CreateWorkspaceAsync(new WorkspaceRequest { Name = "ClientTestWorkspace" });
+			workspaceResponse.IsSuccessful.Should().BeTrue();
+			_workspaceId = workspaceResponse.Data.Id;
 		}
 
 		[TearDown]
 		public async Task Cleanup() {
-			var result = await _client.DeleteWorkspaceAsync(_workspaceId);
-			result.IsSuccessful.Should().BeTrue();
+			var workspaceResponse = await _client.DeleteWorkspaceAsync(_workspaceId);
+			workspaceResponse.IsSuccessful.Should().BeTrue();
 		}
 
 		[Test]
@@ -42,8 +42,8 @@ namespace Clockify.Tests {
 
 		[Test]
 		public async Task FindAllClientsOnWorkspaceAsync_ShouldReturnClientsList() {
-			var result = await _client.FindAllClientsOnWorkspaceAsync(_workspaceId);
-			result.IsSuccessful.Should().BeTrue();
+			var workspaceResponse = await _client.FindAllClientsOnWorkspaceAsync(_workspaceId);
+			workspaceResponse.IsSuccessful.Should().BeTrue();
 		}
 	}
 }

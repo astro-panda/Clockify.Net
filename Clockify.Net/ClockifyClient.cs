@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Clockify.Net.Configuration;
 using Clockify.Net.Models.Clients;
 using Clockify.Net.Models.Projects;
 using Clockify.Net.Models.Tags;
+using Clockify.Net.Models.Templates;
 using Clockify.Net.Models.Tasks;
 using Clockify.Net.Models.Users;
 using Clockify.Net.Models.Workspaces;
@@ -186,6 +188,71 @@ namespace Clockify.Net {
 			var request = new RestRequest($"workspaces/{workspaceId}/tags", Method.POST);
 			request.AddJsonBody(projectRequest);
 			return _client.ExecutePostTaskAsync<TagDto>(request);
+		}
+
+		#endregion
+
+		#region Timesheet templates
+
+		/// <summary>
+		/// Get templates for current user on specified workspace. See Clockify docs for query params explanation.
+		/// </summary>
+		public Task<IRestResponse<List<TemplateDto>>> FindAllTemplatesOnWorkspaceAsync(string workspaceId,
+			string name = "", bool cleansed = false, bool hydrated = false, int page = 1, int pageSize = 1) {
+			var request = new RestRequest($"workspaces/{workspaceId}/templates");
+			request.AddQueryParameter(nameof(name), name);
+			request.AddQueryParameter(nameof(cleansed), cleansed.ToString());
+			request.AddQueryParameter(nameof(hydrated), hydrated.ToString());
+			request.AddQueryParameter(nameof(page), page.ToString());
+			request.AddQueryParameter("page-size", pageSize.ToString());
+			return _client.ExecuteGetTaskAsync<List<TemplateDto>>(request);
+		}
+
+		/// <summary>
+		/// Get template from workspace. See Clockify docs for query params explanation.
+		/// </summary>
+		public Task<IRestResponse<TemplateDto>> GetTemplatesOnWorkspaceAsync(string workspaceId, string templateId, bool cleansed = false, bool hydrated = false) {
+			var request = new RestRequest($"workspaces/{workspaceId}/templates/{templateId}");
+			request.AddQueryParameter(nameof(cleansed), cleansed.ToString());
+			request.AddQueryParameter(nameof(hydrated), hydrated.ToString());
+			return _client.ExecuteGetTaskAsync<TemplateDto>(request);
+		}
+
+		/// <summary>
+		/// Save templates to workspace.
+		/// </summary>
+		public Task<IRestResponse<List<TemplateDto>>> CreateTemplatesAsync(string workspaceId, params TemplateRequest[] projectRequests) {
+			if (projectRequests == null) throw new ArgumentNullException(nameof(projectRequests));
+			foreach (var templateRequest in projectRequests) {
+				Require.Argument(nameof(templateRequest.Name), templateRequest.Name);
+				Require.Argument(nameof(templateRequest.ProjectsAndTasks), templateRequest.ProjectsAndTasks);
+				foreach (var projectsAndTask in templateRequest.ProjectsAndTasks) {
+					Require.Argument(nameof(projectsAndTask.ProjectId), projectsAndTask.ProjectId);
+					Require.Argument(nameof(projectsAndTask.TaskId), projectsAndTask.TaskId);
+				}
+			}
+			var request = new RestRequest($"workspaces/{workspaceId}/templates", Method.POST);
+			request.AddJsonBody(projectRequests);
+			return _client.ExecutePostTaskAsync<List<TemplateDto>>(request);
+		}
+
+		/// <summary>
+		/// Delete template with id.
+		/// </summary>
+		public Task<IRestResponse<TemplateDto>> DeleteTemplateAsync(string workspaceId, string templateId) {
+			var request = new RestRequest($"workspaces/{workspaceId}/templates/{templateId}", Method.DELETE);
+			return _client.ExecuteTaskAsync<TemplateDto>(request);
+		}
+
+		/// <summary>
+		/// Delete template with id.
+		/// </summary>
+		public Task<IRestResponse<TemplateDto>> UpdateTemplateAsync(string workspaceId, string templateId, TemplatePatchRequest templatePatchRequest) {
+			if (templatePatchRequest == null) throw new ArgumentNullException(nameof(templatePatchRequest));
+			Require.Argument(nameof(templatePatchRequest.Name), templatePatchRequest.Name);
+			var request = new RestRequest($"workspaces/{workspaceId}/templates/{templateId}", Method.PATCH);
+			request.AddJsonBody(templatePatchRequest);
+			return _client.ExecuteTaskAsync<TemplateDto>(request);
 		}
 
 		#endregion
