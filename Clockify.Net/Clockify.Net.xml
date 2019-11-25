@@ -10,6 +10,16 @@
             Uses value from environment variable named "CAPI_KEY"
             </summary>
         </member>
+        <member name="M:Clockify.Net.ClockifyClient.FindAllTasksAsync(System.String,System.String,System.Nullable{System.Boolean},System.String,System.Int32,System.Int32)">
+            <summary>
+            Find tasks on project.
+            </summary>
+        </member>
+        <member name="M:Clockify.Net.ClockifyClient.CreateTaskAsync(System.String,System.String,Clockify.Net.Models.Tasks.TaskRequest)">
+            <summary>
+            Add a new client to workspace.
+            </summary>
+        </member>
         <member name="M:Clockify.Net.ClockifyClient.FindAllUsersOnWorkspaceAsync(System.String)">
             <summary>
             Find all users on workspace
@@ -55,9 +65,79 @@
             Add a new client to workspace.
             </summary>
         </member>
+        <member name="M:Clockify.Net.ClockifyClient.DeleteProjectAsync(System.String,System.String)">
+            <summary>
+            Delete project with Id.
+            </summary>
+        </member>
+        <member name="M:Clockify.Net.ClockifyClient.FindAllTagsOnWorkspaceAsync(System.String)">
+            <summary>
+            Find tags on workspace.
+            </summary>
+        </member>
+        <member name="M:Clockify.Net.ClockifyClient.CreateTagAsync(System.String,Clockify.Net.Models.Tags.TagRequest)">
+            <summary>
+            Add a new client to workspace.
+            </summary>
+        </member>
+        <member name="M:Clockify.Net.ClockifyClient.FindAllTemplatesOnWorkspaceAsync(System.String,System.String,System.Boolean,System.Boolean,System.Int32,System.Int32)">
+            <summary>
+            Get templates for current user on specified workspace. See Clockify docs for query params explanation.
+            </summary>
+        </member>
+        <member name="M:Clockify.Net.ClockifyClient.GetTemplateAsync(System.String,System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Get template from workspace. See Clockify docs for query params explanation.
+            </summary>
+        </member>
+        <member name="M:Clockify.Net.ClockifyClient.CreateTemplatesAsync(System.String,Clockify.Net.Models.Templates.TemplateRequest[])">
+            <summary>
+            Save templates to workspace.
+            </summary>
+        </member>
+        <member name="M:Clockify.Net.ClockifyClient.DeleteTemplateAsync(System.String,System.String)">
+            <summary>
+            Delete template with id.
+            </summary>
+        </member>
+        <member name="M:Clockify.Net.ClockifyClient.UpdateTemplateAsync(System.String,System.String,Clockify.Net.Models.Templates.TemplatePatchRequest)">
+            <summary>
+            Updates template with id.
+            </summary>
+        </member>
+        <member name="M:Clockify.Net.ClockifyClient.CreateTimeEntryAsync(System.String,Clockify.Net.Models.TimeEntries.TimeEntryRequest)">
+            <summary>
+            Add a new time entry to workspace. If end is not sent in request means that stopwatch mode is active, otherwise time entry is manually added.
+            </summary>
+        </member>
+        <member name="M:Clockify.Net.ClockifyClient.GetTimeEntryAsync(System.String,System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Get time entry from. workspace. See Clockify docs for query params explanation.
+            </summary>
+        </member>
+        <member name="M:Clockify.Net.ClockifyClient.UpdateTimeEntryAsync(System.String,System.String,Clockify.Net.Models.TimeEntries.UpdateTimeEntryRequest)">
+            <summary>
+            Update time entry with id.
+            </summary>
+        </member>
+        <member name="M:Clockify.Net.ClockifyClient.DeleteTimeEntryAsync(System.String,System.String)">
+            <summary>
+            Delete time entry with id.
+            </summary>
+        </member>
+        <member name="M:Clockify.Net.ClockifyClient.FindAllTimeEntriesForUserAsync(System.String,System.String,System.String,System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset},System.String,System.String,System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Int32,System.Int32)">
+            <summary>
+            Get templates for current user on specified workspace. See Clockify docs for query params explanation.
+            </summary>
+        </member>
         <member name="P:Clockify.Net.Models.Projects.ProjectRequest.Color">
             <summary>
             Should be in HEX "#FF00FF"
+            </summary>
+        </member>
+        <member name="P:Clockify.Net.Models.TimeEntries.TimeIntervalDto.Duration">
+            <summary>
+            Example: PT1H30M15S - 1 hour 30 minutes 15 seconds
             </summary>
         </member>
     </members>
