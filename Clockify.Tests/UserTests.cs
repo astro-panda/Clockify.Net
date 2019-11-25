@@ -15,7 +15,7 @@ namespace Clockify.Tests {
 
 		[SetUp]
 		public async Task Setup() {
-			var workspaceResponse = await _client.CreateWorkspaceAsync(new WorkspaceRequest { Name = "UserTestWorkspace" });
+			var workspaceResponse = await _client.CreateWorkspaceAsync(new WorkspaceRequest { Name = "UserTest Workspace" });
 			workspaceResponse.IsSuccessful.Should().BeTrue();
 			_workspaceId = workspaceResponse.Data.Id;
 		}
