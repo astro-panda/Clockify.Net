@@ -22,6 +22,30 @@ https://clockify.github.io/clockify_api_docs/
 
 Also check [CHANGELOG](CHANGELOG.md).
 
+## Usage
+
+### 1. Add Nuget package from [here](https://www.nuget.org/packages/Clockify.Net/).
+
+### 2. Get your Clockify API Key.
+
+> See [API docs](https://clockify.me/developers-api) for instruction about how to get **Clockify API Key**.
+
+### 3. Create your client.
+
+Recommended:
+```csharp
+// This will use environment variable CAPI_KEY as your API key input.
+var clockify = new ClockifyClient();
+var response = await clockify.GetWorkspacesAsync();
+```
+
+or much simpler
+
+```csharp
+var clockify = new ClockifyClient("myClockifyApiKey");
+var response = await clockify.GetWorkspacesAsync();
+```
+
 ## 💻 Development
 
 Do you want to help? Great!
