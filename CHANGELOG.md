@@ -6,11 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.1.0]
+## [1.0.0]
 ### Added
-- Implementation api/workspace
-### Changed
-### Removed
+- Support for all endpoints form https://clockify.me/developers-api
+	- Workspace support
+	- User support
+	- Client support
+	- Projects support
+	- Tag support
+	- Task support
+	- Time Entry support
+	- Template support
 
 <!-- 
 ===== Template =====

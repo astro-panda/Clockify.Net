@@ -1,7 +1,7 @@
 [![https://www.nuget.org/packages/Clockify.Net/](https://img.shields.io/nuget/v/Clockify.Net)](https://www.nuget.org/packages/Clockify.Net/)
 [![Build Status](https://travis-ci.org/Morasiu/Clockify.Net.svg?branch=master)](https://travis-ci.org/Morasiu/Clockify.Net)
-[![GitHub issues](https://img.shields.io/github/issues/Morasiu/Termgine.svg)](https://GitHub.com/Morasiu/Termgine/issues/)
-[![GitHub license](https://img.shields.io/github/license/Morasiu/Termgine.svg)](https://github.com/Morasiu/Termgine/blob/master/LICENSE)
+[![GitHub issues](https://img.shields.io/github/issues/Morasiu/Clockify.Net.svg)](https://GitHub.com/Morasiu/Clockify.Net/issues/)
+[![GitHub license](https://img.shields.io/github/license/Morasiu/Clockify.Net.svg)](https://github.com/Morasiu/Clockify.Net/blob/master/LICENSE)
 
 # <img src="https://clockify.me/assets/images/clockify-logo.png" width="25"> Clockify.Net
 Clockify C# Client. 
@@ -14,17 +14,21 @@ Stable API docs:
 
 https://clockify.me/developers-api
 
+> Every endpoint form that url is implemented.
+
 EXPERIMENTAL API
 
 https://clockify.github.io/clockify_api_docs/
 
-## Development
+Also check [CHAGELOG](CHANGELOG.md).
+
+## 💻 Development
 
 Do you want to help? Great!
 
 See [CONTRIBUTING](https://github.com/Morasiu/Clockify.Net/blob/master/Docs/CONTRIBUTING.md) 👍
 
-Also check our [Project tab](https://github.com/Morasiu/Clockify.Net/projects/)✅ and pick a task!
+Also check our [Project tab](https://github.com/Morasiu/Clockify.Net/projects/) ✅ and pick a task!
 
 ## Authors
 

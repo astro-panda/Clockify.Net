@@ -14,19 +14,19 @@ namespace Clockify.Tests {
 
 		[Test]
 		public async Task GetWorkspaces_ShouldReturnWorkspaceDtoList() {
-			var response = await _client.GetWorkspaces();
+			var response = await _client.GetWorkspacesAsync();
 			response.IsSuccessful.Should().BeTrue();
 			response.Data.Should().NotBeNullOrEmpty();
 		}
 
 		[Test]
 		public async Task CreateWorkspace_ShouldCreateWorkspace() {
-			var response = await _client.CreateWorkspace(new WorkspaceRequest() { Name = "CreateWorkspaceTest" });
+			var response = await _client.CreateWorkspaceAsync(new WorkspaceRequest() { Name = "CreateWorkspaceTest" });
 			response.IsSuccessful.Should().BeTrue();
 
 			// Cleanup
 			var id = response.Data.Id;
-			var del = await _client.DeleteWorkspace(id);
+			var del = await _client.DeleteWorkspaceAsync(id);
 			del.IsSuccessful.Should().BeTrue();
 		}
 	}
