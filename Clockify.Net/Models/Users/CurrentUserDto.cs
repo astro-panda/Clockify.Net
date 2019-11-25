@@ -6,7 +6,7 @@ namespace Clockify.Net.Models.Users {
 		public string ActiveWorkspace { get; set; }
 		public string DefaultWorkspace { get; set; }
 		public string Email { get; set; }
-		public string ID { get; set; }
+		public string Id { get; set; }
 		public List<MembershipDto> Memberships { get; set; }
 		public string Name { get; set; }
 		public string ProfilePicture { get; set; }

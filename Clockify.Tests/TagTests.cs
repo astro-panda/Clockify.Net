@@ -49,7 +49,7 @@ namespace Clockify.Tests {
 		}
 
 		[Test]
-		public async Task CreateProjectAsync_NullName_ShouldThrowArgumentException() {
+		public async Task CreateTagAsync_NullName_ShouldThrowArgumentException() {
 			var tagRequest = new TagRequest {
 				Name = null,
 			};

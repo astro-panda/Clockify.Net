@@ -8,6 +8,7 @@ using Clockify.Net.Models.Projects;
 using Clockify.Net.Models.Tags;
 using Clockify.Net.Models.Templates;
 using Clockify.Net.Models.Tasks;
+using Clockify.Net.Models.TimeEntries;
 using Clockify.Net.Models.Users;
 using Clockify.Net.Models.Workspaces;
 using RestSharp;
@@ -44,8 +45,8 @@ namespace Clockify.Net {
 		public Task<IRestResponse<List<TaskDto>>> FindAllTasksAsync(string workspaceId, string projectId,
 			bool? isActive = null, string name = null, int page = 1, int pageSize = 50) {
 			var request = new RestRequest($"workspaces/{workspaceId}/projects/{projectId}/tasks");
-			request.AddQueryParameter("is-active", isActive.ToString());
-			request.AddQueryParameter(nameof(name), name);
+			if (isActive != null) request.AddQueryParameter("is-active", isActive.ToString());
+			if (name != null) request.AddQueryParameter(nameof(name), name);
 			request.AddQueryParameter(nameof(page), page.ToString());
 			request.AddQueryParameter("page-size", pageSize.ToString());
 			return _client.ExecuteGetTaskAsync<List<TaskDto>>(request);
@@ -54,7 +55,8 @@ namespace Clockify.Net {
 		/// <summary>
 		/// Add a new client to workspace.
 		/// </summary>
-		public Task<IRestResponse<TaskDto>> CreateTaskAsync(string workspaceId, string projectId, TaskRequest taskRequest) {
+		public Task<IRestResponse<TaskDto>> CreateTaskAsync(string workspaceId, string projectId,
+			TaskRequest taskRequest) {
 			if (taskRequest == null) throw new ArgumentNullException(nameof(taskRequest));
 			Require.Argument(nameof(taskRequest.Name), taskRequest.Name);
 			var request = new RestRequest($"workspaces/{workspaceId}/projects/{projectId}/tasks", Method.POST);
@@ -198,9 +200,9 @@ namespace Clockify.Net {
 		/// Get templates for current user on specified workspace. See Clockify docs for query params explanation.
 		/// </summary>
 		public Task<IRestResponse<List<TemplateDto>>> FindAllTemplatesOnWorkspaceAsync(string workspaceId,
-			string name = "", bool cleansed = false, bool hydrated = false, int page = 1, int pageSize = 1) {
+			string name = null, bool cleansed = false, bool hydrated = false, int page = 1, int pageSize = 1) {
 			var request = new RestRequest($"workspaces/{workspaceId}/templates");
-			request.AddQueryParameter(nameof(name), name);
+			if (name != null) request.AddQueryParameter(nameof(name), name);
 			request.AddQueryParameter(nameof(cleansed), cleansed.ToString());
 			request.AddQueryParameter(nameof(hydrated), hydrated.ToString());
 			request.AddQueryParameter(nameof(page), page.ToString());
@@ -211,7 +213,8 @@ namespace Clockify.Net {
 		/// <summary>
 		/// Get template from workspace. See Clockify docs for query params explanation.
 		/// </summary>
-		public Task<IRestResponse<TemplateDto>> GetTemplatesOnWorkspaceAsync(string workspaceId, string templateId, bool cleansed = false, bool hydrated = false) {
+		public Task<IRestResponse<TemplateDto>> GetTemplateAsync(string workspaceId, string templateId,
+			bool cleansed = false, bool hydrated = false) {
 			var request = new RestRequest($"workspaces/{workspaceId}/templates/{templateId}");
 			request.AddQueryParameter(nameof(cleansed), cleansed.ToString());
 			request.AddQueryParameter(nameof(hydrated), hydrated.ToString());
@@ -221,7 +224,8 @@ namespace Clockify.Net {
 		/// <summary>
 		/// Save templates to workspace.
 		/// </summary>
-		public Task<IRestResponse<List<TemplateDto>>> CreateTemplatesAsync(string workspaceId, params TemplateRequest[] projectRequests) {
+		public Task<IRestResponse<List<TemplateDto>>> CreateTemplatesAsync(string workspaceId,
+			params TemplateRequest[] projectRequests) {
 			if (projectRequests == null) throw new ArgumentNullException(nameof(projectRequests));
 			foreach (var templateRequest in projectRequests) {
 				Require.Argument(nameof(templateRequest.Name), templateRequest.Name);
@@ -231,6 +235,7 @@ namespace Clockify.Net {
 					Require.Argument(nameof(projectsAndTask.TaskId), projectsAndTask.TaskId);
 				}
 			}
+
 			var request = new RestRequest($"workspaces/{workspaceId}/templates", Method.POST);
 			request.AddJsonBody(projectRequests);
 			return _client.ExecutePostTaskAsync<List<TemplateDto>>(request);
@@ -245,17 +250,95 @@ namespace Clockify.Net {
 		}
 
 		/// <summary>
-		/// Delete template with id.
+		/// Updates template with id.
 		/// </summary>
-		public Task<IRestResponse<TemplateDto>> UpdateTemplateAsync(string workspaceId, string templateId, TemplatePatchRequest templatePatchRequest) {
+		public Task<IRestResponse<TemplateDto>> UpdateTemplateAsync(string workspaceId, string timeEntryId,
+			TemplatePatchRequest templatePatchRequest) {
 			if (templatePatchRequest == null) throw new ArgumentNullException(nameof(templatePatchRequest));
 			Require.Argument(nameof(templatePatchRequest.Name), templatePatchRequest.Name);
-			var request = new RestRequest($"workspaces/{workspaceId}/templates/{templateId}", Method.PATCH);
+			var request = new RestRequest($"workspaces/{workspaceId}/templates/{timeEntryId}", Method.PATCH);
 			request.AddJsonBody(templatePatchRequest);
 			return _client.ExecuteTaskAsync<TemplateDto>(request);
 		}
 
 		#endregion
+
+		#region Time entry
+
+		/// <summary>
+		/// Add a new time entry to workspace. If end is not sent in request means that stopwatch mode is active, otherwise time entry is manually added.
+		/// </summary>
+		public Task<IRestResponse<TimeEntryDtoImpl>> CreateTimeEntryAsync(string workspaceId,
+			TimeEntryRequest timeEntryRequest) {
+			if (timeEntryRequest == null) throw new ArgumentNullException(nameof(timeEntryRequest));
+			Require.Argument(nameof(timeEntryRequest.Start), timeEntryRequest.Start);
+			var request = new RestRequest($"workspaces/{workspaceId}/time-entries", Method.POST);
+			request.AddJsonBody(timeEntryRequest);
+			return _client.ExecutePostTaskAsync<TimeEntryDtoImpl>(request);
+		}
+
+
+		/// <summary>
+		/// Get time entry from. workspace. See Clockify docs for query params explanation.
+		/// </summary>
+		public Task<IRestResponse<TimeEntryDtoImpl>> GetTimeEntryAsync(string workspaceId, string timeEntryId,
+			bool considerDurationFormat = false, bool hydrated = false) {
+			var request = new RestRequest($"workspaces/{workspaceId}/time-entries/{timeEntryId}");
+			request.AddQueryParameter("consider-duration-format", considerDurationFormat.ToString());
+			request.AddQueryParameter(nameof(hydrated), hydrated.ToString());
+			return _client.ExecuteGetTaskAsync<TimeEntryDtoImpl>(request);
+		}
+
+		/// <summary>
+		/// Update time entry with id.
+		/// </summary>
+		public Task<IRestResponse<TimeEntryDtoImpl>> UpdateTimeEntryAsync(string workspaceId, string timeEntryId,
+			UpdateTimeEntryRequest updateTimeEntryRequest) {
+			if (updateTimeEntryRequest == null) throw new ArgumentNullException(nameof(updateTimeEntryRequest));
+			Require.Argument(nameof(updateTimeEntryRequest.Start), updateTimeEntryRequest.Start);
+			Require.Argument(nameof(updateTimeEntryRequest.Billable), updateTimeEntryRequest.Billable);
+			var request = new RestRequest($"workspaces/{workspaceId}/time-entries/{timeEntryId}", Method.PUT);
+			request.AddJsonBody(updateTimeEntryRequest);
+			return _client.ExecuteTaskAsync<TimeEntryDtoImpl>(request);
+		}
+
+		/// <summary>
+		/// Delete time entry with id.
+		/// </summary>
+		public Task<IRestResponse> DeleteTimeEntryAsync(string workspaceId, string templateId) {
+			var request = new RestRequest($"workspaces/{workspaceId}/time-entries/{templateId}", Method.DELETE);
+			return _client.ExecuteTaskAsync(request);
+		}
+
+		/// <summary>
+		/// Get templates for current user on specified workspace. See Clockify docs for query params explanation.
+		/// </summary>
+		public Task<IRestResponse<List<TimeEntryDtoImpl>>> FindAllTimeEntriesForUserAsync(string workspaceId, string userId,
+			string description = null, DateTimeOffset? start = null, DateTimeOffset? end = null, string project = null,
+			string task = null, bool? projectRequired = null, bool? taskRequired = null,
+			bool? considerDurationFormat = null, bool? hydrated = null, bool? inProgress = null,
+			int page = 1, int pageSize = 50) {
+			var request = new RestRequest($"workspaces/{workspaceId}/user/{userId}/time-entries");
+
+			if (description != null) request.AddQueryParameter(nameof(description), description);
+			if (start != null) request.AddQueryParameter(nameof(start), start.ToString());
+			if (end != null) request.AddQueryParameter(nameof(end), end.ToString());
+			if (project != null) request.AddQueryParameter(nameof(project), project);
+			if (task != null) request.AddQueryParameter(nameof(task), task);
+			if (projectRequired != null)request.AddQueryParameter("consider-duration-format", considerDurationFormat.ToString());
+			if (taskRequired != null)request.AddQueryParameter("task-required", taskRequired.ToString());
+			if (projectRequired != null) request.AddQueryParameter("project-required", projectRequired.ToString());
+			if (hydrated != null) request.AddQueryParameter(nameof(hydrated), hydrated.ToString());
+			if (inProgress != null) request.AddQueryParameter("in-progress", inProgress.ToString());
+
+			request.AddQueryParameter(nameof(page), page.ToString());
+			request.AddQueryParameter("page-size", pageSize.ToString());
+
+			return _client.ExecuteGetTaskAsync<List<TimeEntryDtoImpl>>(request);
+		}
+
+		#endregion
+
 
 		#region Private methods
 

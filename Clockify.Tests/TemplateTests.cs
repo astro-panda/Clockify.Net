@@ -69,7 +69,7 @@ namespace Clockify.Tests {
 		}
 
 		[Test]
-		public async Task GetTemplatesOnWorkspaceAsync_ShouldReturnTemplateDto() {
+		public async Task GetTemplateAsync_ShouldReturnTemplateDto() {
 			// Create project for test
 			var projectRequest = new ProjectRequest { Name = "Template test project", Color = "#FFFFFF" };
 			var projectResponse = await _client.CreateProjectAsync(_workspaceId, projectRequest);
@@ -95,7 +95,7 @@ namespace Clockify.Tests {
 			createResult.IsSuccessful.Should().BeTrue();
 			createResult.Data.Should().NotBeNull();
 
-			var getResponse = await _client.GetTemplatesOnWorkspaceAsync(_workspaceId, createResult.Data.First().Id);
+			var getResponse = await _client.GetTemplateAsync(_workspaceId, createResult.Data.First().Id);
 			getResponse.IsSuccessful.Should().BeTrue();
 			getResponse.Data.Should().BeEquivalentTo(createResult.Data.First());
 		}
