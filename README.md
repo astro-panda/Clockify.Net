@@ -20,7 +20,7 @@ EXPERIMENTAL API
 
 https://clockify.github.io/clockify_api_docs/
 
-Also check [CHAGELOG](CHANGELOG.md).
+Also check [CHANGELOG](CHANGELOG.md).
 
 ## 💻 Development
 
