@@ -15,7 +15,7 @@ using RestSharp.Validation;
 
 namespace Clockify.Net 
 {
-	public class ClockifyClient 
+    public class ClockifyClient 
     {
 		private const string BaseUrl = "https://api.clockify.me/api/v1";
 		private const string ExperimentalApiUrl = "https://api.clockify.me/api/";
@@ -36,10 +36,8 @@ namespace Clockify.Net
 		public ClockifyClient() 
         {
 			var apiKey = Environment.GetEnvironmentVariable(ApiKeyVariableName);
-            if (apiKey == null)
-            {
-                throw new ArgumentException($"Environment variable {ApiKeyVariableName} is not set.");
-            }
+			if (apiKey == null) { throw new ArgumentException($"Environment variable {ApiKeyVariableName} is not set."); }
+
 			InitClients(apiKey);
 		}
 
@@ -57,15 +55,8 @@ namespace Clockify.Net
             int pageSize = 50) 
         {
 			var request = new RestRequest($"workspaces/{workspaceId}/projects/{projectId}/tasks");
-            if (isActive != null)
-            {
-                request.AddQueryParameter("is-active", isActive.ToString());
-            }
-
-            if (name != null)
-            {
-                request.AddQueryParameter(nameof(name), name);
-            }
+            if (isActive != null) { request.AddQueryParameter("is-active", isActive.ToString()); }
+            if (name != null) { request.AddQueryParameter(nameof(name), name); }
 
 			request.AddQueryParameter(nameof(page), page.ToString());
 			request.AddQueryParameter("page-size", pageSize.ToString());
@@ -80,15 +71,8 @@ namespace Clockify.Net
             string projectId,
 			TaskRequest taskRequest) 
         {
-            if (taskRequest == null)
-            {
-                throw new ArgumentNullException(nameof(taskRequest));
-            }
-
-            if (string.IsNullOrWhiteSpace(taskRequest.Name))
-            {
-                throw new ArgumentException("Argument cannot be null.", nameof(taskRequest.Name));
-            }
+            if (taskRequest == null) { throw new ArgumentNullException(nameof(taskRequest)); }
+            Require.Argument(nameof(taskRequest.Name), taskRequest.Name);
 
 			var request = new RestRequest($"workspaces/{workspaceId}/projects/{projectId}/tasks", Method.POST);
 			request.AddJsonBody(taskRequest);
@@ -167,10 +151,7 @@ namespace Clockify.Net
 		/// </summary>
 		public Task<IRestResponse<ClientDto>> CreateClientAsync(string workspaceId, ClientRequest clientRequest) 
         {
-            if (clientRequest == null)
-            {
-                throw new ArgumentNullException(nameof(clientRequest));
-            }
+            if (clientRequest == null) { throw new ArgumentNullException(nameof(clientRequest)); }
 
 			var request = new RestRequest($"workspaces/{workspaceId}/clients", Method.POST);
 			request.AddJsonBody(clientRequest);
@@ -195,20 +176,9 @@ namespace Clockify.Net
 		/// </summary>
 		public Task<IRestResponse<ProjectDtoImpl>> CreateProjectAsync(string workspaceId, ProjectRequest projectRequest) 
 		{
-            if (projectRequest == null)
-            {
-                throw new ArgumentNullException(nameof(projectRequest));
-            }
-
-            if (string.IsNullOrWhiteSpace(projectRequest.Name))
-            {
-				throw new ArgumentException(nameof(projectRequest.Name));
-            }
-
-			if (string.IsNullOrWhiteSpace(projectRequest.Color))
-			{
-				throw new ArgumentException(nameof(projectRequest.Color));
-			}
+            if (projectRequest == null) { throw new ArgumentNullException(nameof(projectRequest)); }
+            Require.Argument(nameof(projectRequest.Name), projectRequest.Name);
+            Require.Argument(nameof(projectRequest.Color), projectRequest.Color);
 
 			var request = new RestRequest($"workspaces/{workspaceId}/projects", Method.POST);
 			request.AddJsonBody(projectRequest);
@@ -242,15 +212,8 @@ namespace Clockify.Net
 		/// </summary>
 		public Task<IRestResponse<TagDto>> CreateTagAsync(string workspaceId, TagRequest projectRequest) 
         {
-            if (projectRequest == null)
-            {
-                throw new ArgumentNullException(nameof(projectRequest));
-            }
-
-            if (string.IsNullOrWhiteSpace(projectRequest.Name))
-            {
-                throw new ArgumentException(nameof(projectRequest.Name));
-            }
+            if (projectRequest == null) { throw new ArgumentNullException(nameof(projectRequest)); }
+            Require.Argument(nameof(projectRequest.Name), projectRequest.Name);
 
 			var request = new RestRequest($"workspaces/{workspaceId}/tags", Method.POST);
 			request.AddJsonBody(projectRequest);
@@ -273,14 +236,13 @@ namespace Clockify.Net
             int pageSize = 1) 
         {
 			var request = new RestRequest($"workspaces/{workspaceId}/templates");
-            if (name != null)
-            {
-                request.AddQueryParameter(nameof(name), name);
-            }
+
+            if (name != null) { request.AddQueryParameter(nameof(name), name); }
 			request.AddQueryParameter(nameof(cleansed), cleansed.ToString());
 			request.AddQueryParameter(nameof(hydrated), hydrated.ToString());
 			request.AddQueryParameter(nameof(page), page.ToString());
 			request.AddQueryParameter("page-size", pageSize.ToString());
+
 			return _client.ExecuteGetTaskAsync<List<TemplateDto>>(request);
 		}
 
@@ -304,10 +266,7 @@ namespace Clockify.Net
 		/// </summary>
 		public Task<IRestResponse<List<TemplateDto>>> CreateTemplatesAsync(string workspaceId, params TemplateRequest[] projectRequests) 
         {
-            if (projectRequests == null)
-            {
-                throw new ArgumentNullException(nameof(projectRequests));
-            }
+            if (projectRequests == null) { throw new ArgumentNullException(nameof(projectRequests)); }
 
 			// todo: this nested foreach needs work
 			foreach (var templateRequest in projectRequests) 
@@ -343,15 +302,8 @@ namespace Clockify.Net
             string timeEntryId,
 			TemplatePatchRequest templatePatchRequest) 
         {
-            if (templatePatchRequest == null)
-            {
-                throw new ArgumentNullException(nameof(templatePatchRequest));
-            }
-
-            if (string.IsNullOrWhiteSpace(templatePatchRequest.Name))
-            {
-                throw new ArgumentNullException(nameof(templatePatchRequest.Name));
-            }
+			Require.Argument(nameof(templatePatchRequest), templatePatchRequest);
+            Require.Argument(nameof(templatePatchRequest.Name), templatePatchRequest.Name);
 
 			var request = new RestRequest($"workspaces/{workspaceId}/templates/{timeEntryId}", Method.PATCH);
 			request.AddJsonBody(templatePatchRequest);
@@ -367,15 +319,8 @@ namespace Clockify.Net
 		/// </summary>
 		public Task<IRestResponse<TimeEntryDtoImpl>> CreateTimeEntryAsync(string workspaceId, TimeEntryRequest timeEntryRequest) 
         {
-            if (timeEntryRequest == null)
-            {
-                throw new ArgumentNullException(nameof(timeEntryRequest));
-            }
-
-            if (timeEntryRequest.Start == null)
-            {
-                throw new ArgumentNullException(nameof(timeEntryRequest.Start));
-            }
+            if (timeEntryRequest == null) { throw new ArgumentNullException(nameof(timeEntryRequest)); }
+            Require.Argument(nameof(timeEntryRequest.Start), timeEntryRequest.Start);
 
 			var request = new RestRequest($"workspaces/{workspaceId}/time-entries", Method.POST);
 			request.AddJsonBody(timeEntryRequest);
@@ -402,20 +347,9 @@ namespace Clockify.Net
 		/// </summary>
 		public Task<IRestResponse<TimeEntryDtoImpl>> UpdateTimeEntryAsync(string workspaceId, string timeEntryId, UpdateTimeEntryRequest updateTimeEntryRequest) 
         {
-            if (updateTimeEntryRequest == null)
-            {
-                throw new ArgumentNullException(nameof(updateTimeEntryRequest));
-            }
-
-            if (updateTimeEntryRequest.Start == null)
-            {
-                throw new ArgumentNullException(nameof(updateTimeEntryRequest.Start));
-            }
-
-            if (updateTimeEntryRequest.Billable == null)
-            {
-                throw new ArgumentNullException(nameof(updateTimeEntryRequest.Billable));
-            }
+            if (updateTimeEntryRequest == null) { throw new ArgumentNullException(nameof(updateTimeEntryRequest)); }
+            Require.Argument(nameof(updateTimeEntryRequest.Start), updateTimeEntryRequest.Start);
+            Require.Argument(nameof(updateTimeEntryRequest.Billable), updateTimeEntryRequest.Billable);
 
 			var request = new RestRequest($"workspaces/{workspaceId}/time-entries/{timeEntryId}", Method.PUT);
 			request.AddJsonBody(updateTimeEntryRequest);
@@ -452,55 +386,16 @@ namespace Clockify.Net
         {
 			var request = new RestRequest($"workspaces/{workspaceId}/user/{userId}/time-entries");
 
-            if (description != null)
-            {
-                request.AddQueryParameter(nameof(description), description);
-            }
-
-            if (start != null)
-            {
-                request.AddQueryParameter(nameof(start), start.ToString());
-            }
-
-            if (end != null)
-            {
-                request.AddQueryParameter(nameof(end), end.ToString());
-            }
-
-            if (project != null)
-            {
-                request.AddQueryParameter(nameof(project), project);
-            }
-
-            if (task != null)
-            {
-                request.AddQueryParameter(nameof(task), task);
-            }
-
-            if (projectRequired != null)
-            {
-                request.AddQueryParameter("consider-duration-format", considerDurationFormat.ToString());
-            }
-
-            if (taskRequired != null)
-            {
-                request.AddQueryParameter("task-required", taskRequired.ToString());
-            }
-
-            if (projectRequired != null)
-            {
-                request.AddQueryParameter("project-required", projectRequired.ToString());
-            }
-
-            if (hydrated != null)
-            {
-                request.AddQueryParameter(nameof(hydrated), hydrated.ToString());
-            }
-
-            if (inProgress != null)
-            {
-                request.AddQueryParameter("in-progress", inProgress.ToString());
-            }
+            if (description != null) { request.AddQueryParameter(nameof(description), description); }
+            if (start != null) { request.AddQueryParameter(nameof(start), start.ToString()); }
+			if (end != null) { request.AddQueryParameter(nameof(end), end.ToString()); }
+            if (project != null) { request.AddQueryParameter(nameof(project), project); }
+            if (task != null) { request.AddQueryParameter(nameof(task), task); }
+            if (projectRequired != null) { request.AddQueryParameter("consider-duration-format", considerDurationFormat.ToString()); }
+            if (taskRequired != null) { request.AddQueryParameter("task-required", taskRequired.ToString()); }
+            if (projectRequired != null) { request.AddQueryParameter("project-required", projectRequired.ToString()); }
+            if (hydrated != null) { request.AddQueryParameter(nameof(hydrated), hydrated.ToString()); }
+            if (inProgress != null) { request.AddQueryParameter("in-progress", inProgress.ToString()); }
 
 			request.AddQueryParameter(nameof(page), page.ToString());
 			request.AddQueryParameter("page-size", pageSize.ToString());
@@ -512,7 +407,8 @@ namespace Clockify.Net
 		
 		#region Private methods
 
-		private void InitClients(string apiKey) {
+		private void InitClients(string apiKey) 
+        {
 			_client = new RestClient(BaseUrl);
 			_client.AddDefaultHeader(ApiKeyHeaderName, apiKey);
 			_experimentalClient = new RestClient(ExperimentalApiUrl);
