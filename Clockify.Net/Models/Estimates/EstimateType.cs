@@ -1,6 +1,8 @@
-﻿namespace Clockify.Net.Models.Estimates {
-	public enum EstimateType {
-		Auto,
-		Manual
-	}
+﻿namespace Clockify.Net.Models.Estimates
+{
+    public enum EstimateType
+    {
+        Auto,
+        Manual
+    }
 }
