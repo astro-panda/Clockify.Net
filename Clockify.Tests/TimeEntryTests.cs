@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Clockify.Net;
-using Clockify.Net.Models.Tags;
 using Clockify.Net.Models.TimeEntries;
 using Clockify.Net.Models.Workspaces;
 using FluentAssertions;
