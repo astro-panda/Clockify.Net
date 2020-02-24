@@ -11,7 +11,6 @@ using Clockify.Net.Models.TimeEntries;
 using Clockify.Net.Models.Users;
 using Clockify.Net.Models.Workspaces;
 using RestSharp;
-using RestSharp.Validation;
 
 namespace Clockify.Net 
 {
