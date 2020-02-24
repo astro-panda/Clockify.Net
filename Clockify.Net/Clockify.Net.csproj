@@ -12,7 +12,11 @@
     <PackageTags>clockify, client, httpclient</PackageTags>
     <Authors>Morasiu</Authors>
     <Company>Code Hydra</Company>
-    <PackageReleaseNotes>Updated dependencies.</PackageReleaseNotes>
+    <PackageReleaseNotes>### Changed
+- Updated RestSharp
+- Code to stopped using obselete methods.
+### Removed
+- Removed Q&amp;A dependencies</PackageReleaseNotes>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
   </PropertyGroup>
