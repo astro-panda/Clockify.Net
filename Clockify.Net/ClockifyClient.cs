@@ -60,7 +60,7 @@ namespace Clockify.Net
 
 			request.AddQueryParameter(nameof(page), page.ToString());
 			request.AddQueryParameter("page-size", pageSize.ToString());
-			return _client.ExecuteGetTaskAsync<List<TaskDto>>(request);
+			return _client.ExecuteGetAsync<List<TaskDto>>(request);
 		}
 
 		/// <summary>
@@ -72,11 +72,11 @@ namespace Clockify.Net
 			TaskRequest taskRequest) 
         {
             if (taskRequest == null) { throw new ArgumentNullException(nameof(taskRequest)); }
-            Require.Argument(nameof(taskRequest.Name), taskRequest.Name);
+            if (taskRequest.Name == null) throw new ArgumentNullException(nameof(taskRequest.Name));
 
 			var request = new RestRequest($"workspaces/{workspaceId}/projects/{projectId}/tasks", Method.POST);
 			request.AddJsonBody(taskRequest);
-			return _client.ExecutePostTaskAsync<TaskDto>(request);
+			return _client.ExecutePostAsync<TaskDto>(request);
 		}
 
 		#endregion
@@ -89,7 +89,7 @@ namespace Clockify.Net
 		public Task<IRestResponse<List<UserDto>>> FindAllUsersOnWorkspaceAsync(string workspaceId)
         {
 			var request = new RestRequest($"workspaces/{workspaceId}/users");
-			return _client.ExecuteGetTaskAsync<List<UserDto>>(request);
+			return _client.ExecuteGetAsync<List<UserDto>>(request);
 		}
 
 		/// <summary>
@@ -98,7 +98,7 @@ namespace Clockify.Net
 		public Task<IRestResponse<CurrentUserDto>> GetCurrentUserAsync() 
         {
 			var request = new RestRequest("user");
-			return _client.ExecuteGetTaskAsync<CurrentUserDto>(request);
+			return _client.ExecuteGetAsync<CurrentUserDto>(request);
 		}
 
 		#endregion
@@ -111,7 +111,7 @@ namespace Clockify.Net
 		public Task<IRestResponse<List<WorkspaceDto>>> GetWorkspacesAsync() 
         {
 			var request = new RestRequest("workspaces");
-			return _client.ExecuteGetTaskAsync<List<WorkspaceDto>>(request);
+			return _client.ExecuteGetAsync<List<WorkspaceDto>>(request);
 		}
 
 		/// <summary>
@@ -121,7 +121,7 @@ namespace Clockify.Net
         {
 			var request = new RestRequest("workspaces", Method.POST);
 			request.AddJsonBody(workspaceRequest);
-			return _client.ExecutePostTaskAsync<WorkspaceDto>(request);
+			return _client.ExecutePostAsync<WorkspaceDto>(request);
 		}
 
 		/// <summary>
@@ -129,8 +129,8 @@ namespace Clockify.Net
 		/// </summary>
 		public Task<IRestResponse> DeleteWorkspaceAsync(string id) 
         {
-			var request = new RestRequest($"workspaces/{id}", Method.DELETE);
-			return _experimentalClient.ExecuteTaskAsync(request);
+			var request = new RestRequest($"workspaces/{id}");
+			return _experimentalClient.ExecuteAsync(request, Method.DELETE);
 		}
 
 		#endregion
@@ -143,7 +143,7 @@ namespace Clockify.Net
 		public Task<IRestResponse<List<ClientDto>>> FindAllClientsOnWorkspaceAsync(string workspaceId) 
         {
 			var request = new RestRequest($"workspaces/{workspaceId}/clients");
-			return _client.ExecuteGetTaskAsync<List<ClientDto>>(request);
+			return _client.ExecuteGetAsync<List<ClientDto>>(request);
 		}
 
 		/// <summary>
@@ -155,7 +155,7 @@ namespace Clockify.Net
 
 			var request = new RestRequest($"workspaces/{workspaceId}/clients", Method.POST);
 			request.AddJsonBody(clientRequest);
-			return _client.ExecutePostTaskAsync<ClientDto>(request);
+			return _client.ExecutePostAsync<ClientDto>(request);
 		}
 
 		#endregion
@@ -168,7 +168,7 @@ namespace Clockify.Net
 		public Task<IRestResponse<List<ProjectDtoImpl>>> FindAllProjectsOnWorkspaceAsync(string workspaceId) 
         {
 			var request = new RestRequest($"workspaces/{workspaceId}/projects");
-			return _client.ExecuteGetTaskAsync<List<ProjectDtoImpl>>(request);
+			return _client.ExecuteGetAsync<List<ProjectDtoImpl>>(request);
 		}
 
 		/// <summary>
@@ -177,12 +177,12 @@ namespace Clockify.Net
 		public Task<IRestResponse<ProjectDtoImpl>> CreateProjectAsync(string workspaceId, ProjectRequest projectRequest) 
 		{
             if (projectRequest == null) { throw new ArgumentNullException(nameof(projectRequest)); }
-            Require.Argument(nameof(projectRequest.Name), projectRequest.Name);
-            Require.Argument(nameof(projectRequest.Color), projectRequest.Color);
+            if (projectRequest.Name == null) throw new ArgumentNullException(nameof(projectRequest.Name));
+            if (projectRequest.Color == null) throw new ArgumentNullException(nameof(projectRequest.Color));
 
 			var request = new RestRequest($"workspaces/{workspaceId}/projects", Method.POST);
 			request.AddJsonBody(projectRequest);
-			return _client.ExecutePostTaskAsync<ProjectDtoImpl>(request);
+			return _client.ExecutePostAsync<ProjectDtoImpl>(request);
 		}
 
 		/// <summary>
@@ -190,8 +190,8 @@ namespace Clockify.Net
 		/// </summary>
 		public Task<IRestResponse> DeleteProjectAsync(string workspaceId, string id) 
         {
-			var request = new RestRequest($"workspaces/{workspaceId}/projects/{id}", Method.DELETE);
-			return _experimentalClient.ExecuteTaskAsync(request);
+			var request = new RestRequest($"workspaces/{workspaceId}/projects/{id}");
+			return _experimentalClient.ExecuteAsync(request, Method.DELETE);
 		}
 
 		#endregion
@@ -204,7 +204,7 @@ namespace Clockify.Net
 		public Task<IRestResponse<List<TagDto>>> FindAllTagsOnWorkspaceAsync(string workspaceId) 
         {
 			var request = new RestRequest($"workspaces/{workspaceId}/tags");
-			return _client.ExecuteGetTaskAsync<List<TagDto>>(request);
+			return _client.ExecuteGetAsync<List<TagDto>>(request);
 		}
 
 		/// <summary>
@@ -213,11 +213,11 @@ namespace Clockify.Net
 		public Task<IRestResponse<TagDto>> CreateTagAsync(string workspaceId, TagRequest projectRequest) 
         {
             if (projectRequest == null) { throw new ArgumentNullException(nameof(projectRequest)); }
-            Require.Argument(nameof(projectRequest.Name), projectRequest.Name);
+            if (projectRequest.Name == null) { throw new ArgumentNullException(nameof(projectRequest.Name)); }
 
 			var request = new RestRequest($"workspaces/{workspaceId}/tags", Method.POST);
 			request.AddJsonBody(projectRequest);
-			return _client.ExecutePostTaskAsync<TagDto>(request);
+			return _client.ExecutePostAsync<TagDto>(request);
 		}
 
 		#endregion
@@ -243,7 +243,7 @@ namespace Clockify.Net
 			request.AddQueryParameter(nameof(page), page.ToString());
 			request.AddQueryParameter("page-size", pageSize.ToString());
 
-			return _client.ExecuteGetTaskAsync<List<TemplateDto>>(request);
+			return _client.ExecuteGetAsync<List<TemplateDto>>(request);
 		}
 
 		/// <summary>
@@ -258,7 +258,7 @@ namespace Clockify.Net
 			var request = new RestRequest($"workspaces/{workspaceId}/templates/{templateId}");
 			request.AddQueryParameter(nameof(cleansed), cleansed.ToString());
 			request.AddQueryParameter(nameof(hydrated), hydrated.ToString());
-			return _client.ExecuteGetTaskAsync<TemplateDto>(request);
+			return _client.ExecuteGetAsync<TemplateDto>(request);
 		}
 
 		/// <summary>
@@ -271,18 +271,19 @@ namespace Clockify.Net
 			// todo: this nested foreach needs work
 			foreach (var templateRequest in projectRequests) 
             {
-				Require.Argument(nameof(templateRequest.Name), templateRequest.Name);
-				Require.Argument(nameof(templateRequest.ProjectsAndTasks), templateRequest.ProjectsAndTasks);
+	            if (templateRequest.Name == null) { throw new ArgumentNullException(nameof(templateRequest.Name)); }
+	            if (templateRequest.ProjectsAndTasks == null) { throw new ArgumentNullException(nameof(templateRequest.ProjectsAndTasks)); }
+
 				foreach (var projectsAndTask in templateRequest.ProjectsAndTasks) 
                 {
-					Require.Argument(nameof(projectsAndTask.ProjectId), projectsAndTask.ProjectId);
-					Require.Argument(nameof(projectsAndTask.TaskId), projectsAndTask.TaskId);
+		            if (projectsAndTask.ProjectId == null) { throw new ArgumentNullException(nameof(projectsAndTask.ProjectId)); }
+		            if (projectsAndTask.TaskId == null) { throw new ArgumentNullException(nameof(projectsAndTask.TaskId)); }
 				}
 			}
 
 			var request = new RestRequest($"workspaces/{workspaceId}/templates", Method.POST);
 			request.AddJsonBody(projectRequests);
-			return _client.ExecutePostTaskAsync<List<TemplateDto>>(request);
+			return _client.ExecutePostAsync<List<TemplateDto>>(request);
 		}
 
 		/// <summary>
@@ -291,7 +292,7 @@ namespace Clockify.Net
 		public Task<IRestResponse<TemplateDto>> DeleteTemplateAsync(string workspaceId, string templateId) 
         {
 			var request = new RestRequest($"workspaces/{workspaceId}/templates/{templateId}", Method.DELETE);
-			return _client.ExecuteTaskAsync<TemplateDto>(request);
+			return _client.ExecuteAsync<TemplateDto>(request);
 		}
 
 		/// <summary>
@@ -302,12 +303,12 @@ namespace Clockify.Net
             string timeEntryId,
 			TemplatePatchRequest templatePatchRequest) 
         {
-			Require.Argument(nameof(templatePatchRequest), templatePatchRequest);
-            Require.Argument(nameof(templatePatchRequest.Name), templatePatchRequest.Name);
+            if (templatePatchRequest == null) { throw new ArgumentNullException(nameof(templatePatchRequest)); }
+            if (templatePatchRequest.Name == null) { throw new ArgumentNullException(nameof(templatePatchRequest.Name)); }
 
 			var request = new RestRequest($"workspaces/{workspaceId}/templates/{timeEntryId}", Method.PATCH);
 			request.AddJsonBody(templatePatchRequest);
-			return _client.ExecuteTaskAsync<TemplateDto>(request);
+			return _client.ExecuteAsync<TemplateDto>(request);
 		}
 
 		#endregion
@@ -320,11 +321,11 @@ namespace Clockify.Net
 		public Task<IRestResponse<TimeEntryDtoImpl>> CreateTimeEntryAsync(string workspaceId, TimeEntryRequest timeEntryRequest) 
         {
             if (timeEntryRequest == null) { throw new ArgumentNullException(nameof(timeEntryRequest)); }
-            Require.Argument(nameof(timeEntryRequest.Start), timeEntryRequest.Start);
+            if (timeEntryRequest.Start == null) { throw new ArgumentNullException(nameof(timeEntryRequest.Start)); }
 
 			var request = new RestRequest($"workspaces/{workspaceId}/time-entries", Method.POST);
 			request.AddJsonBody(timeEntryRequest);
-			return _client.ExecutePostTaskAsync<TimeEntryDtoImpl>(request);
+			return _client.ExecutePostAsync<TimeEntryDtoImpl>(request);
 		}
 		
 		/// <summary>
@@ -339,7 +340,7 @@ namespace Clockify.Net
 			var request = new RestRequest($"workspaces/{workspaceId}/time-entries/{timeEntryId}");
 			request.AddQueryParameter("consider-duration-format", considerDurationFormat.ToString());
 			request.AddQueryParameter(nameof(hydrated), hydrated.ToString());
-			return _client.ExecuteGetTaskAsync<TimeEntryDtoImpl>(request);
+			return _client.ExecuteGetAsync<TimeEntryDtoImpl>(request);
 		}
 
 		/// <summary>
@@ -348,12 +349,12 @@ namespace Clockify.Net
 		public Task<IRestResponse<TimeEntryDtoImpl>> UpdateTimeEntryAsync(string workspaceId, string timeEntryId, UpdateTimeEntryRequest updateTimeEntryRequest) 
         {
             if (updateTimeEntryRequest == null) { throw new ArgumentNullException(nameof(updateTimeEntryRequest)); }
-            Require.Argument(nameof(updateTimeEntryRequest.Start), updateTimeEntryRequest.Start);
-            Require.Argument(nameof(updateTimeEntryRequest.Billable), updateTimeEntryRequest.Billable);
+            if (updateTimeEntryRequest.Start == null) { throw new ArgumentNullException(nameof(updateTimeEntryRequest.Start)); }
+            if (updateTimeEntryRequest.Billable == null) { throw new ArgumentNullException(nameof(updateTimeEntryRequest.Billable)); }
 
 			var request = new RestRequest($"workspaces/{workspaceId}/time-entries/{timeEntryId}", Method.PUT);
 			request.AddJsonBody(updateTimeEntryRequest);
-			return _client.ExecuteTaskAsync<TimeEntryDtoImpl>(request);
+			return _client.ExecuteAsync<TimeEntryDtoImpl>(request);
 		}
 
 		/// <summary>
@@ -361,8 +362,8 @@ namespace Clockify.Net
 		/// </summary>
 		public Task<IRestResponse> DeleteTimeEntryAsync(string workspaceId, string templateId) 
         {
-			var request = new RestRequest($"workspaces/{workspaceId}/time-entries/{templateId}", Method.DELETE);
-			return _client.ExecuteTaskAsync(request);
+			var request = new RestRequest($"workspaces/{workspaceId}/time-entries/{templateId}");
+			return _client.ExecuteAsync(request, Method.DELETE);
 		}
 
 		/// <summary>
@@ -400,7 +401,7 @@ namespace Clockify.Net
 			request.AddQueryParameter(nameof(page), page.ToString());
 			request.AddQueryParameter("page-size", pageSize.ToString());
 
-			return _client.ExecuteGetTaskAsync<List<TimeEntryDtoImpl>>(request);
+			return _client.ExecuteGetAsync<List<TimeEntryDtoImpl>>(request);
 		}
 
 		#endregion
