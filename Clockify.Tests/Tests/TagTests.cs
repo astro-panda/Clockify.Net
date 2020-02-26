@@ -3,10 +3,11 @@ using System.Threading.Tasks;
 using Clockify.Net;
 using Clockify.Net.Models.Tags;
 using Clockify.Net.Models.Workspaces;
+using Clockify.Tests.Fixtures;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace Clockify.Tests
+namespace Clockify.Tests.Tests
 {
     public class TagTests
     {
@@ -18,7 +19,7 @@ namespace Clockify.Tests
             _client = new ClockifyClient();
         }
 
-        [SetUp]
+        [OneTimeSetUp]
         public async Task Setup()
         {
             var workspaceResponse = await _client.CreateWorkspaceAsync(new WorkspaceRequest {Name = "TagsWorkspace"});
@@ -26,9 +27,13 @@ namespace Clockify.Tests
             _workspaceId = workspaceResponse.Data.Id;
         }
 
-        [TearDown]
+        [OneTimeTearDown]
         public async Task Cleanup()
         {
+	        var currentUser = await _client.GetCurrentUserAsync();
+	        var changeResponse =
+		        await _client.SetActiveWorkspaceFor(currentUser.Data.Id, DefaultWorkspaceFixture.DefaultWorkspaceId);
+	        changeResponse.IsSuccessful.Should().BeTrue();
             var workspaceResponse = await _client.DeleteWorkspaceAsync(_workspaceId);
             workspaceResponse.IsSuccessful.Should().BeTrue();
         }
@@ -65,7 +70,7 @@ namespace Clockify.Tests
             };
             Func<Task> create = () => _client.CreateTagAsync(_workspaceId, tagRequest);
             await create.Should().ThrowAsync<ArgumentException>()
-                .WithMessage($"Argument cannot be null. (Parameter '{nameof(TagRequest.Name)}')");
+                .WithMessage($"Value cannot be null. (Parameter '{nameof(TagRequest.Name)}')");
         }
     }
 }

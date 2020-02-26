@@ -1,15 +1,13 @@
 ﻿using System;
 using NUnit.Framework;
 
-namespace Clockify.Tests
+namespace Clockify.Tests.Fixtures
 {
-    [SetUpFixture]
     public class EnvironmentFixture
     {
         private const string CapiKeyName = "CAPI_KEY";
 
-        [OneTimeSetUp]
-        public void Setup()
+        public static void Setup()
         {
             if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(CapiKeyName)))
             {
@@ -17,8 +15,7 @@ namespace Clockify.Tests
             }
         }
 
-        [OneTimeTearDown]
-        public void TearDown()
+        public static void TearDown()
         {
             Environment.SetEnvironmentVariable(CapiKeyName, null);
         }

@@ -14,9 +14,8 @@ using RestSharp;
 
 namespace Clockify.Net 
 {
-    public class ClockifyClient 
-    {
-		private const string BaseUrl = "https://api.clockify.me/api/v1";
+    public class ClockifyClient {
+	    private const string BaseUrl = "https://api.clockify.me/api/v1";
 		private const string ExperimentalApiUrl = "https://api.clockify.me/api/";
 		private const string ApiKeyHeaderName = "X-Api-Key";
 		private const string ApiKeyVariableName = "CAPI_KEY";
@@ -98,6 +97,15 @@ namespace Clockify.Net
         {
 			var request = new RestRequest("user");
 			return _client.ExecuteGetAsync<CurrentUserDto>(request);
+		}
+
+		/// <summary>
+		/// Set active workspace for user
+		/// </summary>
+		public Task<IRestResponse<UserDto>> SetActiveWorkspaceFor(string userId, string workspaceId) 
+		{
+			var request = new RestRequest($"users/{userId}/activeWorkspace/{workspaceId}");
+			return _experimentalClient.ExecutePostAsync<UserDto>(request);
 		}
 
 		#endregion
