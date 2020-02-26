@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.0.1</Version>
+    <Version>1.1.0</Version>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Description>.Net Client for Clockify</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -12,7 +12,10 @@
     <PackageTags>clockify, client, httpclient</PackageTags>
     <Authors>Morasiu</Authors>
     <Company>Code Hydra</Company>
-    <PackageReleaseNotes>### Changed
+    <PackageReleaseNotes>## [1.1.0]
+### Added
+- Support for POST /users/{userId}/activeWorkspace/{workspaceId}
+### Changed
 - Updated RestSharp
 - Code to stopped using obselete methods.
 ### Removed
