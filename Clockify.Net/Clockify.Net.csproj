@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.0.0</Version>
+    <Version>1.1.0</Version>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Description>.Net Client for Clockify</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -12,7 +12,16 @@
     <PackageTags>clockify, client, httpclient</PackageTags>
     <Authors>Morasiu</Authors>
     <Company>Code Hydra</Company>
-    <PackageReleaseNotes>Offical release</PackageReleaseNotes>
+    <PackageReleaseNotes>## [1.1.0]
+### Added
+- Support for POST /users/{userId}/activeWorkspace/{workspaceId}
+### Changed
+- Updated RestSharp
+- Code to stopped using obselete methods.
+### Removed
+- Removed Q&amp;A dependencies</PackageReleaseNotes>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -24,8 +33,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.3" />
-    <PackageReference Include="RestSharp" Version="106.6.10" />
+    <PackageReference Include="RestSharp" Version="106.10.1" />
   </ItemGroup>
 
   <ItemGroup>
