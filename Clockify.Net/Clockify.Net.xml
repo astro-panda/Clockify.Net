@@ -30,6 +30,11 @@
             Get currently logged in user's info
             </summary>
         </member>
+        <member name="M:Clockify.Net.ClockifyClient.SetActiveWorkspaceFor(System.String,System.String)">
+            <summary>
+            Set active workspace for user
+            </summary>
+        </member>
         <member name="M:Clockify.Net.ClockifyClient.GetWorkspacesAsync">
             <summary>
             Find workspaces for currently logged in user
