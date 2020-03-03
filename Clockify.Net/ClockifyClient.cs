@@ -367,9 +367,9 @@ namespace Clockify.Net
 		/// <summary>
 		/// Delete time entry with id.
 		/// </summary>
-		public Task<IRestResponse> DeleteTimeEntryAsync(string workspaceId, string templateId) 
+		public Task<IRestResponse> DeleteTimeEntryAsync(string workspaceId, string timeEntryId) 
         {
-			var request = new RestRequest($"workspaces/{workspaceId}/time-entries/{templateId}");
+			var request = new RestRequest($"workspaces/{workspaceId}/time-entries/{timeEntryId}");
 			return _client.ExecuteAsync(request, Method.DELETE);
 		}
 
