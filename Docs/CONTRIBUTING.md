@@ -28,6 +28,31 @@ or
 
 ### 2. Writing actual code
 
+#### For newcomers
+
+Just create **pull request**.
+
+>I really recommnend [this](https://opensource.com/article/19/7/create-pull-request-github) article.
+
+Short instruction:
+1. Fork repository.
+1. Clone your forked repository.
+1. Create new branch from `develop`.
+    * `git checkout develop`
+    * `git checkout -b feature/myFeatureName`
+1. Now setup upstream using
+    * `git remote add upstream https://github.com/Morasiu/Clockify.Net`
+1. Now is time to code (my favorite).
+1. After you done commit your changes
+    * `git add .`
+    * `git commit -m "Your commit message"`
+1. Now go to https://github.com/Morasiu/Clockify.Net and click **Compare & pull request**.
+1. Confirm creating `Create pull request`
+1. DONE!
+
+
+#### For developers with repository rights.
+
 > We use [`git flow`](https://jeffkreeftmeijer.com/git-flow/) for git management.
 
 1. Pick some task.
