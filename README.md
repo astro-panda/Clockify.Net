@@ -8,19 +8,18 @@ Clockify C# Client.
 
 Made as .Net Standard 2.0 library.
 
-Now on Nuget!
-
 Stable API docs:
+> Every endpoint from that url is implemented.
 
 https://clockify.me/developers-api
-
-> Every endpoint form that url is implemented.
 
 EXPERIMENTAL API
 
 https://clockify.github.io/clockify_api_docs/
 
 Also check [CHANGELOG](CHANGELOG.md).
+
+> If you like this project, give it a star ⭐. It really motives me to work on it.
 
 ## Usage
 
