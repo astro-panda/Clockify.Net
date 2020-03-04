@@ -367,9 +367,9 @@ namespace Clockify.Net
 		/// <summary>
 		/// Delete time entry with id.
 		/// </summary>
-		public Task<IRestResponse> DeleteTimeEntryAsync(string workspaceId, string templateId) 
+		public Task<IRestResponse> DeleteTimeEntryAsync(string workspaceId, string timeEntryId) 
         {
-			var request = new RestRequest($"workspaces/{workspaceId}/time-entries/{templateId}");
+			var request = new RestRequest($"workspaces/{workspaceId}/time-entries/{timeEntryId}");
 			return _client.ExecuteAsync(request, Method.DELETE);
 		}
 
@@ -395,8 +395,8 @@ namespace Clockify.Net
 			var request = new RestRequest($"workspaces/{workspaceId}/user/{userId}/time-entries");
 
             if (description != null) { request.AddQueryParameter(nameof(description), description); }
-            if (start != null) { request.AddQueryParameter(nameof(start), start.ToString()); }
-			if (end != null) { request.AddQueryParameter(nameof(end), end.ToString()); }
+            if (start != null) { request.AddQueryParameter(nameof(start), start.Value.ToString("yyyy-MM-ddThh:mm:ssZ")); }
+			if (end != null) { request.AddQueryParameter(nameof(end), end.Value.ToString("yyyy-MM-ddThh:mm:ssZ")); }
             if (project != null) { request.AddQueryParameter(nameof(project), project); }
             if (task != null) { request.AddQueryParameter(nameof(task), task); }
             if (projectRequired != null) { request.AddQueryParameter("consider-duration-format", considerDurationFormat.ToString()); }
