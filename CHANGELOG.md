@@ -8,9 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.1.1]
 ### Changed
 - Change paramater name in `DeleteTimeEntryAsync` to timeEntryId
-### Removed 
 ### Fixed
-
+- DataOffset formating in `FindAllTimeEntriesForUserAsync()`
 
 ## [1.1.0]
 ### Added

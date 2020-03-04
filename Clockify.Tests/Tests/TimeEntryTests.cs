@@ -170,7 +170,10 @@ namespace Clockify.Tests.Tests
             userResponse.IsSuccessful.Should().BeTrue();
 
 
-            var response = await _client.FindAllTimeEntriesForUserAsync(_workspaceId, userResponse.Data.Id);
+            var response = await _client.FindAllTimeEntriesForUserAsync(_workspaceId, userResponse.Data.Id, 
+	            start: DateTimeOffset.Now.AddDays(-1), 
+	            end: DateTimeOffset.Now.AddDays(1));
+
             response.IsSuccessful.Should().BeTrue();
             response.Data.Should().ContainEquivalentOf(createResult.Data);
         }
