@@ -399,9 +399,9 @@ namespace Clockify.Net
 			if (end != null) { request.AddQueryParameter(nameof(end), end.Value.ToString("yyyy-MM-ddThh:mm:ssZ")); }
             if (project != null) { request.AddQueryParameter(nameof(project), project); }
             if (task != null) { request.AddQueryParameter(nameof(task), task); }
-            if (projectRequired != null) { request.AddQueryParameter("consider-duration-format", considerDurationFormat.ToString()); }
-            if (taskRequired != null) { request.AddQueryParameter("task-required", taskRequired.ToString()); }
             if (projectRequired != null) { request.AddQueryParameter("project-required", projectRequired.ToString()); }
+            if (taskRequired != null) { request.AddQueryParameter("task-required", taskRequired.ToString()); }
+            if (considerDurationFormat != null) { request.AddQueryParameter("consider-duration-format", considerDurationFormat.ToString()); }
             if (hydrated != null) { request.AddQueryParameter(nameof(hydrated), hydrated.ToString()); }
             if (inProgress != null) { request.AddQueryParameter("in-progress", inProgress.ToString()); }
 
