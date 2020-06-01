@@ -102,6 +102,7 @@ namespace Clockify.Net
 		/// <summary>
 		/// Set active workspace for user
 		/// </summary>
+		[Obsolete("Removed from the experimental API")]
 		public Task<IRestResponse<UserDto>> SetActiveWorkspaceFor(string userId, string workspaceId) 
 		{
 			var request = new RestRequest($"users/{userId}/activeWorkspace/{workspaceId}");
@@ -134,6 +135,7 @@ namespace Clockify.Net
 		/// <summary>
 		/// Delete workspace with Id.
 		/// </summary>
+		[Obsolete("Changing active workplace was removed from the experimental API")]
 		public Task<IRestResponse> DeleteWorkspaceAsync(string id) 
         {
 			var request = new RestRequest($"workspaces/{id}");
