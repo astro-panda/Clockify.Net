@@ -8,7 +8,7 @@
         public DashboardViewType? DashboardViewType { get; set; }
         public string DateFormat { get; set; }
         public bool? IsCompactViewOn { get; set; }
-        public string LongRunning { get; set; }
+        public bool? LongRunning { get; set; }
         public string ProjectListCollapse { get; set; }
         public bool? SendNewsletter { get; set; }
         public SummaryReportSettingsDto SummaryReportSettingsDto { get; set; }
