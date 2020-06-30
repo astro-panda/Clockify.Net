@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.1.3</Version>
+    <Version>1.1.4</Version>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Description>.Net Client for Clockify</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -12,12 +12,9 @@
     <PackageTags>clockify, client, httpclient</PackageTags>
     <Authors>Morasiu</Authors>
     <Company>Code Hydra</Company>
-    <PackageReleaseNotes>## [1.1.3]
-### Changed
-- `SetActiveWorkspaceFor` is now obsolete due to removal from experimental 
-- `DeleteWorkspaceAsync` is now obsolete because of removal SetActiveWorkspaceFor endpoint from API.
+    <PackageReleaseNotes>## [1.1.4]
 ### Fixed
-- `LongRunning` is `UserSettingsDto` is now a bool as it should be (Issue #8)</PackageReleaseNotes>
+- `Estimate` deserialization (PR #10)</PackageReleaseNotes>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
   </PropertyGroup>
