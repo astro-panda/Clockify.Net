@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Clockify.Net.Configuration;
 using Clockify.Net.Models.Clients;
 using Clockify.Net.Models.Estimates;
 using Clockify.Net.Models.Projects;
@@ -11,7 +10,11 @@ using Clockify.Net.Models.Tasks;
 using Clockify.Net.Models.TimeEntries;
 using Clockify.Net.Models.Users;
 using Clockify.Net.Models.Workspaces;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 using RestSharp;
+using RestSharp.Serializers.NewtonsoftJson;
 
 namespace Clockify.Net 
 {
@@ -420,13 +423,20 @@ namespace Clockify.Net
 		
 		#region Private methods
 
-		private void InitClients(string apiKey) 
-        {
-			_client = new RestClient(BaseUrl);
+		private void InitClients(string apiKey) {
+			var jsonSerializerSettings = new JsonSerializerSettings 
+			{
+				Converters = new List<JsonConverter> { new StringEnumConverter() },
+				ContractResolver = new CamelCasePropertyNamesContractResolver(),
+			};
+
+	        _client = new RestClient(BaseUrl);
 			_client.AddDefaultHeader(ApiKeyHeaderName, apiKey);
+			_client.UseNewtonsoftJson(jsonSerializerSettings);
+
 			_experimentalClient = new RestClient(ExperimentalApiUrl);
 			_experimentalClient.AddDefaultHeader(ApiKeyHeaderName, apiKey);
-			SimpleJson.CurrentJsonSerializerStrategy = new CamelCaseSerializerStrategy();
+			_client.UseNewtonsoftJson(jsonSerializerSettings);
 		}
 
 		#endregion
