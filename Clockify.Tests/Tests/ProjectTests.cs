@@ -71,7 +71,7 @@ namespace Clockify.Tests.Tests
             {
                 Name = "Estimate test project",
                 Color = "#0000FF",
-                Estimate = new EstimateRequest() { Estimate = 24, Type = "Manual" }
+                Estimate = new EstimateRequest() { Estimate = 24, Type = EstimateType.Manual }
             };
             var createResult = await _client.CreateProjectAsync(_workspaceId, projectRequest);
             createResult.IsSuccessful.Should().BeTrue();
