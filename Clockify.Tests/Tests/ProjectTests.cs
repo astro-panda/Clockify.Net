@@ -84,21 +84,6 @@ namespace Clockify.Tests.Tests
         }
 
         [Test]
-        public async Task CreateProjectAsync_BadEstimateType_ShouldThrowOutOfRangeException()
-        {
-            var projectRequest = new ProjectRequest
-            {
-                Name = "Estimate test project",
-                Color = "#0000FF",
-                Estimate = new EstimateRequest() { Estimate = 24, Type = "Unknown" }
-            };
-            Func<Task> create = async () => await _client.CreateProjectAsync(_workspaceId, projectRequest);
-
-            await create.Should().ThrowAsync<ArgumentException>()
-                .WithMessage($"Specified argument was out of the range of valid values. (Parameter '{nameof(EstimateRequest.Type)}')");
-        }
-
-        [Test]
         public async Task CreateProjectAsync_NullName_ShouldThrowArgumentException()
         {
             var projectRequest = new ProjectRequest
