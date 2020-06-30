@@ -12,9 +12,13 @@
     <PackageTags>clockify, client, httpclient</PackageTags>
     <Authors>Morasiu</Authors>
     <Company>Code Hydra</Company>
-    <PackageReleaseNotes>## [1.1.4]
+    <PackageReleaseNotes>
+## [1.1.5]
+### Changed
+- JsonSerializer to Json.Net
 ### Fixed
-- `Estimate` deserialization (PR #10)</PackageReleaseNotes>
+- `EstimateRequest` should now work properly. 
+</PackageReleaseNotes>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
   </PropertyGroup>
