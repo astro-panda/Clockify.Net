@@ -71,7 +71,7 @@ namespace Clockify.Tests.Tests
             {
                 Name = "Estimate test project",
                 Color = "#0000FF",
-                Estimate = new EstimateRequest() { Estimate = 24, Type = "Manual" }
+                Estimate = new EstimateRequest() { Estimate = 24, Type = EstimateType.Manual }
             };
             var createResult = await _client.CreateProjectAsync(_workspaceId, projectRequest);
             createResult.IsSuccessful.Should().BeTrue();
@@ -81,21 +81,6 @@ namespace Clockify.Tests.Tests
             var findResult = await _client.FindAllProjectsOnWorkspaceAsync(_workspaceId);
             findResult.IsSuccessful.Should().BeTrue();
             findResult.Data.Should().ContainEquivalentOf(createResult.Data);
-        }
-
-        [Test]
-        public async Task CreateProjectAsync_BadEstimateType_ShouldThrowOutOfRangeException()
-        {
-            var projectRequest = new ProjectRequest
-            {
-                Name = "Estimate test project",
-                Color = "#0000FF",
-                Estimate = new EstimateRequest() { Estimate = 24, Type = "Unknown" }
-            };
-            Func<Task> create = async () => await _client.CreateProjectAsync(_workspaceId, projectRequest);
-
-            await create.Should().ThrowAsync<ArgumentException>()
-                .WithMessage($"Specified argument was out of the range of valid values. (Parameter '{nameof(EstimateRequest.Type)}')");
         }
 
         [Test]

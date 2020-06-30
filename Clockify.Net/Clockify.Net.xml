@@ -67,7 +67,7 @@
         </member>
         <member name="M:Clockify.Net.ClockifyClient.CreateProjectAsync(System.String,Clockify.Net.Models.Projects.ProjectRequest)">
             <summary>
-            Add a new client to workspace.
+            Add a new project to workspace.
             </summary>
         </member>
         <member name="M:Clockify.Net.ClockifyClient.DeleteProjectAsync(System.String,System.String)">
