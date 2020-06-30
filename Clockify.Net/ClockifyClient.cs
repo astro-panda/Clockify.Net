@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
 using Clockify.Net.Models.Clients;
 using Clockify.Net.Models.Estimates;
@@ -424,9 +425,16 @@ namespace Clockify.Net
 		#region Private methods
 
 		private void InitClients(string apiKey) {
-			var jsonSerializerSettings = new JsonSerializerSettings 
+			var jsonSerializerSettings = new JsonSerializerSettings()
 			{
-				Converters = new List<JsonConverter> { new StringEnumConverter() },
+				Converters = new List<JsonConverter> 
+				{
+					new StringEnumConverter(),
+					new IsoDateTimeConverter() 
+					{
+						DateTimeFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"
+					}
+				},
 				ContractResolver = new CamelCasePropertyNamesContractResolver(),
 			};
 
