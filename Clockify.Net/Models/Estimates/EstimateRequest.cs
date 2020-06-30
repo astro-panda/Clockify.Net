@@ -3,6 +3,6 @@
     public class EstimateRequest
     {
         public int? Estimate { get; set; }
-        public EstimateType Type { get; set; }
+        public string Type { get; set; }
     }
 }

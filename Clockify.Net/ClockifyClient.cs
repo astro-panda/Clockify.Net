@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Clockify.Net.Configuration;
 using Clockify.Net.Models.Clients;
+using Clockify.Net.Models.Estimates;
 using Clockify.Net.Models.Projects;
 using Clockify.Net.Models.Tags;
 using Clockify.Net.Models.Templates;
@@ -181,13 +182,15 @@ namespace Clockify.Net
 		}
 
 		/// <summary>
-		/// Add a new client to workspace.
+		/// Add a new project to workspace.
 		/// </summary>
-		public Task<IRestResponse<ProjectDtoImpl>> CreateProjectAsync(string workspaceId, ProjectRequest projectRequest) 
+		public Task<IRestResponse<ProjectDtoImpl>> CreateProjectAsync(string workspaceId, ProjectRequest projectRequest)
 		{
-            if (projectRequest == null) { throw new ArgumentNullException(nameof(projectRequest)); }
-            if (projectRequest.Name == null) throw new ArgumentNullException(nameof(projectRequest.Name));
-            if (projectRequest.Color == null) throw new ArgumentNullException(nameof(projectRequest.Color));
+			if (projectRequest == null) { throw new ArgumentNullException(nameof(projectRequest)); }
+			if (projectRequest.Name == null) throw new ArgumentNullException(nameof(projectRequest.Name));
+			if (projectRequest.Color == null) throw new ArgumentNullException(nameof(projectRequest.Color));
+			if (projectRequest.Estimate != null && (projectRequest.Estimate.Type == null || (projectRequest.Estimate.Type != EstimateType.Auto && projectRequest.Estimate.Type != EstimateType.Manual)))
+				throw new ArgumentOutOfRangeException(nameof(projectRequest.Estimate.Type));
 
 			var request = new RestRequest($"workspaces/{workspaceId}/projects", Method.POST);
 			request.AddJsonBody(projectRequest);

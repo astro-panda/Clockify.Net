@@ -1,8 +1,8 @@
 ﻿namespace Clockify.Net.Models.Estimates
 {
-    public enum EstimateType
+    public struct EstimateType
     {
-        Auto,
-        Manual
+        public const string Auto = "AUTO";
+        public const string Manual = "MANUAL";
     }
 }
