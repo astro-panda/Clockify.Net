@@ -3,6 +3,6 @@
     public class EstimateDto
     {
         public string Estimate { get; set; }        
-        public string Type { get; set; }
+        public EstimateType Type { get; set; }
     }
 }

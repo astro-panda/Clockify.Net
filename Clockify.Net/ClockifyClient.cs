@@ -189,7 +189,7 @@ namespace Clockify.Net
 			if (projectRequest == null) { throw new ArgumentNullException(nameof(projectRequest)); }
 			if (projectRequest.Name == null) throw new ArgumentNullException(nameof(projectRequest.Name));
 			if (projectRequest.Color == null) throw new ArgumentNullException(nameof(projectRequest.Color));
-			if (projectRequest.Estimate != null && (projectRequest.Estimate.Type == null || (projectRequest.Estimate.Type != EstimateType.Auto && projectRequest.Estimate.Type != EstimateType.Manual)))
+			if (projectRequest.Estimate != null && (projectRequest.Estimate.Type == null || !Enum.IsDefined(typeof(EstimateType), projectRequest.Estimate.Type)))
 				throw new ArgumentOutOfRangeException(nameof(projectRequest.Estimate.Type));
 
 			var request = new RestRequest($"workspaces/{workspaceId}/projects", Method.POST);
