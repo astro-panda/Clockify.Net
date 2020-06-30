@@ -1,7 +1,7 @@
+using System;
 using System.Threading.Tasks;
 using Clockify.Net;
 using Clockify.Net.Models.Workspaces;
-using Clockify.Tests.Fixtures;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -27,21 +27,23 @@ namespace Clockify.Tests.Tests
         }
 
         [Test]
+        [Ignore("This will flood your workspaces.")]
         public async Task CreateWorkspace_ShouldCreateWorkspace()
         {
-            var response = await _client.CreateWorkspaceAsync(new WorkspaceRequest() {Name = "CreateWorkspaceTest"});
+            var response = await _client.CreateWorkspaceAsync(new WorkspaceRequest() {Name = "CreateWorkspaceTest " + Guid.NewGuid()});
             response.IsSuccessful.Should().BeTrue();
 
             // Cleanup
-            var id = response.Data.Id;
 
-            var currentUser = await _client.GetCurrentUserAsync();
-            var changeWorkspaceResponse =
-	            await _client.SetActiveWorkspaceFor(currentUser.Data.Id, DefaultWorkspaceFixture.DefaultWorkspaceId);
-            changeWorkspaceResponse.IsSuccessful.Should().BeTrue();
-            var del = await _client.DeleteWorkspaceAsync(id);
-
-            del.IsSuccessful.Should().BeTrue();
+            // TODO Uncomment when Clockify add deleting workspaces again
+            // var id = response.Data.Id;
+            //var currentUser = await _client.GetCurrentUserAsync();
+            //var changeWorkspaceResponse =
+	           // await _client.SetActiveWorkspaceFor(currentUser.Data.Id, DefaultWorkspaceFixture.DefaultWorkspaceId);
+            //changeWorkspaceResponse.IsSuccessful.Should().BeTrue();
+            // var del = await _client.DeleteWorkspaceAsync(id);
+            //
+            // del.IsSuccessful.Should().BeTrue();
         }
     }
 }

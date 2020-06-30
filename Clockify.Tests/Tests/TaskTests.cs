@@ -4,7 +4,7 @@ using Clockify.Net;
 using Clockify.Net.Models.Projects;
 using Clockify.Net.Models.Tasks;
 using Clockify.Net.Models.Workspaces;
-using Clockify.Tests.Fixtures;
+using Clockify.Tests.Helpers;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -23,27 +23,27 @@ namespace Clockify.Tests.Tests
         [OneTimeSetUp]
         public async Task Setup()
         {
-            var workspaceResponse = await _client.CreateWorkspaceAsync(new WorkspaceRequest {Name = "Task Workspace"});
-            workspaceResponse.IsSuccessful.Should().BeTrue();
-            _workspaceId = workspaceResponse.Data.Id;
+            _workspaceId = await SetupHelper.CreateOrFindWorkspaceAsync(_client, "TaskWorkspace");
         }
 
-        [OneTimeTearDown]
-        public async Task Cleanup()
-        {
-	        var currentUser = await _client.GetCurrentUserAsync();
-	        var changeResponse =
-		        await _client.SetActiveWorkspaceFor(currentUser.Data.Id, DefaultWorkspaceFixture.DefaultWorkspaceId);
-	        changeResponse.IsSuccessful.Should().BeTrue();
-            var workspaceResponse = await _client.DeleteWorkspaceAsync(_workspaceId);
-            workspaceResponse.IsSuccessful.Should().BeTrue();
-        }
+        // TODO Uncomment when Clockify add deleting workspaces again
+
+        // [OneTimeTearDown]
+        // public async Task Cleanup()
+        // {
+	       //  var currentUser = await _client.GetCurrentUserAsync();
+	       //  var changeResponse =
+		      //   await _client.SetActiveWorkspaceFor(currentUser.Data.Id, DefaultWorkspaceFixture.DefaultWorkspaceId);
+	       //  changeResponse.IsSuccessful.Should().BeTrue();
+        //     var workspaceResponse = await _client.DeleteWorkspaceAsync(_workspaceId);
+        //     workspaceResponse.IsSuccessful.Should().BeTrue();
+        // }
 
         [Test]
         public async Task FindAllTasksAsync_ShouldReturnTaskList()
         {
             // Prepare some project
-            var projectRequest = new ProjectRequest {Name = "Task find project", Color = "#FF00FF"};
+            var projectRequest = new ProjectRequest {Name = "Task find project " + Guid.NewGuid(), Color = "#FF00FF"};
             var createResult = await _client.CreateProjectAsync(_workspaceId, projectRequest);
             createResult.IsSuccessful.Should().BeTrue();
             var projectId = createResult.Data.Id;
@@ -56,7 +56,7 @@ namespace Clockify.Tests.Tests
         public async Task CreateTagAsync_ShouldCreteTagAndReturnTagDto()
         {
             // Prepare some project
-            var projectRequest = new ProjectRequest {Name = "Create task project", Color = "#FF00FF"};
+            var projectRequest = new ProjectRequest {Name = "Create task project " + Guid.NewGuid(), Color = "#FF00FF"};
             var createProjectResult = await _client.CreateProjectAsync(_workspaceId, projectRequest);
             createProjectResult.IsSuccessful.Should().BeTrue();
             var projectId = createProjectResult.Data.Id;
