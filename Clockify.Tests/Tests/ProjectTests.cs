@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Clockify.Net;
+using Clockify.Net.Models.Estimates;
 using Clockify.Net.Models.Projects;
 using Clockify.Net.Models.Workspaces;
 using Clockify.Tests.Fixtures;
@@ -61,6 +62,40 @@ namespace Clockify.Tests.Tests
             var findResult = await _client.FindAllProjectsOnWorkspaceAsync(_workspaceId);
             findResult.IsSuccessful.Should().BeTrue();
             findResult.Data.Should().ContainEquivalentOf(createResult.Data);
+        }
+
+        [Test]
+        public async Task CreateProjectWithEstimateAsync_ShouldCreteProjectAndReturnProjectImplDtoWithEstimateDto()
+        {
+            var projectRequest = new ProjectRequest
+            {
+                Name = "Estimate test project",
+                Color = "#0000FF",
+                Estimate = new EstimateRequest() { Estimate = 24, Type = "Manual" }
+            };
+            var createResult = await _client.CreateProjectAsync(_workspaceId, projectRequest);
+            createResult.IsSuccessful.Should().BeTrue();
+            createResult.Data.Should().NotBeNull();
+            createResult.Data.Estimate.Should().NotBeNull();
+
+            var findResult = await _client.FindAllProjectsOnWorkspaceAsync(_workspaceId);
+            findResult.IsSuccessful.Should().BeTrue();
+            findResult.Data.Should().ContainEquivalentOf(createResult.Data);
+        }
+
+        [Test]
+        public async Task CreateProjectAsync_BadEstimateType_ShouldThrowOutOfRangeException()
+        {
+            var projectRequest = new ProjectRequest
+            {
+                Name = "Estimate test project",
+                Color = "#0000FF",
+                Estimate = new EstimateRequest() { Estimate = 24, Type = "Unknown" }
+            };
+            Func<Task> create = async () => await _client.CreateProjectAsync(_workspaceId, projectRequest);
+
+            await create.Should().ThrowAsync<ArgumentException>()
+                .WithMessage($"Specified argument was out of the range of valid values. (Parameter '{nameof(EstimateRequest.Type)}')");
         }
 
         [Test]

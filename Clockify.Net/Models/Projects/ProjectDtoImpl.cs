@@ -13,7 +13,7 @@ namespace Clockify.Net.Models.Projects
         public string ClientName { get; set; }
         public string Color { get; set; }
         public string Duration { get; set; }
-        public EstimateDto EstimateDto { get; set; }
+        public EstimateDto Estimate { get; set; }
         public HourlyRateDto HourlyRate { get; set; }
         public string Id { get; set; }
         public List<MembershipDto> Memberships { get; set; }
