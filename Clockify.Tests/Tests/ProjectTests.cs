@@ -23,7 +23,7 @@ namespace Clockify.Tests.Tests
         [OneTimeSetUp]
         public async Task Setup()
         {
-			_workspaceId = await SetupHelper.CreateOrFindWorkspaceAsync(_client, "ProjectsTestWorkspace");
+			_workspaceId = await SetupHelper.CreateOrFindWorkspaceAsync(_client, "Clockify.NetTestWorkspace");
         }
 
         // TODO Uncomment when Clockify add deleting workspaces again
@@ -57,6 +57,25 @@ namespace Clockify.Tests.Tests
             var createResult = await _client.CreateProjectAsync(_workspaceId, projectRequest);
             createResult.IsSuccessful.Should().BeTrue();
             createResult.Data.Should().NotBeNull();
+
+            var findResult = await _client.FindAllProjectsOnWorkspaceAsync(_workspaceId);
+            findResult.IsSuccessful.Should().BeTrue();
+            findResult.Data.Should().ContainEquivalentOf(createResult.Data);
+        }
+
+        [Test]
+        public async Task CreateProjectWithNoteAsync_ShouldCreteProjectAndReturnProjectImplDtoWithNote()
+        {
+            var projectRequest = new ProjectRequest
+            {
+                Name = "Note test project " + Guid.NewGuid(),
+                Color = "#0000FF",
+                Note = "Project Note Test"
+            };
+            var createResult = await _client.CreateProjectAsync(_workspaceId, projectRequest);
+            createResult.IsSuccessful.Should().BeTrue();
+            createResult.Data.Should().NotBeNull();
+            createResult.Data.Note.Should().NotBeNull();
 
             var findResult = await _client.FindAllProjectsOnWorkspaceAsync(_workspaceId);
             findResult.IsSuccessful.Should().BeTrue();
