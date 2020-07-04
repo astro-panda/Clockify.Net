@@ -21,7 +21,7 @@ namespace Clockify.Tests.Tests
         [OneTimeSetUp]
         public async Task Setup()
         {
-            _workspaceId = await SetupHelper.CreateOrFindWorkspaceAsync(_client, "UserTestWorkspace");
+            _workspaceId = await SetupHelper.CreateOrFindWorkspaceAsync(_client, "Clockify.NetTestWorkspace");
 
         }
 

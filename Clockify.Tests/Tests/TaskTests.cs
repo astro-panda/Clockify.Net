@@ -23,7 +23,7 @@ namespace Clockify.Tests.Tests
         [OneTimeSetUp]
         public async Task Setup()
         {
-            _workspaceId = await SetupHelper.CreateOrFindWorkspaceAsync(_client, "TaskWorkspace");
+            _workspaceId = await SetupHelper.CreateOrFindWorkspaceAsync(_client, "Clockify.NetTestWorkspace");
         }
 
         // TODO Uncomment when Clockify add deleting workspaces again

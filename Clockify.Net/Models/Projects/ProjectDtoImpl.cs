@@ -20,5 +20,6 @@ namespace Clockify.Net.Models.Projects
         public string Name { get; set; }
         public bool? Public { get; set; }
         public string WorkspaceId { get; set; }
+        public string Note { get; set; }
     }
 }

@@ -22,5 +22,6 @@ namespace Clockify.Net.Models.Projects
         public HourlyRateRequest HourlyRate { get; set; }
         public List<MembershipRequest> Memberships { get; set; }
         public List<TaskRequest> Tasks { get; set; }
+        public string Note { get; set; }
     }
 }
