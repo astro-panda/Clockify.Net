@@ -86,5 +86,69 @@ namespace Clockify.Tests.Tests
             await create.Should().ThrowAsync<ArgumentException>()
                 .WithMessage($"Value cannot be null. (Parameter '{nameof(TaskRequest.Name)}')");
         }
+
+        [Test]
+        public async Task UpdateTaskAsync_ShouldUpdateTask()
+        {
+            // Prepare some project
+            var projectRequest = new ProjectRequest { Name = "Update task project", Color = "#FF00FF" };
+            var createProjectResult = await _client.CreateProjectAsync(_workspaceId, projectRequest);
+            createProjectResult.IsSuccessful.Should().BeTrue();
+            var projectId = createProjectResult.Data.Id;
+
+            var taskRequest = new TaskRequest
+            {
+                Name = "Test task",
+            };
+            var createResult = await _client.CreateTaskAsync(_workspaceId, projectId, taskRequest);
+            createResult.IsSuccessful.Should().BeTrue();
+            createResult.Data.Should().NotBeNull();
+
+            var findResult = await _client.FindAllTasksAsync(_workspaceId, projectId);
+            findResult.IsSuccessful.Should().BeTrue();
+            findResult.Data.Should().ContainEquivalentOf(createResult.Data);
+
+            var taskRequestUpdate = new TaskRequest
+            {
+                Id = createResult.Data.Id,
+                Name = "Updated Test task"
+            };
+            var updateResult = await _client.UpdateTaskAsync(_workspaceId, projectId, taskRequestUpdate);
+            updateResult.IsSuccessful.Should().BeTrue();
+            updateResult.Data.Should().NotBeNull();
+
+            var findResult2 = await _client.FindAllTasksAsync(_workspaceId, projectId);
+            findResult2.IsSuccessful.Should().BeTrue();
+            findResult2.Data.Should().ContainEquivalentOf(updateResult.Data);
+        }
+
+        [Test]
+        public async Task DeleteTaskAsync_ShouldRemoveTask()
+        {
+            // Prepare some project
+            var projectRequest = new ProjectRequest { Name = "Delete task project", Color = "#FF00FF" };
+            var createProjectResult = await _client.CreateProjectAsync(_workspaceId, projectRequest);
+            createProjectResult.IsSuccessful.Should().BeTrue();
+            var projectId = createProjectResult.Data.Id;
+
+            var taskRequest = new TaskRequest
+            {
+                Name = "Test task",
+            };
+            var createResult = await _client.CreateTaskAsync(_workspaceId, projectId, taskRequest);
+            createResult.IsSuccessful.Should().BeTrue();
+            createResult.Data.Should().NotBeNull();
+
+            var findResult = await _client.FindAllTasksAsync(_workspaceId, projectId);
+            findResult.IsSuccessful.Should().BeTrue();
+            findResult.Data.Should().ContainEquivalentOf(createResult.Data);
+
+            var deleteResult = await _client.DeleteTaskAsync(_workspaceId, projectId, createResult.Data.Id);
+            deleteResult.IsSuccessful.Should().BeTrue();
+
+            var findResult2 = await _client.FindAllTasksAsync(_workspaceId, projectId);
+            findResult2.IsSuccessful.Should().BeTrue();
+            findResult2.Data.Should().BeEmpty();
+        }
     }
 }
