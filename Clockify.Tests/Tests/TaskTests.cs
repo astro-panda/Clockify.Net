@@ -91,7 +91,7 @@ namespace Clockify.Tests.Tests
         public async Task UpdateTaskAsync_ShouldUpdateTask()
         {
             // Prepare some project
-            var projectRequest = new ProjectRequest { Name = "Update task project", Color = "#FF00FF" };
+            var projectRequest = new ProjectRequest { Name = "Update task project" + Guid.NewGuid(), Color = "#FF00FF" };
             var createProjectResult = await _client.CreateProjectAsync(_workspaceId, projectRequest);
             createProjectResult.IsSuccessful.Should().BeTrue();
             var projectId = createProjectResult.Data.Id;
@@ -126,7 +126,7 @@ namespace Clockify.Tests.Tests
         public async Task DeleteTaskAsync_ShouldRemoveTask()
         {
             // Prepare some project
-            var projectRequest = new ProjectRequest { Name = "Delete task project", Color = "#FF00FF" };
+            var projectRequest = new ProjectRequest { Name = "Delete task project" + Guid.NewGuid(), Color = "#FF00FF" };
             var createProjectResult = await _client.CreateProjectAsync(_workspaceId, projectRequest);
             createProjectResult.IsSuccessful.Should().BeTrue();
             var projectId = createProjectResult.Data.Id;
