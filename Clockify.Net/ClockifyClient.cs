@@ -82,6 +82,38 @@ namespace Clockify.Net
 			return _client.ExecutePostAsync<TaskDto>(request);
 		}
 
+		/// <summary>
+		/// Updates an existing task to workspace.
+		/// </summary>
+		public Task<IRestResponse<TaskDto>> UpdateTaskAsync(
+			string workspaceId,
+			string projectId,
+			TaskRequest taskRequest)
+		{
+			if (taskRequest == null) { throw new ArgumentNullException(nameof(taskRequest)); }
+			if (taskRequest.Name == null) throw new ArgumentNullException(nameof(taskRequest.Name));
+			if (taskRequest.Id == null) { throw new ArgumentNullException(nameof(taskRequest.Id)); }
+
+			var request = new RestRequest($"workspaces/{workspaceId}/projects/{projectId}/tasks/{taskRequest.Id}", Method.PUT);
+			request.AddJsonBody(taskRequest);
+			return _client.ExecuteAsync<TaskDto>(request, Method.PUT);
+		}
+
+		/// <summary>
+		/// Deletes an existing task from workspace.
+		/// </summary>
+		public Task<IRestResponse<TaskDto>> DeleteTaskAsync(
+			string workspaceId,
+			string projectId,
+			string taskId)
+		{
+			if (taskId == null) { throw new ArgumentNullException(nameof(taskId)); }
+
+			var request = new RestRequest($"workspaces/{workspaceId}/projects/{projectId}/tasks/{taskId}", Method.DELETE);
+			return _client.ExecuteAsync<TaskDto>(request, Method.DELETE);
+		}
+
+
 		#endregion
 
 		#region User
