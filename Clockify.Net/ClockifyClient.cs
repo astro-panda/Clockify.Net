@@ -418,22 +418,60 @@ namespace Clockify.Net
 		/// Get templates for current user on specified workspace. See Clockify docs for query params explanation.
 		/// </summary>
 		public Task<IRestResponse<List<TimeEntryDtoImpl>>> FindAllTimeEntriesForUserAsync(
-            string workspaceId, 
-            string userId,
-			string description = null, 
-            DateTimeOffset? start = null, 
-            DateTimeOffset? end = null, 
-            string project = null,
-			string task = null, 
-            bool? projectRequired = null, 
-            bool? taskRequired = null,
-			bool? considerDurationFormat = null, 
-            bool? hydrated = null, 
-            bool? inProgress = null,
-			int page = 1, 
-            int pageSize = 50) 
-        {
+			string workspaceId,
+			string userId,
+			string description = null,
+			DateTimeOffset? start = null,
+			DateTimeOffset? end = null,
+			string project = null,
+			string task = null,
+			bool? projectRequired = null,
+			bool? taskRequired = null,
+			bool? considerDurationFormat = null,
+			bool? hydrated = null,
+			bool? inProgress = null,
+			int page = 1,
+			int pageSize = 50)
+		{
 			var request = new RestRequest($"workspaces/{workspaceId}/user/{userId}/time-entries");
+
+			if (description != null) { request.AddQueryParameter(nameof(description), description); }
+			if (start != null) { request.AddQueryParameter(nameof(start), start.Value.ToString("yyyy-MM-ddTHH:mm:ssZ")); }
+			if (end != null) { request.AddQueryParameter(nameof(end), end.Value.ToString("yyyy-MM-ddTHH:mm:ssZ")); }
+			if (project != null) { request.AddQueryParameter(nameof(project), project); }
+			if (task != null) { request.AddQueryParameter(nameof(task), task); }
+			if (projectRequired != null) { request.AddQueryParameter("project-required", projectRequired.ToString()); }
+			if (taskRequired != null) { request.AddQueryParameter("task-required", taskRequired.ToString()); }
+			if (considerDurationFormat != null) { request.AddQueryParameter("consider-duration-format", considerDurationFormat.ToString()); }
+			if (hydrated != null) { request.AddQueryParameter(nameof(hydrated), hydrated.ToString()); }
+			if (inProgress != null) { request.AddQueryParameter("in-progress", inProgress.ToString()); }
+
+			request.AddQueryParameter(nameof(page), page.ToString());
+			request.AddQueryParameter("page-size", pageSize.ToString());
+
+			return _client.ExecuteGetAsync<List<TimeEntryDtoImpl>>(request);
+		}
+
+		/// <summary>
+		/// Get hydrated time entries for current user on specified workspace. See Clockify docs for query params explanation.
+		/// </summary>
+		public Task<IRestResponse<List<HydratedTimeEntryDtoImpl>>> FindAllHydratedTimeEntriesForUserAsync(
+			string workspaceId,
+			string userId,
+			string description = null,
+			DateTimeOffset? start = null,
+			DateTimeOffset? end = null,
+			string project = null,
+			string task = null,
+			bool? projectRequired = null,
+			bool? taskRequired = null,
+			bool? considerDurationFormat = null,
+			bool? inProgress = null,
+			int page = 1,
+			int pageSize = 50)
+		{
+			var request = new RestRequest($"workspaces/{workspaceId}/user/{userId}/time-entries");
+			const bool hydrated = true;
 
             if (description != null) { request.AddQueryParameter(nameof(description), description); }
             if (start != null) { request.AddQueryParameter(nameof(start), start.Value.ToString("yyyy-MM-ddTHH:mm:ssZ")); }
@@ -443,13 +481,13 @@ namespace Clockify.Net
             if (projectRequired != null) { request.AddQueryParameter("project-required", projectRequired.ToString()); }
             if (taskRequired != null) { request.AddQueryParameter("task-required", taskRequired.ToString()); }
             if (considerDurationFormat != null) { request.AddQueryParameter("consider-duration-format", considerDurationFormat.ToString()); }
-            if (hydrated != null) { request.AddQueryParameter(nameof(hydrated), hydrated.ToString()); }
             if (inProgress != null) { request.AddQueryParameter("in-progress", inProgress.ToString()); }
 
-			request.AddQueryParameter(nameof(page), page.ToString());
+            request.AddQueryParameter(nameof(hydrated), hydrated.ToString());
+            request.AddQueryParameter(nameof(page), page.ToString());
 			request.AddQueryParameter("page-size", pageSize.ToString());
 
-			return _client.ExecuteGetAsync<List<TimeEntryDtoImpl>>(request);
+			return _client.ExecuteGetAsync<List<HydratedTimeEntryDtoImpl>>(request);
 		}
 
 		#endregion
