@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Clockify.Net;
 using Clockify.Net.Models.TimeEntries;
 using Clockify.Net.Models.Workspaces;
-using Clockify.Tests.Fixtures;
+using Clockify.Tests.Helpers;
 using FluentAssertions;
 using FluentAssertions.Extensions;
 using NUnit.Framework;
@@ -23,22 +23,21 @@ namespace Clockify.Tests.Tests
         [OneTimeSetUp]
         public async Task Setup()
         {
-            var workspaceResponse =
-                await _client.CreateWorkspaceAsync(new WorkspaceRequest {Name = "TimeEntryWorkspace"});
-            workspaceResponse.IsSuccessful.Should().BeTrue();
-            _workspaceId = workspaceResponse.Data.Id;
+            _workspaceId = await SetupHelper.CreateOrFindWorkspaceAsync(_client, "Clockify.NetTestWorkspace");
         }
 
-        [OneTimeTearDown]
-        public async Task Cleanup()
-        {
-	        var currentUser = await _client.GetCurrentUserAsync();
-	        var changeResponse =
-		        await _client.SetActiveWorkspaceFor(currentUser.Data.Id, DefaultWorkspaceFixture.DefaultWorkspaceId);
-	        changeResponse.IsSuccessful.Should().BeTrue();
-            var workspaceResponse = await _client.DeleteWorkspaceAsync(_workspaceId);
-            workspaceResponse.IsSuccessful.Should().BeTrue();
-        }
+        // TODO Uncomment when Clockify add deleting workspaces again
+
+        //[OneTimeTearDown]
+        //public async Task Cleanup()
+        //{
+	       // var currentUser = await _client.GetCurrentUserAsync();
+	       // var changeResponse =
+		      //  await _client.SetActiveWorkspaceFor(currentUser.Data.Id, DefaultWorkspaceFixture.DefaultWorkspaceId);
+	       // changeResponse.IsSuccessful.Should().BeTrue();
+        //    var workspaceResponse = await _client.DeleteWorkspaceAsync(_workspaceId);
+        //    workspaceResponse.IsSuccessful.Should().BeTrue();
+        //}
 
         [Test]
         public async Task FindAllTagsOnWorkspaceAsync_ShouldReturnTagsList()
@@ -176,6 +175,29 @@ namespace Clockify.Tests.Tests
 
             response.IsSuccessful.Should().BeTrue();
             response.Data.Should().ContainEquivalentOf(createResult.Data);
+        }
+        
+        [Test]
+        public async Task FindAllHydratedTimeEntriesForUserAsync_ShouldReturnHydratedTimeEntryDtoImplList()
+        {
+            var now = DateTimeOffset.UtcNow;
+            var timeEntryRequest = new TimeEntryRequest
+            {
+                Start = now,
+            };
+            var createResult = await _client.CreateTimeEntryAsync(_workspaceId, timeEntryRequest);
+            createResult.IsSuccessful.Should().BeTrue();
+
+            var userResponse = await _client.GetCurrentUserAsync();
+            userResponse.IsSuccessful.Should().BeTrue();
+
+
+            var response = await _client.FindAllHydratedTimeEntriesForUserAsync(_workspaceId, userResponse.Data.Id, 
+                start: DateTimeOffset.Now.AddDays(-1), 
+                end: DateTimeOffset.Now.AddDays(1));
+
+            response.IsSuccessful.Should().BeTrue();
+            response.Data.Should().Contain(timeEntry => timeEntry.Id.Equals(createResult.Data.Id));
         }
     }
 }

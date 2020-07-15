@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
-using Clockify.Net.Configuration;
 using Clockify.Net.Models.Clients;
 using Clockify.Net.Models.Estimates;
 using Clockify.Net.Models.Projects;
@@ -11,7 +11,11 @@ using Clockify.Net.Models.Tasks;
 using Clockify.Net.Models.TimeEntries;
 using Clockify.Net.Models.Users;
 using Clockify.Net.Models.Workspaces;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 using RestSharp;
+using RestSharp.Serializers.NewtonsoftJson;
 
 namespace Clockify.Net 
 {
@@ -77,6 +81,38 @@ namespace Clockify.Net
 			request.AddJsonBody(taskRequest);
 			return _client.ExecutePostAsync<TaskDto>(request);
 		}
+
+		/// <summary>
+		/// Updates an existing task to workspace.
+		/// </summary>
+		public Task<IRestResponse<TaskDto>> UpdateTaskAsync(
+			string workspaceId,
+			string projectId,
+			TaskRequest taskRequest)
+		{
+			if (taskRequest == null) { throw new ArgumentNullException(nameof(taskRequest)); }
+			if (taskRequest.Name == null) throw new ArgumentNullException(nameof(taskRequest.Name));
+			if (taskRequest.Id == null) { throw new ArgumentNullException(nameof(taskRequest.Id)); }
+
+			var request = new RestRequest($"workspaces/{workspaceId}/projects/{projectId}/tasks/{taskRequest.Id}", Method.PUT);
+			request.AddJsonBody(taskRequest);
+			return _client.ExecuteAsync<TaskDto>(request, Method.PUT);
+		}
+
+		/// <summary>
+		/// Deletes an existing task from workspace.
+		/// </summary>
+		public Task<IRestResponse<TaskDto>> DeleteTaskAsync(
+			string workspaceId,
+			string projectId,
+			string taskId)
+		{
+			if (taskId == null) { throw new ArgumentNullException(nameof(taskId)); }
+
+			var request = new RestRequest($"workspaces/{workspaceId}/projects/{projectId}/tasks/{taskId}", Method.DELETE);
+			return _client.ExecuteAsync<TaskDto>(request, Method.DELETE);
+		}
+
 
 		#endregion
 
@@ -382,22 +418,60 @@ namespace Clockify.Net
 		/// Get templates for current user on specified workspace. See Clockify docs for query params explanation.
 		/// </summary>
 		public Task<IRestResponse<List<TimeEntryDtoImpl>>> FindAllTimeEntriesForUserAsync(
-            string workspaceId, 
-            string userId,
-			string description = null, 
-            DateTimeOffset? start = null, 
-            DateTimeOffset? end = null, 
-            string project = null,
-			string task = null, 
-            bool? projectRequired = null, 
-            bool? taskRequired = null,
-			bool? considerDurationFormat = null, 
-            bool? hydrated = null, 
-            bool? inProgress = null,
-			int page = 1, 
-            int pageSize = 50) 
-        {
+			string workspaceId,
+			string userId,
+			string description = null,
+			DateTimeOffset? start = null,
+			DateTimeOffset? end = null,
+			string project = null,
+			string task = null,
+			bool? projectRequired = null,
+			bool? taskRequired = null,
+			bool? considerDurationFormat = null,
+			bool? hydrated = null,
+			bool? inProgress = null,
+			int page = 1,
+			int pageSize = 50)
+		{
 			var request = new RestRequest($"workspaces/{workspaceId}/user/{userId}/time-entries");
+
+			if (description != null) { request.AddQueryParameter(nameof(description), description); }
+			if (start != null) { request.AddQueryParameter(nameof(start), start.Value.ToString("yyyy-MM-ddTHH:mm:ssZ")); }
+			if (end != null) { request.AddQueryParameter(nameof(end), end.Value.ToString("yyyy-MM-ddTHH:mm:ssZ")); }
+			if (project != null) { request.AddQueryParameter(nameof(project), project); }
+			if (task != null) { request.AddQueryParameter(nameof(task), task); }
+			if (projectRequired != null) { request.AddQueryParameter("project-required", projectRequired.ToString()); }
+			if (taskRequired != null) { request.AddQueryParameter("task-required", taskRequired.ToString()); }
+			if (considerDurationFormat != null) { request.AddQueryParameter("consider-duration-format", considerDurationFormat.ToString()); }
+			if (hydrated != null) { request.AddQueryParameter(nameof(hydrated), hydrated.ToString()); }
+			if (inProgress != null) { request.AddQueryParameter("in-progress", inProgress.ToString()); }
+
+			request.AddQueryParameter(nameof(page), page.ToString());
+			request.AddQueryParameter("page-size", pageSize.ToString());
+
+			return _client.ExecuteGetAsync<List<TimeEntryDtoImpl>>(request);
+		}
+
+		/// <summary>
+		/// Get hydrated time entries for current user on specified workspace. See Clockify docs for query params explanation.
+		/// </summary>
+		public Task<IRestResponse<List<HydratedTimeEntryDtoImpl>>> FindAllHydratedTimeEntriesForUserAsync(
+			string workspaceId,
+			string userId,
+			string description = null,
+			DateTimeOffset? start = null,
+			DateTimeOffset? end = null,
+			string project = null,
+			string task = null,
+			bool? projectRequired = null,
+			bool? taskRequired = null,
+			bool? considerDurationFormat = null,
+			bool? inProgress = null,
+			int page = 1,
+			int pageSize = 50)
+		{
+			var request = new RestRequest($"workspaces/{workspaceId}/user/{userId}/time-entries");
+			const bool hydrated = true;
 
             if (description != null) { request.AddQueryParameter(nameof(description), description); }
             if (start != null) { request.AddQueryParameter(nameof(start), start.Value.ToString("yyyy-MM-ddTHH:mm:ssZ")); }
@@ -407,26 +481,40 @@ namespace Clockify.Net
             if (projectRequired != null) { request.AddQueryParameter("project-required", projectRequired.ToString()); }
             if (taskRequired != null) { request.AddQueryParameter("task-required", taskRequired.ToString()); }
             if (considerDurationFormat != null) { request.AddQueryParameter("consider-duration-format", considerDurationFormat.ToString()); }
-            if (hydrated != null) { request.AddQueryParameter(nameof(hydrated), hydrated.ToString()); }
             if (inProgress != null) { request.AddQueryParameter("in-progress", inProgress.ToString()); }
 
-			request.AddQueryParameter(nameof(page), page.ToString());
+            request.AddQueryParameter(nameof(hydrated), hydrated.ToString());
+            request.AddQueryParameter(nameof(page), page.ToString());
 			request.AddQueryParameter("page-size", pageSize.ToString());
 
-			return _client.ExecuteGetAsync<List<TimeEntryDtoImpl>>(request);
+			return _client.ExecuteGetAsync<List<HydratedTimeEntryDtoImpl>>(request);
 		}
 
 		#endregion
 		
 		#region Private methods
 
-		private void InitClients(string apiKey) 
-        {
-			_client = new RestClient(BaseUrl);
+		private void InitClients(string apiKey) {
+			var jsonSerializerSettings = new JsonSerializerSettings()
+			{
+				Converters = new List<JsonConverter> 
+				{
+					new StringEnumConverter(),
+					new IsoDateTimeConverter() 
+					{
+						DateTimeFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"
+					}
+				},
+				ContractResolver = new CamelCasePropertyNamesContractResolver(),
+			};
+
+	        _client = new RestClient(BaseUrl);
 			_client.AddDefaultHeader(ApiKeyHeaderName, apiKey);
+			_client.UseNewtonsoftJson(jsonSerializerSettings);
+
 			_experimentalClient = new RestClient(ExperimentalApiUrl);
 			_experimentalClient.AddDefaultHeader(ApiKeyHeaderName, apiKey);
-			SimpleJson.CurrentJsonSerializerStrategy = new CamelCaseSerializerStrategy();
+			_client.UseNewtonsoftJson(jsonSerializerSettings);
 		}
 
 		#endregion
