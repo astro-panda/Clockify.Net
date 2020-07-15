@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.2.0]
 ### Added
- - Support for deleting and updating tasks.
+ - Support for deleting and updating tasks. (PR #16)
+ - `Note` field to ProjectRequest and ProjectDtoImpl (PR #15)
+ - `FindAllHydratedTimeEntriesForUserAsync` method to client (PR #12)
 ### Changed
 - JsonSerializer to Json.Net
 ### Fixed
