@@ -19,7 +19,7 @@ jobs:
         with:
           build-tasks: dotnet build
           cleanup-tasks: dotnet clean
-          binaries: Clockify.Net\Clockify.Net\bin\Debug\netstandard2.0\Clockify.Net.dll
+          binaries: Clockify.Net\bin\Debug\netstandard2.0\Clockify.Net.dll
           output-path: docs/api
           user-email: morasiu2@gmail.com
           user-name: Morasiu
