@@ -1,0 +1,2861 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		
+		
+		
+		
+		
+			
+		
+			<title>ClockifyClient | Clockify.Net API</title>
+		
+		
+		
+			<link rel="stylesheet" type="text/css" href="css/default.css" />
+		
+			<link rel="stylesheet" type="text/css" href="css/prism-vs-and-material-dark.css" />
+		
+			<link rel="stylesheet" type="text/css" href="css/type-navigation.css" />
+		
+		
+		
+			<script src="js/main.js"></script>
+		
+			<script src="js/search-types-members.js"></script>
+		
+				
+	</head>
+	
+	<body>
+		
+		<header class="page-header">
+			
+<h1 class="project-name">Clockify.Net</h1>
+<h2 class="project-tagline"></h2>
+
+		</header>
+		
+		<nav class="side-content">
+			<div class="nav-modal">
+				<span class="exit">&Cross;</span>
+				<div class="block-on-mobile">
+					<div class="extra-side-content">
+						<details class="quick-links-menu">
+							<summary class="heading">Quick Links:</summary>
+							<div class="quick-links-content"></div>
+						</details>
+						<details class="help-menu">
+							<summary class="heading">Search Bar Help:</summary>
+							<div class="help-desc" id="search-help-desc"></div>
+						</details>
+					</div>
+					<div class="type-nav-label heading">Type Navigation:</div>
+					<iframe src="--navigation.html"></iframe>
+				</div>
+			</div>
+			<a class="btn hamburger open-nav-btn" id="open-nav"></a>
+			<a href="#" class="btn top-btn">Top</a>
+			<input
+				type="text"
+				class="search-bar"
+				id="search-bar"
+				autocomplete="off"
+				onkeyup="SearchHelper.search(this.value, 'search-results', 'search-output');"
+			/>
+			<div class="search-results" id="search-results">
+				<ul id="search-output"></ul>
+			</div>
+		</nav>
+		
+		<main class="main-content">
+			
+				<div class="description">
+  <h1>class: ClockifyClient</h1>
+  <blockquote>
+    <small>
+      <span class="namespace">Namespace:
+        <a href="clockify.net.html">Clockify.Net</a>
+      </span><br/>
+      <span class="assemblies">Assembly: <span>Clockify.Net.dll</span></span>
+    </small>
+  </blockquote>
+  <div class="doc-desc type-description">
+    <p>No description.</p>
+  </div>
+</div>
+<aside class="declaration">
+  <pre class="language-csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ClockifyClient</span></code></pre>
+
+</aside>
+
+
+
+
+<h2>Quick Links</h2>
+<div class="quick-links">
+  
+    <a class="quick-link" href="#quick-constructors">Constructors</a>
+  
+    <a class="quick-link" href="#quick-methods">Methods</a>
+  
+</div>
+<h2>Compact Summary</h2>
+<div class="member-details-compact">
+  
+    <div class="relative"><a id="quick-constructors"></a></div>
+    <h3><span class="toggle-btn"></span>Constructors</h3>
+    <div class="toggle-content">
+      
+        <table class="compact-member full-width constructor-description member-constructors">
+          <tr><th>Constructor Descriptions</th></tr>
+          
+            <tr>
+  <td>
+    <a class="name" href="#ClockifyClient(System.String)">public ClockifyClient(string apiKey)</a>
+    <p>No description.</p>
+  </td>
+</tr>
+          
+            <tr>
+  <td>
+    <a class="name" href="#ClockifyClient">public ClockifyClient()</a>
+    <p>Creates new <a href="clockify.net.clockifyclient.html">ClockifyClient</a>.
+Uses value from environment variable named &quot;CAPI_KEY&quot;.</p>
+
+  </td>
+</tr>
+          
+        </table>
+      
+    </div>
+  
+    <div class="relative"><a id="quick-methods"></a></div>
+    <h3><span class="toggle-btn"></span>Methods</h3>
+    <div class="toggle-content">
+      
+        <table class="compact-member full-width modifier-description member-methods">
+          <tr>
+            <th>Modifier / Type</th>
+            <th>Name and Description</th>
+          </tr>
+          
+            <tr>
+  <td>
+    
+    
+    <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1" class="defined-type">Task&lt;IRestResponse&lt;ClientDto&gt;&gt;</a>
+  </td>
+  <td>
+    <a class="name" href="#CreateClientAsync(System.String,Clockify.Net.Models.Clients.ClientRequest)">CreateClientAsync(string workspaceId, ClientRequest clientRequest)</a>
+    <p>Add a new client to workspace.</p>
+
+    
+  </td>
+</tr>
+          
+            <tr>
+  <td>
+    
+    
+    <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1" class="defined-type">Task&lt;IRestResponse&lt;ProjectDtoImpl&gt;&gt;</a>
+  </td>
+  <td>
+    <a class="name" href="#CreateProjectAsync(System.String,Clockify.Net.Models.Projects.ProjectRequest)">CreateProjectAsync(string workspaceId, ProjectRequest projectRequest)</a>
+    <p>Add a new project to workspace.</p>
+
+    
+  </td>
+</tr>
+          
+            <tr>
+  <td>
+    
+    
+    <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1" class="defined-type">Task&lt;IRestResponse&lt;TagDto&gt;&gt;</a>
+  </td>
+  <td>
+    <a class="name" href="#CreateTagAsync(System.String,Clockify.Net.Models.Tags.TagRequest)">CreateTagAsync(string workspaceId, TagRequest projectRequest)</a>
+    <p>Add a new client to workspace.</p>
+
+    
+  </td>
+</tr>
+          
+            <tr>
+  <td>
+    
+    
+    <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1" class="defined-type">Task&lt;IRestResponse&lt;TaskDto&gt;&gt;</a>
+  </td>
+  <td>
+    <a class="name" href="#CreateTaskAsync(System.String,System.String,Clockify.Net.Models.Tasks.TaskRequest)">CreateTaskAsync(string workspaceId, string projectId, TaskRequest taskRequest)</a>
+    <p>Add a new client to workspace.</p>
+
+    
+  </td>
+</tr>
+          
+            <tr>
+  <td>
+    
+    
+    <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1" class="defined-type">Task&lt;IRestResponse&lt;List&lt;TemplateDto&gt;&gt;&gt;</a>
+  </td>
+  <td>
+    <a class="name" href="#CreateTemplatesAsync(System.String,Clockify.Net.Models.Templates.TemplateRequest)">CreateTemplatesAsync(string workspaceId, params TemplateRequest[] projectRequests)</a>
+    <p>No description.</p>
+    
+  </td>
+</tr>
+          
+            <tr>
+  <td>
+    
+    
+    <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1" class="defined-type">Task&lt;IRestResponse&lt;TimeEntryDtoImpl&gt;&gt;</a>
+  </td>
+  <td>
+    <a class="name" href="#CreateTimeEntryAsync(System.String,Clockify.Net.Models.TimeEntries.TimeEntryRequest)">CreateTimeEntryAsync(string workspaceId, TimeEntryRequest timeEntryRequest)</a>
+    <p>Add a new time entry to workspace. If end is not sent in request means that stopwatch mode is active, otherwise time entry is manually added.</p>
+
+    
+  </td>
+</tr>
+          
+            <tr>
+  <td>
+    
+    
+    <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1" class="defined-type">Task&lt;IRestResponse&lt;WorkspaceDto&gt;&gt;</a>
+  </td>
+  <td>
+    <a class="name" href="#CreateWorkspaceAsync(Clockify.Net.Models.Workspaces.WorkspaceRequest)">CreateWorkspaceAsync(WorkspaceRequest workspaceRequest)</a>
+    <p>Creates new workspace.</p>
+
+    
+  </td>
+</tr>
+          
+            <tr>
+  <td>
+    
+    
+    <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1" class="defined-type">Task&lt;IRestResponse&gt;</a>
+  </td>
+  <td>
+    <a class="name" href="#DeleteProjectAsync(System.String,System.String)">DeleteProjectAsync(string workspaceId, string id)</a>
+    <p>Delete project with Id.</p>
+
+    
+  </td>
+</tr>
+          
+            <tr>
+  <td>
+    
+    
+    <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1" class="defined-type">Task&lt;IRestResponse&lt;TaskDto&gt;&gt;</a>
+  </td>
+  <td>
+    <a class="name" href="#DeleteTaskAsync(System.String,System.String,System.String)">DeleteTaskAsync(string workspaceId, string projectId, string taskId)</a>
+    <p>Deletes an existing task from workspace.</p>
+
+    
+  </td>
+</tr>
+          
+            <tr>
+  <td>
+    
+    
+    <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1" class="defined-type">Task&lt;IRestResponse&lt;TemplateDto&gt;&gt;</a>
+  </td>
+  <td>
+    <a class="name" href="#DeleteTemplateAsync(System.String,System.String)">DeleteTemplateAsync(string workspaceId, string templateId)</a>
+    <p>Delete template with id.</p>
+
+    
+  </td>
+</tr>
+          
+            <tr>
+  <td>
+    
+    
+    <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1" class="defined-type">Task&lt;IRestResponse&gt;</a>
+  </td>
+  <td>
+    <a class="name" href="#DeleteTimeEntryAsync(System.String,System.String)">DeleteTimeEntryAsync(string workspaceId, string timeEntryId)</a>
+    <p>Delete time entry with id.</p>
+
+    
+  </td>
+</tr>
+          
+            <tr>
+  <td>
+    
+    
+    <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1" class="defined-type">Task&lt;IRestResponse&gt;</a>
+  </td>
+  <td>
+    <a class="name" href="#DeleteWorkspaceAsync(System.String)">DeleteWorkspaceAsync(string id)</a>
+    <p>Delete workspace with Id.</p>
+
+    
+  </td>
+</tr>
+          
+            <tr>
+  <td>
+    
+    
+      <span class="langword">virtual</span>
+    
+    <a href="https://docs.microsoft.com/en-us/dotnet/api/system.boolean" class="defined-type">bool</a>
+  </td>
+  <td>
+    <a class="name" href="#Equals(System.Object)">Equals(object obj)</a>
+    <p>Determines whether the specified object is equal to the current object.</p>
+
+    
+      (Inherited from <a href="https://docs.microsoft.com/en-us/dotnet/api/system.object">object</a>)
+    
+  </td>
+</tr>
+          
+            <tr>
+  <td>
+    
+      <span class="langword">protected</span>
+    
+    
+      <span class="langword">virtual</span>
+    
+    <a href="https://docs.microsoft.com/en-us/dotnet/api/system.void" class="defined-type">void</a>
+  </td>
+  <td>
+    <a class="name" href="#Finalize">Finalize()</a>
+    <p>Allows an object to try to free resources and perform other cleanup operations before it is reclaimed by garbage collection.</p>
+
+    
+      (Inherited from <a href="https://docs.microsoft.com/en-us/dotnet/api/system.object">object</a>)
+    
+  </td>
+</tr>
+          
+            <tr>
+  <td>
+    
+    
+    <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1" class="defined-type">Task&lt;IRestResponse&lt;List&lt;ClientDto&gt;&gt;&gt;</a>
+  </td>
+  <td>
+    <a class="name" href="#FindAllClientsOnWorkspaceAsync(System.String)">FindAllClientsOnWorkspaceAsync(string workspaceId)</a>
+    <p>Find clients on workspace.</p>
+
+    
+  </td>
+</tr>
+          
+            <tr>
+  <td>
+    
+    
+    <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1" class="defined-type">Task&lt;IRestResponse&lt;List&lt;HydratedTimeEntryDtoImpl&gt;&gt;&gt;</a>
+  </td>
+  <td>
+    <a class="name" href="#FindAllHydratedTimeEntriesForUserAsync(System.String,System.String,System.String,System.Nullable-1,System.Nullable-1,System.String,System.String,System.Nullable-1,System.Nullable-1,System.Nullable-1,System.Nullable-1,System.Int32,System.Int32)">FindAllHydratedTimeEntriesForUserAsync(string workspaceId, string userId, string description, Nullable&lt;DateTimeOffset&gt; start, Nullable&lt;DateTimeOffset&gt; end, string project, string task, Nullable&lt;bool&gt; projectRequired, Nullable&lt;bool&gt; taskRequired, Nullable&lt;bool&gt; considerDurationFormat, Nullable&lt;bool&gt; inProgress, int page = 1, int pageSize = 50)</a>
+    <p>Get hydrated time entries for current user on specified workspace. See Clockify docs for query params explanation.</p>
+
+    
+  </td>
+</tr>
+          
+            <tr>
+  <td>
+    
+    
+    <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1" class="defined-type">Task&lt;IRestResponse&lt;List&lt;ProjectDtoImpl&gt;&gt;&gt;</a>
+  </td>
+  <td>
+    <a class="name" href="#FindAllProjectsOnWorkspaceAsync(System.String)">FindAllProjectsOnWorkspaceAsync(string workspaceId)</a>
+    <p>Find projects on workspace.</p>
+
+    
+  </td>
+</tr>
+          
+            <tr>
+  <td>
+    
+    
+    <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1" class="defined-type">Task&lt;IRestResponse&lt;List&lt;TagDto&gt;&gt;&gt;</a>
+  </td>
+  <td>
+    <a class="name" href="#FindAllTagsOnWorkspaceAsync(System.String)">FindAllTagsOnWorkspaceAsync(string workspaceId)</a>
+    <p>Find tags on workspace.</p>
+
+    
+  </td>
+</tr>
+          
+            <tr>
+  <td>
+    
+    
+    <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1" class="defined-type">Task&lt;IRestResponse&lt;List&lt;TaskDto&gt;&gt;&gt;</a>
+  </td>
+  <td>
+    <a class="name" href="#FindAllTasksAsync(System.String,System.String,System.Nullable-1,System.String,System.Int32,System.Int32)">FindAllTasksAsync(string workspaceId, string projectId, Nullable&lt;bool&gt; isActive, string name, int page = 1, int pageSize = 50)</a>
+    <p>Find tasks on project.</p>
+
+    
+  </td>
+</tr>
+          
+            <tr>
+  <td>
+    
+    
+    <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1" class="defined-type">Task&lt;IRestResponse&lt;List&lt;TemplateDto&gt;&gt;&gt;</a>
+  </td>
+  <td>
+    <a class="name" href="#FindAllTemplatesOnWorkspaceAsync(System.String,System.String,System.Boolean,System.Boolean,System.Int32,System.Int32)">FindAllTemplatesOnWorkspaceAsync(string workspaceId, string name, bool cleansed = False, bool hydrated = False, int page = 1, int pageSize = 1)</a>
+    <p>Get templates for current user on specified workspace. See Clockify docs for query params explanation.</p>
+
+    
+  </td>
+</tr>
+          
+            <tr>
+  <td>
+    
+    
+    <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1" class="defined-type">Task&lt;IRestResponse&lt;List&lt;TimeEntryDtoImpl&gt;&gt;&gt;</a>
+  </td>
+  <td>
+    <a class="name" href="#FindAllTimeEntriesForUserAsync(System.String,System.String,System.String,System.Nullable-1,System.Nullable-1,System.String,System.String,System.Nullable-1,System.Nullable-1,System.Nullable-1,System.Nullable-1,System.Nullable-1,System.Int32,System.Int32)">FindAllTimeEntriesForUserAsync(string workspaceId, string userId, string description, Nullable&lt;DateTimeOffset&gt; start, Nullable&lt;DateTimeOffset&gt; end, string project, string task, Nullable&lt;bool&gt; projectRequired, Nullable&lt;bool&gt; taskRequired, Nullable&lt;bool&gt; considerDurationFormat, Nullable&lt;bool&gt; hydrated, Nullable&lt;bool&gt; inProgress, int page = 1, int pageSize = 50)</a>
+    <p>Get templates for current user on specified workspace. See Clockify docs for query params explanation.</p>
+
+    
+  </td>
+</tr>
+          
+            <tr>
+  <td>
+    
+    
+    <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1" class="defined-type">Task&lt;IRestResponse&lt;List&lt;UserDto&gt;&gt;&gt;</a>
+  </td>
+  <td>
+    <a class="name" href="#FindAllUsersOnWorkspaceAsync(System.String)">FindAllUsersOnWorkspaceAsync(string workspaceId)</a>
+    <p>Find all users on workspace.</p>
+
+    
+  </td>
+</tr>
+          
+            <tr>
+  <td>
+    
+    
+    <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1" class="defined-type">Task&lt;IRestResponse&lt;CurrentUserDto&gt;&gt;</a>
+  </td>
+  <td>
+    <a class="name" href="#GetCurrentUserAsync">GetCurrentUserAsync()</a>
+    <p>Get currently logged in user's info.</p>
+
+    
+  </td>
+</tr>
+          
+            <tr>
+  <td>
+    
+    
+      <span class="langword">virtual</span>
+    
+    <a href="https://docs.microsoft.com/en-us/dotnet/api/system.int32" class="defined-type">int</a>
+  </td>
+  <td>
+    <a class="name" href="#GetHashCode">GetHashCode()</a>
+    <p>Serves as the default hash function.</p>
+
+    
+      (Inherited from <a href="https://docs.microsoft.com/en-us/dotnet/api/system.object">object</a>)
+    
+  </td>
+</tr>
+          
+            <tr>
+  <td>
+    
+    
+    <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1" class="defined-type">Task&lt;IRestResponse&lt;TemplateDto&gt;&gt;</a>
+  </td>
+  <td>
+    <a class="name" href="#GetTemplateAsync(System.String,System.String,System.Boolean,System.Boolean)">GetTemplateAsync(string workspaceId, string templateId, bool cleansed = False, bool hydrated = False)</a>
+    <p>Get template from workspace. See Clockify docs for query params explanation.</p>
+
+    
+  </td>
+</tr>
+          
+            <tr>
+  <td>
+    
+    
+    <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1" class="defined-type">Task&lt;IRestResponse&lt;TimeEntryDtoImpl&gt;&gt;</a>
+  </td>
+  <td>
+    <a class="name" href="#GetTimeEntryAsync(System.String,System.String,System.Boolean,System.Boolean)">GetTimeEntryAsync(string workspaceId, string timeEntryId, bool considerDurationFormat = False, bool hydrated = False)</a>
+    <p>Get time entry from. workspace. See Clockify docs for query params explanation.</p>
+
+    
+  </td>
+</tr>
+          
+            <tr>
+  <td>
+    
+    
+    <a href="https://docs.microsoft.com/en-us/dotnet/api/system.type" class="defined-type">Type</a>
+  </td>
+  <td>
+    <a class="name" href="#GetType">GetType()</a>
+    <p>Gets the <a href="https://docs.microsoft.com/en-us/dotnet/api/system.type">Type</a> of the current instance.</p>
+
+    
+      (Inherited from <a href="https://docs.microsoft.com/en-us/dotnet/api/system.object">object</a>)
+    
+  </td>
+</tr>
+          
+            <tr>
+  <td>
+    
+    
+    <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1" class="defined-type">Task&lt;IRestResponse&lt;List&lt;WorkspaceDto&gt;&gt;&gt;</a>
+  </td>
+  <td>
+    <a class="name" href="#GetWorkspacesAsync">GetWorkspacesAsync()</a>
+    <p>Find workspaces for currently logged in user.</p>
+
+    
+  </td>
+</tr>
+          
+            <tr>
+  <td>
+    
+      <span class="langword">protected</span>
+    
+    
+    <a href="https://docs.microsoft.com/en-us/dotnet/api/system.object" class="defined-type">object</a>
+  </td>
+  <td>
+    <a class="name" href="#MemberwiseClone">MemberwiseClone()</a>
+    <p>Creates a shallow copy of the current <a href="https://docs.microsoft.com/en-us/dotnet/api/system.object">Object</a>.</p>
+
+    
+      (Inherited from <a href="https://docs.microsoft.com/en-us/dotnet/api/system.object">object</a>)
+    
+  </td>
+</tr>
+          
+            <tr>
+  <td>
+    
+    
+    <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1" class="defined-type">Task&lt;IRestResponse&lt;UserDto&gt;&gt;</a>
+  </td>
+  <td>
+    <a class="name" href="#SetActiveWorkspaceFor(System.String,System.String)">SetActiveWorkspaceFor(string userId, string workspaceId)</a>
+    <p>Set active workspace for user.</p>
+
+    
+  </td>
+</tr>
+          
+            <tr>
+  <td>
+    
+    
+      <span class="langword">virtual</span>
+    
+    <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string" class="defined-type">string</a>
+  </td>
+  <td>
+    <a class="name" href="#ToString">ToString()</a>
+    <p>Returns a string that represents the current object.</p>
+
+    
+      (Inherited from <a href="https://docs.microsoft.com/en-us/dotnet/api/system.object">object</a>)
+    
+  </td>
+</tr>
+          
+            <tr>
+  <td>
+    
+    
+    <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1" class="defined-type">Task&lt;IRestResponse&lt;TaskDto&gt;&gt;</a>
+  </td>
+  <td>
+    <a class="name" href="#UpdateTaskAsync(System.String,System.String,Clockify.Net.Models.Tasks.TaskRequest)">UpdateTaskAsync(string workspaceId, string projectId, TaskRequest taskRequest)</a>
+    <p>Updates an existing task to workspace.</p>
+
+    
+  </td>
+</tr>
+          
+            <tr>
+  <td>
+    
+    
+    <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1" class="defined-type">Task&lt;IRestResponse&lt;TemplateDto&gt;&gt;</a>
+  </td>
+  <td>
+    <a class="name" href="#UpdateTemplateAsync(System.String,System.String,Clockify.Net.Models.Templates.TemplatePatchRequest)">UpdateTemplateAsync(string workspaceId, string timeEntryId, TemplatePatchRequest templatePatchRequest)</a>
+    <p>Updates template with id.</p>
+
+    
+  </td>
+</tr>
+          
+            <tr>
+  <td>
+    
+    
+    <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1" class="defined-type">Task&lt;IRestResponse&lt;TimeEntryDtoImpl&gt;&gt;</a>
+  </td>
+  <td>
+    <a class="name" href="#UpdateTimeEntryAsync(System.String,System.String,Clockify.Net.Models.TimeEntries.UpdateTimeEntryRequest)">UpdateTimeEntryAsync(string workspaceId, string timeEntryId, UpdateTimeEntryRequest updateTimeEntryRequest)</a>
+    <p>Update time entry with id.</p>
+
+    
+  </td>
+</tr>
+          
+        </table>
+      
+    </div>
+  
+</div>
+<div class="member-details-full">
+  
+    <div class="relative"><a id="constructors"></a></div>
+    <h2><span class="toggle-btn"></span>Constructors</h2>
+    <div class="toggle-content">
+      
+        <div class="member-details member-constructor">
+  <div class="relative"><a id="ClockifyClient(System.String)"></a></div>
+  <h3><span class="toggle-btn"></span>ClockifyClient(string apiKey)</h3>
+  <div class="padded-content toggle-content">
+    <div class="doc-desc member">
+      <p>No description.</p>
+    </div>
+    <div class="declaration">
+      <pre class="language-csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token function">ClockifyClient</span><span class="token punctuation">(</span><span class="token keyword">string</span> apiKey<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+    </div>
+    
+    
+      <div class="relative"><a id="ClockifyClient(System.String)-parameters"></a></div>
+      <h4><span class="toggle-btn"></span>Parameters</h4>
+      <div class="padded-content toggle-content">
+        
+          <div class="parameter">
+            <div class="param-id">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+              apiKey
+            </div>
+            <div class="doc-desc parameter">
+              <p>No description.</p>
+            </div>
+          </div>
+        
+      </div>
+    
+    
+    
+    
+    
+  </div>
+</div>
+      
+        <div class="member-details member-constructor">
+  <div class="relative"><a id="ClockifyClient"></a></div>
+  <h3><span class="toggle-btn"></span>ClockifyClient()</h3>
+  <div class="padded-content toggle-content">
+    <div class="doc-desc member">
+      <p>Creates new <a href="clockify.net.clockifyclient.html">ClockifyClient</a>.
+Uses value from environment variable named &quot;CAPI_KEY&quot;.</p>
+
+    </div>
+    <div class="declaration">
+      <pre class="language-csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token function">ClockifyClient</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+    </div>
+    
+    
+    
+    
+    
+    
+  </div>
+</div>
+      
+    </div>
+  
+    <div class="relative"><a id="methods"></a></div>
+    <h2><span class="toggle-btn"></span>Methods</h2>
+    <div class="toggle-content">
+      
+        <div class="member-details member-method">
+  <div class="relative"><a id="CreateClientAsync(System.String,Clockify.Net.Models.Clients.ClientRequest)"></a></div>
+  <h3><span class="toggle-btn"></span>CreateClientAsync(string workspaceId, ClientRequest clientRequest)</h3>
+  <div class="padded-content toggle-content">
+    <div class="doc-desc member">
+      <p>Add a new client to workspace.</p>
+
+    </div>
+    <div class="declaration">
+      <pre class="language-csharp"><code class="language-csharp"><span class="token keyword">public</span> Task<span class="token operator">&lt;</span>IRestResponse<span class="token operator">&lt;</span>ClientDto<span class="token operator">>></span> <span class="token function">CreateClientAsync</span><span class="token punctuation">(</span><span class="token keyword">string</span> workspaceId<span class="token punctuation">,</span> <span class="token class-name">ClientRequest</span> clientRequest<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+    </div>
+    
+    
+      <div class="relative"><a id="CreateClientAsync(System.String,Clockify.Net.Models.Clients.ClientRequest)-parameters"></a></div>
+      <h4><span class="toggle-btn"></span>Parameters</h4>
+      <div class="padded-content toggle-content">
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">workspaceId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="clockify.net.models.clients.clientrequest.html">ClientRequest</a>
+            </span>
+            <span class="param-name">clientRequest</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+      </div>
+    
+    
+      <div class="relative"><a id="CreateClientAsync(System.String,Clockify.Net.Models.Clients.ClientRequest)-returns"></a></div>
+      <h4><span class="toggle-btn"></span>Returns</h4>
+      <div class="padded-content toggle-content">
+        <span class="return-type">
+          <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1">System.Threading.Tasks.Task&lt;RestSharp.IRestResponse&lt;Clockify.Net.Models.Clients.ClientDto&gt;&gt;</a>
+        </span>
+        <div class="doc-desc return">
+          
+        </div>
+      </div>
+    
+    
+    
+    
+  </div>
+</div>
+      
+        <div class="member-details member-method">
+  <div class="relative"><a id="CreateProjectAsync(System.String,Clockify.Net.Models.Projects.ProjectRequest)"></a></div>
+  <h3><span class="toggle-btn"></span>CreateProjectAsync(string workspaceId, ProjectRequest projectRequest)</h3>
+  <div class="padded-content toggle-content">
+    <div class="doc-desc member">
+      <p>Add a new project to workspace.</p>
+
+    </div>
+    <div class="declaration">
+      <pre class="language-csharp"><code class="language-csharp"><span class="token keyword">public</span> Task<span class="token operator">&lt;</span>IRestResponse<span class="token operator">&lt;</span>ProjectDtoImpl<span class="token operator">>></span> <span class="token function">CreateProjectAsync</span><span class="token punctuation">(</span><span class="token keyword">string</span> workspaceId<span class="token punctuation">,</span> <span class="token class-name">ProjectRequest</span> projectRequest<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+    </div>
+    
+    
+      <div class="relative"><a id="CreateProjectAsync(System.String,Clockify.Net.Models.Projects.ProjectRequest)-parameters"></a></div>
+      <h4><span class="toggle-btn"></span>Parameters</h4>
+      <div class="padded-content toggle-content">
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">workspaceId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="clockify.net.models.projects.projectrequest.html">ProjectRequest</a>
+            </span>
+            <span class="param-name">projectRequest</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+      </div>
+    
+    
+      <div class="relative"><a id="CreateProjectAsync(System.String,Clockify.Net.Models.Projects.ProjectRequest)-returns"></a></div>
+      <h4><span class="toggle-btn"></span>Returns</h4>
+      <div class="padded-content toggle-content">
+        <span class="return-type">
+          <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1">System.Threading.Tasks.Task&lt;RestSharp.IRestResponse&lt;Clockify.Net.Models.Projects.ProjectDtoImpl&gt;&gt;</a>
+        </span>
+        <div class="doc-desc return">
+          
+        </div>
+      </div>
+    
+    
+    
+    
+  </div>
+</div>
+      
+        <div class="member-details member-method">
+  <div class="relative"><a id="CreateTagAsync(System.String,Clockify.Net.Models.Tags.TagRequest)"></a></div>
+  <h3><span class="toggle-btn"></span>CreateTagAsync(string workspaceId, TagRequest projectRequest)</h3>
+  <div class="padded-content toggle-content">
+    <div class="doc-desc member">
+      <p>Add a new client to workspace.</p>
+
+    </div>
+    <div class="declaration">
+      <pre class="language-csharp"><code class="language-csharp"><span class="token keyword">public</span> Task<span class="token operator">&lt;</span>IRestResponse<span class="token operator">&lt;</span>TagDto<span class="token operator">>></span> <span class="token function">CreateTagAsync</span><span class="token punctuation">(</span><span class="token keyword">string</span> workspaceId<span class="token punctuation">,</span> <span class="token class-name">TagRequest</span> projectRequest<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+    </div>
+    
+    
+      <div class="relative"><a id="CreateTagAsync(System.String,Clockify.Net.Models.Tags.TagRequest)-parameters"></a></div>
+      <h4><span class="toggle-btn"></span>Parameters</h4>
+      <div class="padded-content toggle-content">
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">workspaceId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="clockify.net.models.tags.tagrequest.html">TagRequest</a>
+            </span>
+            <span class="param-name">projectRequest</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+      </div>
+    
+    
+      <div class="relative"><a id="CreateTagAsync(System.String,Clockify.Net.Models.Tags.TagRequest)-returns"></a></div>
+      <h4><span class="toggle-btn"></span>Returns</h4>
+      <div class="padded-content toggle-content">
+        <span class="return-type">
+          <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1">System.Threading.Tasks.Task&lt;RestSharp.IRestResponse&lt;Clockify.Net.Models.Tags.TagDto&gt;&gt;</a>
+        </span>
+        <div class="doc-desc return">
+          
+        </div>
+      </div>
+    
+    
+    
+    
+  </div>
+</div>
+      
+        <div class="member-details member-method">
+  <div class="relative"><a id="CreateTaskAsync(System.String,System.String,Clockify.Net.Models.Tasks.TaskRequest)"></a></div>
+  <h3><span class="toggle-btn"></span>CreateTaskAsync(string workspaceId, string projectId, TaskRequest taskRequest)</h3>
+  <div class="padded-content toggle-content">
+    <div class="doc-desc member">
+      <p>Add a new client to workspace.</p>
+
+    </div>
+    <div class="declaration">
+      <pre class="language-csharp"><code class="language-csharp"><span class="token keyword">public</span> Task<span class="token operator">&lt;</span>IRestResponse<span class="token operator">&lt;</span>TaskDto<span class="token operator">>></span> <span class="token function">CreateTaskAsync</span><span class="token punctuation">(</span><span class="token keyword">string</span> workspaceId<span class="token punctuation">,</span> <span class="token keyword">string</span> projectId<span class="token punctuation">,</span> <span class="token class-name">TaskRequest</span> taskRequest<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+    </div>
+    
+    
+      <div class="relative"><a id="CreateTaskAsync(System.String,System.String,Clockify.Net.Models.Tasks.TaskRequest)-parameters"></a></div>
+      <h4><span class="toggle-btn"></span>Parameters</h4>
+      <div class="padded-content toggle-content">
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">workspaceId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">projectId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="clockify.net.models.tasks.taskrequest.html">TaskRequest</a>
+            </span>
+            <span class="param-name">taskRequest</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+      </div>
+    
+    
+      <div class="relative"><a id="CreateTaskAsync(System.String,System.String,Clockify.Net.Models.Tasks.TaskRequest)-returns"></a></div>
+      <h4><span class="toggle-btn"></span>Returns</h4>
+      <div class="padded-content toggle-content">
+        <span class="return-type">
+          <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1">System.Threading.Tasks.Task&lt;RestSharp.IRestResponse&lt;Clockify.Net.Models.Tasks.TaskDto&gt;&gt;</a>
+        </span>
+        <div class="doc-desc return">
+          
+        </div>
+      </div>
+    
+    
+    
+    
+  </div>
+</div>
+      
+        <div class="member-details member-method">
+  <div class="relative"><a id="CreateTemplatesAsync(System.String,Clockify.Net.Models.Templates.TemplateRequest)"></a></div>
+  <h3><span class="toggle-btn"></span>CreateTemplatesAsync(string workspaceId, params TemplateRequest[] projectRequests)</h3>
+  <div class="padded-content toggle-content">
+    <div class="doc-desc member">
+      <p>No description.</p>
+    </div>
+    <div class="declaration">
+      <pre class="language-csharp"><code class="language-csharp"><span class="token keyword">public</span> Task<span class="token operator">&lt;</span>IRestResponse<span class="token operator">&lt;</span>List<span class="token operator">&lt;</span>TemplateDto<span class="token operator">>></span><span class="token operator">></span> <span class="token function">CreateTemplatesAsync</span><span class="token punctuation">(</span><span class="token keyword">string</span> workspaceId<span class="token punctuation">,</span> <span class="token keyword">params</span> TemplateRequest<span class="token punctuation">[</span><span class="token punctuation">]</span> projectRequests<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+    </div>
+    
+    
+      <div class="relative"><a id="CreateTemplatesAsync(System.String,Clockify.Net.Models.Templates.TemplateRequest)-parameters"></a></div>
+      <h4><span class="toggle-btn"></span>Parameters</h4>
+      <div class="padded-content toggle-content">
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">workspaceId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="clockify.net.models.templates.templaterequest.html">TemplateRequest[]</a>
+            </span>
+            <span class="param-name">projectRequests</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+      </div>
+    
+    
+      <div class="relative"><a id="CreateTemplatesAsync(System.String,Clockify.Net.Models.Templates.TemplateRequest)-returns"></a></div>
+      <h4><span class="toggle-btn"></span>Returns</h4>
+      <div class="padded-content toggle-content">
+        <span class="return-type">
+          <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1">System.Threading.Tasks.Task&lt;RestSharp.IRestResponse&lt;System.Collections.Generic.List&lt;Clockify.Net.Models.Templates.TemplateDto&gt;&gt;&gt;</a>
+        </span>
+        <div class="doc-desc return">
+          
+        </div>
+      </div>
+    
+    
+    
+    
+  </div>
+</div>
+      
+        <div class="member-details member-method">
+  <div class="relative"><a id="CreateTimeEntryAsync(System.String,Clockify.Net.Models.TimeEntries.TimeEntryRequest)"></a></div>
+  <h3><span class="toggle-btn"></span>CreateTimeEntryAsync(string workspaceId, TimeEntryRequest timeEntryRequest)</h3>
+  <div class="padded-content toggle-content">
+    <div class="doc-desc member">
+      <p>Add a new time entry to workspace. If end is not sent in request means that stopwatch mode is active, otherwise time entry is manually added.</p>
+
+    </div>
+    <div class="declaration">
+      <pre class="language-csharp"><code class="language-csharp"><span class="token keyword">public</span> Task<span class="token operator">&lt;</span>IRestResponse<span class="token operator">&lt;</span>TimeEntryDtoImpl<span class="token operator">>></span> <span class="token function">CreateTimeEntryAsync</span><span class="token punctuation">(</span><span class="token keyword">string</span> workspaceId<span class="token punctuation">,</span> <span class="token class-name">TimeEntryRequest</span> timeEntryRequest<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+    </div>
+    
+    
+      <div class="relative"><a id="CreateTimeEntryAsync(System.String,Clockify.Net.Models.TimeEntries.TimeEntryRequest)-parameters"></a></div>
+      <h4><span class="toggle-btn"></span>Parameters</h4>
+      <div class="padded-content toggle-content">
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">workspaceId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="clockify.net.models.timeentries.timeentryrequest.html">TimeEntryRequest</a>
+            </span>
+            <span class="param-name">timeEntryRequest</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+      </div>
+    
+    
+      <div class="relative"><a id="CreateTimeEntryAsync(System.String,Clockify.Net.Models.TimeEntries.TimeEntryRequest)-returns"></a></div>
+      <h4><span class="toggle-btn"></span>Returns</h4>
+      <div class="padded-content toggle-content">
+        <span class="return-type">
+          <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1">System.Threading.Tasks.Task&lt;RestSharp.IRestResponse&lt;Clockify.Net.Models.TimeEntries.TimeEntryDtoImpl&gt;&gt;</a>
+        </span>
+        <div class="doc-desc return">
+          
+        </div>
+      </div>
+    
+    
+    
+    
+  </div>
+</div>
+      
+        <div class="member-details member-method">
+  <div class="relative"><a id="CreateWorkspaceAsync(Clockify.Net.Models.Workspaces.WorkspaceRequest)"></a></div>
+  <h3><span class="toggle-btn"></span>CreateWorkspaceAsync(WorkspaceRequest workspaceRequest)</h3>
+  <div class="padded-content toggle-content">
+    <div class="doc-desc member">
+      <p>Creates new workspace.</p>
+
+    </div>
+    <div class="declaration">
+      <pre class="language-csharp"><code class="language-csharp"><span class="token keyword">public</span> Task<span class="token operator">&lt;</span>IRestResponse<span class="token operator">&lt;</span>WorkspaceDto<span class="token operator">>></span> <span class="token function">CreateWorkspaceAsync</span><span class="token punctuation">(</span><span class="token class-name">WorkspaceRequest</span> workspaceRequest<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+    </div>
+    
+    
+      <div class="relative"><a id="CreateWorkspaceAsync(Clockify.Net.Models.Workspaces.WorkspaceRequest)-parameters"></a></div>
+      <h4><span class="toggle-btn"></span>Parameters</h4>
+      <div class="padded-content toggle-content">
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="clockify.net.models.workspaces.workspacerequest.html">WorkspaceRequest</a>
+            </span>
+            <span class="param-name">workspaceRequest</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+      </div>
+    
+    
+      <div class="relative"><a id="CreateWorkspaceAsync(Clockify.Net.Models.Workspaces.WorkspaceRequest)-returns"></a></div>
+      <h4><span class="toggle-btn"></span>Returns</h4>
+      <div class="padded-content toggle-content">
+        <span class="return-type">
+          <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1">System.Threading.Tasks.Task&lt;RestSharp.IRestResponse&lt;Clockify.Net.Models.Workspaces.WorkspaceDto&gt;&gt;</a>
+        </span>
+        <div class="doc-desc return">
+          
+        </div>
+      </div>
+    
+    
+    
+    
+  </div>
+</div>
+      
+        <div class="member-details member-method">
+  <div class="relative"><a id="DeleteProjectAsync(System.String,System.String)"></a></div>
+  <h3><span class="toggle-btn"></span>DeleteProjectAsync(string workspaceId, string id)</h3>
+  <div class="padded-content toggle-content">
+    <div class="doc-desc member">
+      <p>Delete project with Id.</p>
+
+    </div>
+    <div class="declaration">
+      <pre class="language-csharp"><code class="language-csharp"><span class="token keyword">public</span> Task<span class="token operator">&lt;</span>IRestResponse<span class="token operator">></span> <span class="token function">DeleteProjectAsync</span><span class="token punctuation">(</span><span class="token keyword">string</span> workspaceId<span class="token punctuation">,</span> <span class="token keyword">string</span> id<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+    </div>
+    
+    
+      <div class="relative"><a id="DeleteProjectAsync(System.String,System.String)-parameters"></a></div>
+      <h4><span class="toggle-btn"></span>Parameters</h4>
+      <div class="padded-content toggle-content">
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">workspaceId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">id</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+      </div>
+    
+    
+      <div class="relative"><a id="DeleteProjectAsync(System.String,System.String)-returns"></a></div>
+      <h4><span class="toggle-btn"></span>Returns</h4>
+      <div class="padded-content toggle-content">
+        <span class="return-type">
+          <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1">System.Threading.Tasks.Task&lt;RestSharp.IRestResponse&gt;</a>
+        </span>
+        <div class="doc-desc return">
+          
+        </div>
+      </div>
+    
+    
+    
+    
+  </div>
+</div>
+      
+        <div class="member-details member-method">
+  <div class="relative"><a id="DeleteTaskAsync(System.String,System.String,System.String)"></a></div>
+  <h3><span class="toggle-btn"></span>DeleteTaskAsync(string workspaceId, string projectId, string taskId)</h3>
+  <div class="padded-content toggle-content">
+    <div class="doc-desc member">
+      <p>Deletes an existing task from workspace.</p>
+
+    </div>
+    <div class="declaration">
+      <pre class="language-csharp"><code class="language-csharp"><span class="token keyword">public</span> Task<span class="token operator">&lt;</span>IRestResponse<span class="token operator">&lt;</span>TaskDto<span class="token operator">>></span> <span class="token function">DeleteTaskAsync</span><span class="token punctuation">(</span><span class="token keyword">string</span> workspaceId<span class="token punctuation">,</span> <span class="token keyword">string</span> projectId<span class="token punctuation">,</span> <span class="token keyword">string</span> taskId<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+    </div>
+    
+    
+      <div class="relative"><a id="DeleteTaskAsync(System.String,System.String,System.String)-parameters"></a></div>
+      <h4><span class="toggle-btn"></span>Parameters</h4>
+      <div class="padded-content toggle-content">
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">workspaceId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">projectId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">taskId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+      </div>
+    
+    
+      <div class="relative"><a id="DeleteTaskAsync(System.String,System.String,System.String)-returns"></a></div>
+      <h4><span class="toggle-btn"></span>Returns</h4>
+      <div class="padded-content toggle-content">
+        <span class="return-type">
+          <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1">System.Threading.Tasks.Task&lt;RestSharp.IRestResponse&lt;Clockify.Net.Models.Tasks.TaskDto&gt;&gt;</a>
+        </span>
+        <div class="doc-desc return">
+          
+        </div>
+      </div>
+    
+    
+    
+    
+  </div>
+</div>
+      
+        <div class="member-details member-method">
+  <div class="relative"><a id="DeleteTemplateAsync(System.String,System.String)"></a></div>
+  <h3><span class="toggle-btn"></span>DeleteTemplateAsync(string workspaceId, string templateId)</h3>
+  <div class="padded-content toggle-content">
+    <div class="doc-desc member">
+      <p>Delete template with id.</p>
+
+    </div>
+    <div class="declaration">
+      <pre class="language-csharp"><code class="language-csharp"><span class="token keyword">public</span> Task<span class="token operator">&lt;</span>IRestResponse<span class="token operator">&lt;</span>TemplateDto<span class="token operator">>></span> <span class="token function">DeleteTemplateAsync</span><span class="token punctuation">(</span><span class="token keyword">string</span> workspaceId<span class="token punctuation">,</span> <span class="token keyword">string</span> templateId<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+    </div>
+    
+    
+      <div class="relative"><a id="DeleteTemplateAsync(System.String,System.String)-parameters"></a></div>
+      <h4><span class="toggle-btn"></span>Parameters</h4>
+      <div class="padded-content toggle-content">
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">workspaceId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">templateId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+      </div>
+    
+    
+      <div class="relative"><a id="DeleteTemplateAsync(System.String,System.String)-returns"></a></div>
+      <h4><span class="toggle-btn"></span>Returns</h4>
+      <div class="padded-content toggle-content">
+        <span class="return-type">
+          <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1">System.Threading.Tasks.Task&lt;RestSharp.IRestResponse&lt;Clockify.Net.Models.Templates.TemplateDto&gt;&gt;</a>
+        </span>
+        <div class="doc-desc return">
+          
+        </div>
+      </div>
+    
+    
+    
+    
+  </div>
+</div>
+      
+        <div class="member-details member-method">
+  <div class="relative"><a id="DeleteTimeEntryAsync(System.String,System.String)"></a></div>
+  <h3><span class="toggle-btn"></span>DeleteTimeEntryAsync(string workspaceId, string timeEntryId)</h3>
+  <div class="padded-content toggle-content">
+    <div class="doc-desc member">
+      <p>Delete time entry with id.</p>
+
+    </div>
+    <div class="declaration">
+      <pre class="language-csharp"><code class="language-csharp"><span class="token keyword">public</span> Task<span class="token operator">&lt;</span>IRestResponse<span class="token operator">></span> <span class="token function">DeleteTimeEntryAsync</span><span class="token punctuation">(</span><span class="token keyword">string</span> workspaceId<span class="token punctuation">,</span> <span class="token keyword">string</span> timeEntryId<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+    </div>
+    
+    
+      <div class="relative"><a id="DeleteTimeEntryAsync(System.String,System.String)-parameters"></a></div>
+      <h4><span class="toggle-btn"></span>Parameters</h4>
+      <div class="padded-content toggle-content">
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">workspaceId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">timeEntryId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+      </div>
+    
+    
+      <div class="relative"><a id="DeleteTimeEntryAsync(System.String,System.String)-returns"></a></div>
+      <h4><span class="toggle-btn"></span>Returns</h4>
+      <div class="padded-content toggle-content">
+        <span class="return-type">
+          <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1">System.Threading.Tasks.Task&lt;RestSharp.IRestResponse&gt;</a>
+        </span>
+        <div class="doc-desc return">
+          
+        </div>
+      </div>
+    
+    
+    
+    
+  </div>
+</div>
+      
+        <div class="member-details member-method">
+  <div class="relative"><a id="DeleteWorkspaceAsync(System.String)"></a></div>
+  <h3><span class="toggle-btn"></span>DeleteWorkspaceAsync(string id)</h3>
+  <div class="padded-content toggle-content">
+    <div class="doc-desc member">
+      <p>Delete workspace with Id.</p>
+
+    </div>
+    <div class="declaration">
+      <pre class="language-csharp"><code class="language-csharp"><span class="token punctuation">[</span><span class="token class-name">System<span class="token punctuation">.</span>ObsoleteAttribute</span><span class="token punctuation">(</span><span class="token string">"Changing active workplace was removed from the experimental API"</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+<span class="token keyword">public</span> Task<span class="token operator">&lt;</span>IRestResponse<span class="token operator">></span> <span class="token function">DeleteWorkspaceAsync</span><span class="token punctuation">(</span><span class="token keyword">string</span> id<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+    </div>
+    
+    
+      <div class="relative"><a id="DeleteWorkspaceAsync(System.String)-parameters"></a></div>
+      <h4><span class="toggle-btn"></span>Parameters</h4>
+      <div class="padded-content toggle-content">
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">id</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+      </div>
+    
+    
+      <div class="relative"><a id="DeleteWorkspaceAsync(System.String)-returns"></a></div>
+      <h4><span class="toggle-btn"></span>Returns</h4>
+      <div class="padded-content toggle-content">
+        <span class="return-type">
+          <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1">System.Threading.Tasks.Task&lt;RestSharp.IRestResponse&gt;</a>
+        </span>
+        <div class="doc-desc return">
+          
+        </div>
+      </div>
+    
+    
+    
+    
+  </div>
+</div>
+      
+        <div class="member-details member-method">
+  <div class="relative"><a id="Equals(System.Object)"></a></div>
+  <h3><span class="toggle-btn"></span>Equals(object obj)</h3>
+  <div class="padded-content toggle-content">
+    <div class="doc-desc member">
+      <p>Determines whether the specified object is equal to the current object.</p>
+
+    </div>
+    <div class="declaration">
+      <pre class="language-csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">virtual</span> <span class="token keyword">bool</span> <span class="token function">Equals</span><span class="token punctuation">(</span><span class="token keyword">object</span> obj<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+    </div>
+    
+    
+      <div class="relative"><a id="Equals(System.Object)-parameters"></a></div>
+      <h4><span class="toggle-btn"></span>Parameters</h4>
+      <div class="padded-content toggle-content">
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.object">object</a>
+            </span>
+            <span class="param-name">obj</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>The object to compare with the current object.</p>
+
+          </div>
+        
+      </div>
+    
+    
+      <div class="relative"><a id="Equals(System.Object)-returns"></a></div>
+      <h4><span class="toggle-btn"></span>Returns</h4>
+      <div class="padded-content toggle-content">
+        <span class="return-type">
+          <a href="https://docs.microsoft.com/en-us/dotnet/api/system.boolean">System.Boolean</a>
+        </span>
+        <div class="doc-desc return">
+          <p><span class="langword">true</span> if the specified object  is equal to the current object; otherwise, <span class="langword">false</span>.</p>
+
+        </div>
+      </div>
+    
+    
+    
+    
+  </div>
+</div>
+      
+        <div class="member-details member-method">
+  <div class="relative"><a id="Finalize"></a></div>
+  <h3><span class="toggle-btn"></span>Finalize()</h3>
+  <div class="padded-content toggle-content">
+    <div class="doc-desc member">
+      <p>Allows an object to try to free resources and perform other cleanup operations before it is reclaimed by garbage collection.</p>
+
+    </div>
+    <div class="declaration">
+      <pre class="language-csharp"><code class="language-csharp"><span class="token punctuation">[</span><span class="token class-name">System<span class="token punctuation">.</span>Runtime<span class="token punctuation">.</span>Versioning<span class="token punctuation">.</span>NonVersionableAttribute</span><span class="token punctuation">]</span>
+<span class="token keyword">protected</span> <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">Finalize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+    </div>
+    
+    
+    
+    
+    
+    
+  </div>
+</div>
+      
+        <div class="member-details member-method">
+  <div class="relative"><a id="FindAllClientsOnWorkspaceAsync(System.String)"></a></div>
+  <h3><span class="toggle-btn"></span>FindAllClientsOnWorkspaceAsync(string workspaceId)</h3>
+  <div class="padded-content toggle-content">
+    <div class="doc-desc member">
+      <p>Find clients on workspace.</p>
+
+    </div>
+    <div class="declaration">
+      <pre class="language-csharp"><code class="language-csharp"><span class="token keyword">public</span> Task<span class="token operator">&lt;</span>IRestResponse<span class="token operator">&lt;</span>List<span class="token operator">&lt;</span>ClientDto<span class="token operator">>></span><span class="token operator">></span> <span class="token function">FindAllClientsOnWorkspaceAsync</span><span class="token punctuation">(</span><span class="token keyword">string</span> workspaceId<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+    </div>
+    
+    
+      <div class="relative"><a id="FindAllClientsOnWorkspaceAsync(System.String)-parameters"></a></div>
+      <h4><span class="toggle-btn"></span>Parameters</h4>
+      <div class="padded-content toggle-content">
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">workspaceId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+      </div>
+    
+    
+      <div class="relative"><a id="FindAllClientsOnWorkspaceAsync(System.String)-returns"></a></div>
+      <h4><span class="toggle-btn"></span>Returns</h4>
+      <div class="padded-content toggle-content">
+        <span class="return-type">
+          <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1">System.Threading.Tasks.Task&lt;RestSharp.IRestResponse&lt;System.Collections.Generic.List&lt;Clockify.Net.Models.Clients.ClientDto&gt;&gt;&gt;</a>
+        </span>
+        <div class="doc-desc return">
+          
+        </div>
+      </div>
+    
+    
+    
+    
+  </div>
+</div>
+      
+        <div class="member-details member-method">
+  <div class="relative"><a id="FindAllHydratedTimeEntriesForUserAsync(System.String,System.String,System.String,System.Nullable-1,System.Nullable-1,System.String,System.String,System.Nullable-1,System.Nullable-1,System.Nullable-1,System.Nullable-1,System.Int32,System.Int32)"></a></div>
+  <h3><span class="toggle-btn"></span>FindAllHydratedTimeEntriesForUserAsync(string workspaceId, string userId, string description, Nullable&lt;DateTimeOffset&gt; start, Nullable&lt;DateTimeOffset&gt; end, string project, string task, Nullable&lt;bool&gt; projectRequired, Nullable&lt;bool&gt; taskRequired, Nullable&lt;bool&gt; considerDurationFormat, Nullable&lt;bool&gt; inProgress, int page = 1, int pageSize = 50)</h3>
+  <div class="padded-content toggle-content">
+    <div class="doc-desc member">
+      <p>Get hydrated time entries for current user on specified workspace. See Clockify docs for query params explanation.</p>
+
+    </div>
+    <div class="declaration">
+      <pre class="language-csharp"><code class="language-csharp"><span class="token keyword">public</span> Task<span class="token operator">&lt;</span>IRestResponse<span class="token operator">&lt;</span>List<span class="token operator">&lt;</span>HydratedTimeEntryDtoImpl<span class="token operator">>></span><span class="token operator">></span> <span class="token function">FindAllHydratedTimeEntriesForUserAsync</span><span class="token punctuation">(</span><span class="token keyword">string</span> workspaceId<span class="token punctuation">,</span> <span class="token keyword">string</span> userId<span class="token punctuation">,</span> <span class="token keyword">string</span> description<span class="token punctuation">,</span> Nullable<span class="token operator">&lt;</span>DateTimeOffset<span class="token operator">></span> start<span class="token punctuation">,</span> Nullable<span class="token operator">&lt;</span>DateTimeOffset<span class="token operator">></span> end<span class="token punctuation">,</span> <span class="token keyword">string</span> project<span class="token punctuation">,</span> <span class="token keyword">string</span> task<span class="token punctuation">,</span> Nullable<span class="token operator">&lt;</span><span class="token keyword">bool</span><span class="token operator">></span> projectRequired<span class="token punctuation">,</span> Nullable<span class="token operator">&lt;</span><span class="token keyword">bool</span><span class="token operator">></span> taskRequired<span class="token punctuation">,</span> Nullable<span class="token operator">&lt;</span><span class="token keyword">bool</span><span class="token operator">></span> considerDurationFormat<span class="token punctuation">,</span> Nullable<span class="token operator">&lt;</span><span class="token keyword">bool</span><span class="token operator">></span> inProgress<span class="token punctuation">,</span> <span class="token keyword">int</span> page <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token keyword">int</span> pageSize <span class="token operator">=</span> <span class="token number">50</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+    </div>
+    
+    
+      <div class="relative"><a id="FindAllHydratedTimeEntriesForUserAsync(System.String,System.String,System.String,System.Nullable-1,System.Nullable-1,System.String,System.String,System.Nullable-1,System.Nullable-1,System.Nullable-1,System.Nullable-1,System.Int32,System.Int32)-parameters"></a></div>
+      <h4><span class="toggle-btn"></span>Parameters</h4>
+      <div class="padded-content toggle-content">
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">workspaceId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">userId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">description</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1">Nullable&lt;DateTimeOffset&gt;</a>
+            </span>
+            <span class="param-name">start</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1">Nullable&lt;DateTimeOffset&gt;</a>
+            </span>
+            <span class="param-name">end</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">project</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">task</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1">Nullable&lt;bool&gt;</a>
+            </span>
+            <span class="param-name">projectRequired</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1">Nullable&lt;bool&gt;</a>
+            </span>
+            <span class="param-name">taskRequired</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1">Nullable&lt;bool&gt;</a>
+            </span>
+            <span class="param-name">considerDurationFormat</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1">Nullable&lt;bool&gt;</a>
+            </span>
+            <span class="param-name">inProgress</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">int</a>
+            </span>
+            <span class="param-name">page</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">int</a>
+            </span>
+            <span class="param-name">pageSize</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+      </div>
+    
+    
+      <div class="relative"><a id="FindAllHydratedTimeEntriesForUserAsync(System.String,System.String,System.String,System.Nullable-1,System.Nullable-1,System.String,System.String,System.Nullable-1,System.Nullable-1,System.Nullable-1,System.Nullable-1,System.Int32,System.Int32)-returns"></a></div>
+      <h4><span class="toggle-btn"></span>Returns</h4>
+      <div class="padded-content toggle-content">
+        <span class="return-type">
+          <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1">System.Threading.Tasks.Task&lt;RestSharp.IRestResponse&lt;System.Collections.Generic.List&lt;Clockify.Net.Models.TimeEntries.HydratedTimeEntryDtoImpl&gt;&gt;&gt;</a>
+        </span>
+        <div class="doc-desc return">
+          
+        </div>
+      </div>
+    
+    
+    
+    
+  </div>
+</div>
+      
+        <div class="member-details member-method">
+  <div class="relative"><a id="FindAllProjectsOnWorkspaceAsync(System.String)"></a></div>
+  <h3><span class="toggle-btn"></span>FindAllProjectsOnWorkspaceAsync(string workspaceId)</h3>
+  <div class="padded-content toggle-content">
+    <div class="doc-desc member">
+      <p>Find projects on workspace.</p>
+
+    </div>
+    <div class="declaration">
+      <pre class="language-csharp"><code class="language-csharp"><span class="token keyword">public</span> Task<span class="token operator">&lt;</span>IRestResponse<span class="token operator">&lt;</span>List<span class="token operator">&lt;</span>ProjectDtoImpl<span class="token operator">>></span><span class="token operator">></span> <span class="token function">FindAllProjectsOnWorkspaceAsync</span><span class="token punctuation">(</span><span class="token keyword">string</span> workspaceId<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+    </div>
+    
+    
+      <div class="relative"><a id="FindAllProjectsOnWorkspaceAsync(System.String)-parameters"></a></div>
+      <h4><span class="toggle-btn"></span>Parameters</h4>
+      <div class="padded-content toggle-content">
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">workspaceId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+      </div>
+    
+    
+      <div class="relative"><a id="FindAllProjectsOnWorkspaceAsync(System.String)-returns"></a></div>
+      <h4><span class="toggle-btn"></span>Returns</h4>
+      <div class="padded-content toggle-content">
+        <span class="return-type">
+          <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1">System.Threading.Tasks.Task&lt;RestSharp.IRestResponse&lt;System.Collections.Generic.List&lt;Clockify.Net.Models.Projects.ProjectDtoImpl&gt;&gt;&gt;</a>
+        </span>
+        <div class="doc-desc return">
+          
+        </div>
+      </div>
+    
+    
+    
+    
+  </div>
+</div>
+      
+        <div class="member-details member-method">
+  <div class="relative"><a id="FindAllTagsOnWorkspaceAsync(System.String)"></a></div>
+  <h3><span class="toggle-btn"></span>FindAllTagsOnWorkspaceAsync(string workspaceId)</h3>
+  <div class="padded-content toggle-content">
+    <div class="doc-desc member">
+      <p>Find tags on workspace.</p>
+
+    </div>
+    <div class="declaration">
+      <pre class="language-csharp"><code class="language-csharp"><span class="token keyword">public</span> Task<span class="token operator">&lt;</span>IRestResponse<span class="token operator">&lt;</span>List<span class="token operator">&lt;</span>TagDto<span class="token operator">>></span><span class="token operator">></span> <span class="token function">FindAllTagsOnWorkspaceAsync</span><span class="token punctuation">(</span><span class="token keyword">string</span> workspaceId<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+    </div>
+    
+    
+      <div class="relative"><a id="FindAllTagsOnWorkspaceAsync(System.String)-parameters"></a></div>
+      <h4><span class="toggle-btn"></span>Parameters</h4>
+      <div class="padded-content toggle-content">
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">workspaceId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+      </div>
+    
+    
+      <div class="relative"><a id="FindAllTagsOnWorkspaceAsync(System.String)-returns"></a></div>
+      <h4><span class="toggle-btn"></span>Returns</h4>
+      <div class="padded-content toggle-content">
+        <span class="return-type">
+          <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1">System.Threading.Tasks.Task&lt;RestSharp.IRestResponse&lt;System.Collections.Generic.List&lt;Clockify.Net.Models.Tags.TagDto&gt;&gt;&gt;</a>
+        </span>
+        <div class="doc-desc return">
+          
+        </div>
+      </div>
+    
+    
+    
+    
+  </div>
+</div>
+      
+        <div class="member-details member-method">
+  <div class="relative"><a id="FindAllTasksAsync(System.String,System.String,System.Nullable-1,System.String,System.Int32,System.Int32)"></a></div>
+  <h3><span class="toggle-btn"></span>FindAllTasksAsync(string workspaceId, string projectId, Nullable&lt;bool&gt; isActive, string name, int page = 1, int pageSize = 50)</h3>
+  <div class="padded-content toggle-content">
+    <div class="doc-desc member">
+      <p>Find tasks on project.</p>
+
+    </div>
+    <div class="declaration">
+      <pre class="language-csharp"><code class="language-csharp"><span class="token keyword">public</span> Task<span class="token operator">&lt;</span>IRestResponse<span class="token operator">&lt;</span>List<span class="token operator">&lt;</span>TaskDto<span class="token operator">>></span><span class="token operator">></span> <span class="token function">FindAllTasksAsync</span><span class="token punctuation">(</span><span class="token keyword">string</span> workspaceId<span class="token punctuation">,</span> <span class="token keyword">string</span> projectId<span class="token punctuation">,</span> Nullable<span class="token operator">&lt;</span><span class="token keyword">bool</span><span class="token operator">></span> isActive<span class="token punctuation">,</span> <span class="token keyword">string</span> name<span class="token punctuation">,</span> <span class="token keyword">int</span> page <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token keyword">int</span> pageSize <span class="token operator">=</span> <span class="token number">50</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+    </div>
+    
+    
+      <div class="relative"><a id="FindAllTasksAsync(System.String,System.String,System.Nullable-1,System.String,System.Int32,System.Int32)-parameters"></a></div>
+      <h4><span class="toggle-btn"></span>Parameters</h4>
+      <div class="padded-content toggle-content">
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">workspaceId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">projectId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1">Nullable&lt;bool&gt;</a>
+            </span>
+            <span class="param-name">isActive</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">name</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">int</a>
+            </span>
+            <span class="param-name">page</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">int</a>
+            </span>
+            <span class="param-name">pageSize</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+      </div>
+    
+    
+      <div class="relative"><a id="FindAllTasksAsync(System.String,System.String,System.Nullable-1,System.String,System.Int32,System.Int32)-returns"></a></div>
+      <h4><span class="toggle-btn"></span>Returns</h4>
+      <div class="padded-content toggle-content">
+        <span class="return-type">
+          <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1">System.Threading.Tasks.Task&lt;RestSharp.IRestResponse&lt;System.Collections.Generic.List&lt;Clockify.Net.Models.Tasks.TaskDto&gt;&gt;&gt;</a>
+        </span>
+        <div class="doc-desc return">
+          
+        </div>
+      </div>
+    
+    
+    
+    
+  </div>
+</div>
+      
+        <div class="member-details member-method">
+  <div class="relative"><a id="FindAllTemplatesOnWorkspaceAsync(System.String,System.String,System.Boolean,System.Boolean,System.Int32,System.Int32)"></a></div>
+  <h3><span class="toggle-btn"></span>FindAllTemplatesOnWorkspaceAsync(string workspaceId, string name, bool cleansed = False, bool hydrated = False, int page = 1, int pageSize = 1)</h3>
+  <div class="padded-content toggle-content">
+    <div class="doc-desc member">
+      <p>Get templates for current user on specified workspace. See Clockify docs for query params explanation.</p>
+
+    </div>
+    <div class="declaration">
+      <pre class="language-csharp"><code class="language-csharp"><span class="token keyword">public</span> Task<span class="token operator">&lt;</span>IRestResponse<span class="token operator">&lt;</span>List<span class="token operator">&lt;</span>TemplateDto<span class="token operator">>></span><span class="token operator">></span> <span class="token function">FindAllTemplatesOnWorkspaceAsync</span><span class="token punctuation">(</span><span class="token keyword">string</span> workspaceId<span class="token punctuation">,</span> <span class="token keyword">string</span> name<span class="token punctuation">,</span> <span class="token keyword">bool</span> cleansed <span class="token operator">=</span> False<span class="token punctuation">,</span> <span class="token keyword">bool</span> hydrated <span class="token operator">=</span> False<span class="token punctuation">,</span> <span class="token keyword">int</span> page <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token keyword">int</span> pageSize <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+    </div>
+    
+    
+      <div class="relative"><a id="FindAllTemplatesOnWorkspaceAsync(System.String,System.String,System.Boolean,System.Boolean,System.Int32,System.Int32)-parameters"></a></div>
+      <h4><span class="toggle-btn"></span>Parameters</h4>
+      <div class="padded-content toggle-content">
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">workspaceId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">name</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.boolean">bool</a>
+            </span>
+            <span class="param-name">cleansed</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.boolean">bool</a>
+            </span>
+            <span class="param-name">hydrated</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">int</a>
+            </span>
+            <span class="param-name">page</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">int</a>
+            </span>
+            <span class="param-name">pageSize</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+      </div>
+    
+    
+      <div class="relative"><a id="FindAllTemplatesOnWorkspaceAsync(System.String,System.String,System.Boolean,System.Boolean,System.Int32,System.Int32)-returns"></a></div>
+      <h4><span class="toggle-btn"></span>Returns</h4>
+      <div class="padded-content toggle-content">
+        <span class="return-type">
+          <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1">System.Threading.Tasks.Task&lt;RestSharp.IRestResponse&lt;System.Collections.Generic.List&lt;Clockify.Net.Models.Templates.TemplateDto&gt;&gt;&gt;</a>
+        </span>
+        <div class="doc-desc return">
+          
+        </div>
+      </div>
+    
+    
+    
+    
+  </div>
+</div>
+      
+        <div class="member-details member-method">
+  <div class="relative"><a id="FindAllTimeEntriesForUserAsync(System.String,System.String,System.String,System.Nullable-1,System.Nullable-1,System.String,System.String,System.Nullable-1,System.Nullable-1,System.Nullable-1,System.Nullable-1,System.Nullable-1,System.Int32,System.Int32)"></a></div>
+  <h3><span class="toggle-btn"></span>FindAllTimeEntriesForUserAsync(string workspaceId, string userId, string description, Nullable&lt;DateTimeOffset&gt; start, Nullable&lt;DateTimeOffset&gt; end, string project, string task, Nullable&lt;bool&gt; projectRequired, Nullable&lt;bool&gt; taskRequired, Nullable&lt;bool&gt; considerDurationFormat, Nullable&lt;bool&gt; hydrated, Nullable&lt;bool&gt; inProgress, int page = 1, int pageSize = 50)</h3>
+  <div class="padded-content toggle-content">
+    <div class="doc-desc member">
+      <p>Get templates for current user on specified workspace. See Clockify docs for query params explanation.</p>
+
+    </div>
+    <div class="declaration">
+      <pre class="language-csharp"><code class="language-csharp"><span class="token keyword">public</span> Task<span class="token operator">&lt;</span>IRestResponse<span class="token operator">&lt;</span>List<span class="token operator">&lt;</span>TimeEntryDtoImpl<span class="token operator">>></span><span class="token operator">></span> <span class="token function">FindAllTimeEntriesForUserAsync</span><span class="token punctuation">(</span><span class="token keyword">string</span> workspaceId<span class="token punctuation">,</span> <span class="token keyword">string</span> userId<span class="token punctuation">,</span> <span class="token keyword">string</span> description<span class="token punctuation">,</span> Nullable<span class="token operator">&lt;</span>DateTimeOffset<span class="token operator">></span> start<span class="token punctuation">,</span> Nullable<span class="token operator">&lt;</span>DateTimeOffset<span class="token operator">></span> end<span class="token punctuation">,</span> <span class="token keyword">string</span> project<span class="token punctuation">,</span> <span class="token keyword">string</span> task<span class="token punctuation">,</span> Nullable<span class="token operator">&lt;</span><span class="token keyword">bool</span><span class="token operator">></span> projectRequired<span class="token punctuation">,</span> Nullable<span class="token operator">&lt;</span><span class="token keyword">bool</span><span class="token operator">></span> taskRequired<span class="token punctuation">,</span> Nullable<span class="token operator">&lt;</span><span class="token keyword">bool</span><span class="token operator">></span> considerDurationFormat<span class="token punctuation">,</span> Nullable<span class="token operator">&lt;</span><span class="token keyword">bool</span><span class="token operator">></span> hydrated<span class="token punctuation">,</span> Nullable<span class="token operator">&lt;</span><span class="token keyword">bool</span><span class="token operator">></span> inProgress<span class="token punctuation">,</span> <span class="token keyword">int</span> page <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token keyword">int</span> pageSize <span class="token operator">=</span> <span class="token number">50</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+    </div>
+    
+    
+      <div class="relative"><a id="FindAllTimeEntriesForUserAsync(System.String,System.String,System.String,System.Nullable-1,System.Nullable-1,System.String,System.String,System.Nullable-1,System.Nullable-1,System.Nullable-1,System.Nullable-1,System.Nullable-1,System.Int32,System.Int32)-parameters"></a></div>
+      <h4><span class="toggle-btn"></span>Parameters</h4>
+      <div class="padded-content toggle-content">
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">workspaceId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">userId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">description</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1">Nullable&lt;DateTimeOffset&gt;</a>
+            </span>
+            <span class="param-name">start</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1">Nullable&lt;DateTimeOffset&gt;</a>
+            </span>
+            <span class="param-name">end</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">project</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">task</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1">Nullable&lt;bool&gt;</a>
+            </span>
+            <span class="param-name">projectRequired</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1">Nullable&lt;bool&gt;</a>
+            </span>
+            <span class="param-name">taskRequired</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1">Nullable&lt;bool&gt;</a>
+            </span>
+            <span class="param-name">considerDurationFormat</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1">Nullable&lt;bool&gt;</a>
+            </span>
+            <span class="param-name">hydrated</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1">Nullable&lt;bool&gt;</a>
+            </span>
+            <span class="param-name">inProgress</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">int</a>
+            </span>
+            <span class="param-name">page</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">int</a>
+            </span>
+            <span class="param-name">pageSize</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+      </div>
+    
+    
+      <div class="relative"><a id="FindAllTimeEntriesForUserAsync(System.String,System.String,System.String,System.Nullable-1,System.Nullable-1,System.String,System.String,System.Nullable-1,System.Nullable-1,System.Nullable-1,System.Nullable-1,System.Nullable-1,System.Int32,System.Int32)-returns"></a></div>
+      <h4><span class="toggle-btn"></span>Returns</h4>
+      <div class="padded-content toggle-content">
+        <span class="return-type">
+          <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1">System.Threading.Tasks.Task&lt;RestSharp.IRestResponse&lt;System.Collections.Generic.List&lt;Clockify.Net.Models.TimeEntries.TimeEntryDtoImpl&gt;&gt;&gt;</a>
+        </span>
+        <div class="doc-desc return">
+          
+        </div>
+      </div>
+    
+    
+    
+    
+  </div>
+</div>
+      
+        <div class="member-details member-method">
+  <div class="relative"><a id="FindAllUsersOnWorkspaceAsync(System.String)"></a></div>
+  <h3><span class="toggle-btn"></span>FindAllUsersOnWorkspaceAsync(string workspaceId)</h3>
+  <div class="padded-content toggle-content">
+    <div class="doc-desc member">
+      <p>Find all users on workspace.</p>
+
+    </div>
+    <div class="declaration">
+      <pre class="language-csharp"><code class="language-csharp"><span class="token keyword">public</span> Task<span class="token operator">&lt;</span>IRestResponse<span class="token operator">&lt;</span>List<span class="token operator">&lt;</span>UserDto<span class="token operator">>></span><span class="token operator">></span> <span class="token function">FindAllUsersOnWorkspaceAsync</span><span class="token punctuation">(</span><span class="token keyword">string</span> workspaceId<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+    </div>
+    
+    
+      <div class="relative"><a id="FindAllUsersOnWorkspaceAsync(System.String)-parameters"></a></div>
+      <h4><span class="toggle-btn"></span>Parameters</h4>
+      <div class="padded-content toggle-content">
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">workspaceId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+      </div>
+    
+    
+      <div class="relative"><a id="FindAllUsersOnWorkspaceAsync(System.String)-returns"></a></div>
+      <h4><span class="toggle-btn"></span>Returns</h4>
+      <div class="padded-content toggle-content">
+        <span class="return-type">
+          <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1">System.Threading.Tasks.Task&lt;RestSharp.IRestResponse&lt;System.Collections.Generic.List&lt;Clockify.Net.Models.Users.UserDto&gt;&gt;&gt;</a>
+        </span>
+        <div class="doc-desc return">
+          
+        </div>
+      </div>
+    
+    
+    
+    
+  </div>
+</div>
+      
+        <div class="member-details member-method">
+  <div class="relative"><a id="GetCurrentUserAsync"></a></div>
+  <h3><span class="toggle-btn"></span>GetCurrentUserAsync()</h3>
+  <div class="padded-content toggle-content">
+    <div class="doc-desc member">
+      <p>Get currently logged in user's info.</p>
+
+    </div>
+    <div class="declaration">
+      <pre class="language-csharp"><code class="language-csharp"><span class="token keyword">public</span> Task<span class="token operator">&lt;</span>IRestResponse<span class="token operator">&lt;</span>CurrentUserDto<span class="token operator">>></span> <span class="token function">GetCurrentUserAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+    </div>
+    
+    
+    
+      <div class="relative"><a id="GetCurrentUserAsync-returns"></a></div>
+      <h4><span class="toggle-btn"></span>Returns</h4>
+      <div class="padded-content toggle-content">
+        <span class="return-type">
+          <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1">System.Threading.Tasks.Task&lt;RestSharp.IRestResponse&lt;Clockify.Net.Models.Users.CurrentUserDto&gt;&gt;</a>
+        </span>
+        <div class="doc-desc return">
+          
+        </div>
+      </div>
+    
+    
+    
+    
+  </div>
+</div>
+      
+        <div class="member-details member-method">
+  <div class="relative"><a id="GetHashCode"></a></div>
+  <h3><span class="toggle-btn"></span>GetHashCode()</h3>
+  <div class="padded-content toggle-content">
+    <div class="doc-desc member">
+      <p>Serves as the default hash function.</p>
+
+    </div>
+    <div class="declaration">
+      <pre class="language-csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">virtual</span> <span class="token keyword">int</span> <span class="token function">GetHashCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+    </div>
+    
+    
+    
+      <div class="relative"><a id="GetHashCode-returns"></a></div>
+      <h4><span class="toggle-btn"></span>Returns</h4>
+      <div class="padded-content toggle-content">
+        <span class="return-type">
+          <a href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">System.Int32</a>
+        </span>
+        <div class="doc-desc return">
+          <p>A hash code for the current object.</p>
+
+        </div>
+      </div>
+    
+    
+    
+    
+  </div>
+</div>
+      
+        <div class="member-details member-method">
+  <div class="relative"><a id="GetTemplateAsync(System.String,System.String,System.Boolean,System.Boolean)"></a></div>
+  <h3><span class="toggle-btn"></span>GetTemplateAsync(string workspaceId, string templateId, bool cleansed = False, bool hydrated = False)</h3>
+  <div class="padded-content toggle-content">
+    <div class="doc-desc member">
+      <p>Get template from workspace. See Clockify docs for query params explanation.</p>
+
+    </div>
+    <div class="declaration">
+      <pre class="language-csharp"><code class="language-csharp"><span class="token keyword">public</span> Task<span class="token operator">&lt;</span>IRestResponse<span class="token operator">&lt;</span>TemplateDto<span class="token operator">>></span> <span class="token function">GetTemplateAsync</span><span class="token punctuation">(</span><span class="token keyword">string</span> workspaceId<span class="token punctuation">,</span> <span class="token keyword">string</span> templateId<span class="token punctuation">,</span> <span class="token keyword">bool</span> cleansed <span class="token operator">=</span> False<span class="token punctuation">,</span> <span class="token keyword">bool</span> hydrated <span class="token operator">=</span> False<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+    </div>
+    
+    
+      <div class="relative"><a id="GetTemplateAsync(System.String,System.String,System.Boolean,System.Boolean)-parameters"></a></div>
+      <h4><span class="toggle-btn"></span>Parameters</h4>
+      <div class="padded-content toggle-content">
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">workspaceId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">templateId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.boolean">bool</a>
+            </span>
+            <span class="param-name">cleansed</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.boolean">bool</a>
+            </span>
+            <span class="param-name">hydrated</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+      </div>
+    
+    
+      <div class="relative"><a id="GetTemplateAsync(System.String,System.String,System.Boolean,System.Boolean)-returns"></a></div>
+      <h4><span class="toggle-btn"></span>Returns</h4>
+      <div class="padded-content toggle-content">
+        <span class="return-type">
+          <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1">System.Threading.Tasks.Task&lt;RestSharp.IRestResponse&lt;Clockify.Net.Models.Templates.TemplateDto&gt;&gt;</a>
+        </span>
+        <div class="doc-desc return">
+          
+        </div>
+      </div>
+    
+    
+    
+    
+  </div>
+</div>
+      
+        <div class="member-details member-method">
+  <div class="relative"><a id="GetTimeEntryAsync(System.String,System.String,System.Boolean,System.Boolean)"></a></div>
+  <h3><span class="toggle-btn"></span>GetTimeEntryAsync(string workspaceId, string timeEntryId, bool considerDurationFormat = False, bool hydrated = False)</h3>
+  <div class="padded-content toggle-content">
+    <div class="doc-desc member">
+      <p>Get time entry from. workspace. See Clockify docs for query params explanation.</p>
+
+    </div>
+    <div class="declaration">
+      <pre class="language-csharp"><code class="language-csharp"><span class="token keyword">public</span> Task<span class="token operator">&lt;</span>IRestResponse<span class="token operator">&lt;</span>TimeEntryDtoImpl<span class="token operator">>></span> <span class="token function">GetTimeEntryAsync</span><span class="token punctuation">(</span><span class="token keyword">string</span> workspaceId<span class="token punctuation">,</span> <span class="token keyword">string</span> timeEntryId<span class="token punctuation">,</span> <span class="token keyword">bool</span> considerDurationFormat <span class="token operator">=</span> False<span class="token punctuation">,</span> <span class="token keyword">bool</span> hydrated <span class="token operator">=</span> False<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+    </div>
+    
+    
+      <div class="relative"><a id="GetTimeEntryAsync(System.String,System.String,System.Boolean,System.Boolean)-parameters"></a></div>
+      <h4><span class="toggle-btn"></span>Parameters</h4>
+      <div class="padded-content toggle-content">
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">workspaceId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">timeEntryId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.boolean">bool</a>
+            </span>
+            <span class="param-name">considerDurationFormat</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.boolean">bool</a>
+            </span>
+            <span class="param-name">hydrated</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+      </div>
+    
+    
+      <div class="relative"><a id="GetTimeEntryAsync(System.String,System.String,System.Boolean,System.Boolean)-returns"></a></div>
+      <h4><span class="toggle-btn"></span>Returns</h4>
+      <div class="padded-content toggle-content">
+        <span class="return-type">
+          <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1">System.Threading.Tasks.Task&lt;RestSharp.IRestResponse&lt;Clockify.Net.Models.TimeEntries.TimeEntryDtoImpl&gt;&gt;</a>
+        </span>
+        <div class="doc-desc return">
+          
+        </div>
+      </div>
+    
+    
+    
+    
+  </div>
+</div>
+      
+        <div class="member-details member-method">
+  <div class="relative"><a id="GetType"></a></div>
+  <h3><span class="toggle-btn"></span>GetType()</h3>
+  <div class="padded-content toggle-content">
+    <div class="doc-desc member">
+      <p>Gets the <a href="https://docs.microsoft.com/en-us/dotnet/api/system.type">Type</a> of the current instance.</p>
+
+    </div>
+    <div class="declaration">
+      <pre class="language-csharp"><code class="language-csharp"><span class="token punctuation">[</span><span class="token class-name">System<span class="token punctuation">.</span>Runtime<span class="token punctuation">.</span>CompilerServices<span class="token punctuation">.</span>NullableContextAttribute</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+<span class="token keyword">public</span> <span class="token class-name">Type</span> <span class="token function">GetType</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+    </div>
+    
+    
+    
+      <div class="relative"><a id="GetType-returns"></a></div>
+      <h4><span class="toggle-btn"></span>Returns</h4>
+      <div class="padded-content toggle-content">
+        <span class="return-type">
+          <a href="https://docs.microsoft.com/en-us/dotnet/api/system.type">System.Type</a>
+        </span>
+        <div class="doc-desc return">
+          <p>The exact runtime type of the current instance.</p>
+
+        </div>
+      </div>
+    
+    
+    
+    
+  </div>
+</div>
+      
+        <div class="member-details member-method">
+  <div class="relative"><a id="GetWorkspacesAsync"></a></div>
+  <h3><span class="toggle-btn"></span>GetWorkspacesAsync()</h3>
+  <div class="padded-content toggle-content">
+    <div class="doc-desc member">
+      <p>Find workspaces for currently logged in user.</p>
+
+    </div>
+    <div class="declaration">
+      <pre class="language-csharp"><code class="language-csharp"><span class="token keyword">public</span> Task<span class="token operator">&lt;</span>IRestResponse<span class="token operator">&lt;</span>List<span class="token operator">&lt;</span>WorkspaceDto<span class="token operator">>></span><span class="token operator">></span> <span class="token function">GetWorkspacesAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+    </div>
+    
+    
+    
+      <div class="relative"><a id="GetWorkspacesAsync-returns"></a></div>
+      <h4><span class="toggle-btn"></span>Returns</h4>
+      <div class="padded-content toggle-content">
+        <span class="return-type">
+          <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1">System.Threading.Tasks.Task&lt;RestSharp.IRestResponse&lt;System.Collections.Generic.List&lt;Clockify.Net.Models.Workspaces.WorkspaceDto&gt;&gt;&gt;</a>
+        </span>
+        <div class="doc-desc return">
+          
+        </div>
+      </div>
+    
+    
+    
+    
+  </div>
+</div>
+      
+        <div class="member-details member-method">
+  <div class="relative"><a id="MemberwiseClone"></a></div>
+  <h3><span class="toggle-btn"></span>MemberwiseClone()</h3>
+  <div class="padded-content toggle-content">
+    <div class="doc-desc member">
+      <p>Creates a shallow copy of the current <a href="https://docs.microsoft.com/en-us/dotnet/api/system.object">Object</a>.</p>
+
+    </div>
+    <div class="declaration">
+      <pre class="language-csharp"><code class="language-csharp"><span class="token punctuation">[</span><span class="token class-name">System<span class="token punctuation">.</span>Runtime<span class="token punctuation">.</span>CompilerServices<span class="token punctuation">.</span>NullableContextAttribute</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+<span class="token keyword">protected</span> <span class="token keyword">object</span> <span class="token function">MemberwiseClone</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+    </div>
+    
+    
+    
+      <div class="relative"><a id="MemberwiseClone-returns"></a></div>
+      <h4><span class="toggle-btn"></span>Returns</h4>
+      <div class="padded-content toggle-content">
+        <span class="return-type">
+          <a href="https://docs.microsoft.com/en-us/dotnet/api/system.object">System.Object</a>
+        </span>
+        <div class="doc-desc return">
+          <p>A shallow copy of the current <a href="https://docs.microsoft.com/en-us/dotnet/api/system.object">Object</a>.</p>
+
+        </div>
+      </div>
+    
+    
+    
+    
+  </div>
+</div>
+      
+        <div class="member-details member-method">
+  <div class="relative"><a id="SetActiveWorkspaceFor(System.String,System.String)"></a></div>
+  <h3><span class="toggle-btn"></span>SetActiveWorkspaceFor(string userId, string workspaceId)</h3>
+  <div class="padded-content toggle-content">
+    <div class="doc-desc member">
+      <p>Set active workspace for user.</p>
+
+    </div>
+    <div class="declaration">
+      <pre class="language-csharp"><code class="language-csharp"><span class="token punctuation">[</span><span class="token class-name">System<span class="token punctuation">.</span>ObsoleteAttribute</span><span class="token punctuation">(</span><span class="token string">"Removed from the experimental API"</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+<span class="token keyword">public</span> Task<span class="token operator">&lt;</span>IRestResponse<span class="token operator">&lt;</span>UserDto<span class="token operator">>></span> <span class="token function">SetActiveWorkspaceFor</span><span class="token punctuation">(</span><span class="token keyword">string</span> userId<span class="token punctuation">,</span> <span class="token keyword">string</span> workspaceId<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+    </div>
+    
+    
+      <div class="relative"><a id="SetActiveWorkspaceFor(System.String,System.String)-parameters"></a></div>
+      <h4><span class="toggle-btn"></span>Parameters</h4>
+      <div class="padded-content toggle-content">
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">userId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">workspaceId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+      </div>
+    
+    
+      <div class="relative"><a id="SetActiveWorkspaceFor(System.String,System.String)-returns"></a></div>
+      <h4><span class="toggle-btn"></span>Returns</h4>
+      <div class="padded-content toggle-content">
+        <span class="return-type">
+          <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1">System.Threading.Tasks.Task&lt;RestSharp.IRestResponse&lt;Clockify.Net.Models.Users.UserDto&gt;&gt;</a>
+        </span>
+        <div class="doc-desc return">
+          
+        </div>
+      </div>
+    
+    
+    
+    
+  </div>
+</div>
+      
+        <div class="member-details member-method">
+  <div class="relative"><a id="ToString"></a></div>
+  <h3><span class="toggle-btn"></span>ToString()</h3>
+  <div class="padded-content toggle-content">
+    <div class="doc-desc member">
+      <p>Returns a string that represents the current object.</p>
+
+    </div>
+    <div class="declaration">
+      <pre class="language-csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">virtual</span> <span class="token keyword">string</span> <span class="token function">ToString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+    </div>
+    
+    
+    
+      <div class="relative"><a id="ToString-returns"></a></div>
+      <h4><span class="toggle-btn"></span>Returns</h4>
+      <div class="padded-content toggle-content">
+        <span class="return-type">
+          <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">System.String</a>
+        </span>
+        <div class="doc-desc return">
+          <p>A string that represents the current object.</p>
+
+        </div>
+      </div>
+    
+    
+    
+    
+  </div>
+</div>
+      
+        <div class="member-details member-method">
+  <div class="relative"><a id="UpdateTaskAsync(System.String,System.String,Clockify.Net.Models.Tasks.TaskRequest)"></a></div>
+  <h3><span class="toggle-btn"></span>UpdateTaskAsync(string workspaceId, string projectId, TaskRequest taskRequest)</h3>
+  <div class="padded-content toggle-content">
+    <div class="doc-desc member">
+      <p>Updates an existing task to workspace.</p>
+
+    </div>
+    <div class="declaration">
+      <pre class="language-csharp"><code class="language-csharp"><span class="token keyword">public</span> Task<span class="token operator">&lt;</span>IRestResponse<span class="token operator">&lt;</span>TaskDto<span class="token operator">>></span> <span class="token function">UpdateTaskAsync</span><span class="token punctuation">(</span><span class="token keyword">string</span> workspaceId<span class="token punctuation">,</span> <span class="token keyword">string</span> projectId<span class="token punctuation">,</span> <span class="token class-name">TaskRequest</span> taskRequest<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+    </div>
+    
+    
+      <div class="relative"><a id="UpdateTaskAsync(System.String,System.String,Clockify.Net.Models.Tasks.TaskRequest)-parameters"></a></div>
+      <h4><span class="toggle-btn"></span>Parameters</h4>
+      <div class="padded-content toggle-content">
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">workspaceId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">projectId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="clockify.net.models.tasks.taskrequest.html">TaskRequest</a>
+            </span>
+            <span class="param-name">taskRequest</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+      </div>
+    
+    
+      <div class="relative"><a id="UpdateTaskAsync(System.String,System.String,Clockify.Net.Models.Tasks.TaskRequest)-returns"></a></div>
+      <h4><span class="toggle-btn"></span>Returns</h4>
+      <div class="padded-content toggle-content">
+        <span class="return-type">
+          <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1">System.Threading.Tasks.Task&lt;RestSharp.IRestResponse&lt;Clockify.Net.Models.Tasks.TaskDto&gt;&gt;</a>
+        </span>
+        <div class="doc-desc return">
+          
+        </div>
+      </div>
+    
+    
+    
+    
+  </div>
+</div>
+      
+        <div class="member-details member-method">
+  <div class="relative"><a id="UpdateTemplateAsync(System.String,System.String,Clockify.Net.Models.Templates.TemplatePatchRequest)"></a></div>
+  <h3><span class="toggle-btn"></span>UpdateTemplateAsync(string workspaceId, string timeEntryId, TemplatePatchRequest templatePatchRequest)</h3>
+  <div class="padded-content toggle-content">
+    <div class="doc-desc member">
+      <p>Updates template with id.</p>
+
+    </div>
+    <div class="declaration">
+      <pre class="language-csharp"><code class="language-csharp"><span class="token keyword">public</span> Task<span class="token operator">&lt;</span>IRestResponse<span class="token operator">&lt;</span>TemplateDto<span class="token operator">>></span> <span class="token function">UpdateTemplateAsync</span><span class="token punctuation">(</span><span class="token keyword">string</span> workspaceId<span class="token punctuation">,</span> <span class="token keyword">string</span> timeEntryId<span class="token punctuation">,</span> <span class="token class-name">TemplatePatchRequest</span> templatePatchRequest<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+    </div>
+    
+    
+      <div class="relative"><a id="UpdateTemplateAsync(System.String,System.String,Clockify.Net.Models.Templates.TemplatePatchRequest)-parameters"></a></div>
+      <h4><span class="toggle-btn"></span>Parameters</h4>
+      <div class="padded-content toggle-content">
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">workspaceId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">timeEntryId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="clockify.net.models.templates.templatepatchrequest.html">TemplatePatchRequest</a>
+            </span>
+            <span class="param-name">templatePatchRequest</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+      </div>
+    
+    
+      <div class="relative"><a id="UpdateTemplateAsync(System.String,System.String,Clockify.Net.Models.Templates.TemplatePatchRequest)-returns"></a></div>
+      <h4><span class="toggle-btn"></span>Returns</h4>
+      <div class="padded-content toggle-content">
+        <span class="return-type">
+          <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1">System.Threading.Tasks.Task&lt;RestSharp.IRestResponse&lt;Clockify.Net.Models.Templates.TemplateDto&gt;&gt;</a>
+        </span>
+        <div class="doc-desc return">
+          
+        </div>
+      </div>
+    
+    
+    
+    
+  </div>
+</div>
+      
+        <div class="member-details member-method">
+  <div class="relative"><a id="UpdateTimeEntryAsync(System.String,System.String,Clockify.Net.Models.TimeEntries.UpdateTimeEntryRequest)"></a></div>
+  <h3><span class="toggle-btn"></span>UpdateTimeEntryAsync(string workspaceId, string timeEntryId, UpdateTimeEntryRequest updateTimeEntryRequest)</h3>
+  <div class="padded-content toggle-content">
+    <div class="doc-desc member">
+      <p>Update time entry with id.</p>
+
+    </div>
+    <div class="declaration">
+      <pre class="language-csharp"><code class="language-csharp"><span class="token keyword">public</span> Task<span class="token operator">&lt;</span>IRestResponse<span class="token operator">&lt;</span>TimeEntryDtoImpl<span class="token operator">>></span> <span class="token function">UpdateTimeEntryAsync</span><span class="token punctuation">(</span><span class="token keyword">string</span> workspaceId<span class="token punctuation">,</span> <span class="token keyword">string</span> timeEntryId<span class="token punctuation">,</span> <span class="token class-name">UpdateTimeEntryRequest</span> updateTimeEntryRequest<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+    </div>
+    
+    
+      <div class="relative"><a id="UpdateTimeEntryAsync(System.String,System.String,Clockify.Net.Models.TimeEntries.UpdateTimeEntryRequest)-parameters"></a></div>
+      <h4><span class="toggle-btn"></span>Parameters</h4>
+      <div class="padded-content toggle-content">
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">workspaceId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a>
+            </span>
+            <span class="param-name">timeEntryId</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+          <div class="param-id">
+            <span class="param-type">
+              <a href="clockify.net.models.timeentries.updatetimeentryrequest.html">UpdateTimeEntryRequest</a>
+            </span>
+            <span class="param-name">updateTimeEntryRequest</span>
+          </div>
+          <div class="doc-desc parameter">
+            <p>No description.</p>
+          </div>
+        
+      </div>
+    
+    
+      <div class="relative"><a id="UpdateTimeEntryAsync(System.String,System.String,Clockify.Net.Models.TimeEntries.UpdateTimeEntryRequest)-returns"></a></div>
+      <h4><span class="toggle-btn"></span>Returns</h4>
+      <div class="padded-content toggle-content">
+        <span class="return-type">
+          <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1">System.Threading.Tasks.Task&lt;RestSharp.IRestResponse&lt;Clockify.Net.Models.TimeEntries.TimeEntryDtoImpl&gt;&gt;</a>
+        </span>
+        <div class="doc-desc return">
+          
+        </div>
+      </div>
+    
+    
+    
+    
+  </div>
+</div>
+      
+    </div>
+  
+</div>
+<script>
+  SearchHelper.setCurrent(
+    "Clockify.Net",
+    "ClockifyClient"
+  );
+</script>
+			
+		</main>
+		
+		<footer class="site-footer">
+			
+<div class="center-text">
+	
+		&copy;  . All Rights Reserved.<br/>
+	
+</div>
+
+		</footer>
+		
+	</body>
+</html>
