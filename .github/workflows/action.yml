@@ -6,7 +6,7 @@ on:
 jobs:
   generate-docs:
     runs-on: windows-latest
-    name: Generate Docs
+    name: Generate C# Docs
     steps:
       - name: Checkout
         uses: actions/checkout@v2
