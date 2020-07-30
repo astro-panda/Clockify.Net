@@ -6,7 +6,7 @@ on:
 jobs:
   generate-docs:
     runs-on: windows-latest
-    name: Generate Docs
+    name: Generate C# Docs
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -18,10 +18,10 @@ jobs:
         uses: FuLagann/csharp-docs-generator@v1.0
         with:
           build-tasks: dotnet build
-          cleanup-tasks: dotnet clean
+          cleanup-tasks: dotnet clean, cp -rf docs/* .
           binaries: Clockify.Net\bin\Debug\netstandard2.0\Clockify.Net.dll
-          output-path: docs/
-          branch-name: docs
+          output-path: docs
+          branch-name: gh-pages
           user-email: morasiu2@gmail.com
           user-name: Morasiu
           project-details-json: project-details.json
