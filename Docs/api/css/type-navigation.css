@@ -1,0 +1,51 @@
+
+/** A stylesheet for the documentation's type navigation **/
+
+ul.treeview ul.nested { padding-left: 16px; }
+ul.treeview {
+	margin: 0px;
+	padding: 0px;
+}
+
+ul.treeview,
+ul.nested { list-style-type: none; }
+
+.nested { display: none; }
+.active { display: block; }
+.caret {
+	cursor: pointer;
+	user-select: none;
+	display: block;
+	padding: 0.5rem 1rem;
+}
+
+.caret-down::before { transform: rotate(90deg); }
+.caret::before {
+	content: "\25b8  ";
+	color: black;
+	display: inline-block;
+}
+
+.end-caret {
+	user-select: none;
+	display: block;
+	padding: 0.5rem 1rem;
+	display: block;
+}
+
+.treeview li {
+	display: block;
+	border-left: 2px #ddd ridge;
+	margin-bottom: 8px;
+	padding-left: 4px;
+}
+
+.treeview li:hover {
+	border-color: #155799;
+	padding-left: 8px;
+}
+
+@media(prefers-color-scheme: dark) {
+	.caret::before { color: ghostwhite; }
+	.treeview li:hover { border-color: #f77; }
+}
