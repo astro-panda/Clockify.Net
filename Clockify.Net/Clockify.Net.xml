@@ -70,9 +70,9 @@
             Add a new client to workspace.
             </summary>
         </member>
-        <member name="M:Clockify.Net.ClockifyClient.FindAllProjectsOnWorkspaceAsync(System.String)">
+        <member name="M:Clockify.Net.ClockifyClient.FindAllProjectsOnWorkspaceAsync(System.String,System.Nullable{System.Boolean},System.String,System.Nullable{System.Boolean},System.String[],System.Nullable{System.Boolean},System.String,System.String[],System.Nullable{System.Boolean},System.String,System.Nullable{System.Boolean},System.String,System.String,System.Int32,System.Int32)">
             <summary>
-            Find projects on workspace.
+            Find projects on workspace. See Clockify docs for query params explanation.
             </summary>
         </member>
         <member name="M:Clockify.Net.ClockifyClient.CreateProjectAsync(System.String,Clockify.Net.Models.Projects.ProjectRequest)">
