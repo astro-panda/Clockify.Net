@@ -4,6 +4,8 @@ namespace Clockify.Net.Models.TimeEntries
 {
     public class TimeEntryDtoImpl
     {
+        public string ClientId { get; set; }
+        public string ClientName { get; set; }
         public bool? Billable { get; set; }
         public string Description { get; set; }
         public string Id { get; set; }
