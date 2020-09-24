@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.3.0</Version>
+    <Version>1.4.0</Version>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Description>.Net Client for Clockify</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -12,10 +12,9 @@
     <PackageTags>clockify, client, httpclient</PackageTags>
     <Authors>Morasiu</Authors>
     <Company>Code Hydra</Company>
-    <PackageReleaseNotes>
-## [1.3.0]
+    <PackageReleaseNotes>## [1.4.0] - 24.09.2020
 ### Added
-- Support for query parameter in `FindAllWorkspacesAsync()` (PR #17)</PackageReleaseNotes>
+- Property `ClientId` and `ClientName`  to the `TimeEntryDtoImpl` (PR #20)</PackageReleaseNotes>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
   </PropertyGroup>
