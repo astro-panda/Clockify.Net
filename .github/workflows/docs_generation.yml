@@ -18,9 +18,9 @@ jobs:
         uses: FuLagann/csharp-docs-generator@v1.0
         with:
           build-tasks: dotnet build
-          cleanup-tasks: dotnet clean, cp -rf docs/* .
+          cleanup-tasks: dotnet clean, cp -rf docs/api/* .
           binaries: Clockify.Net\bin\Debug\netstandard2.0\Clockify.Net.dll
-          output-path: docs
+          output-path: docs/api
           branch-name: gh-pages
           user-email: morasiu2@gmail.com
           user-name: Morasiu
