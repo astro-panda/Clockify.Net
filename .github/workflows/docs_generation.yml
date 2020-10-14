@@ -17,7 +17,7 @@ jobs:
       - name: C# Documentation Generator
         uses: FuLagann/csharp-docs-generator@v1.0
         with:
-          build-tasks: dotnet build
+          build-tasks: dotnet build .\Clockify.Net\Clockify.Net.csproj --nologo
           cleanup-tasks: dotnet clean, cp -rf docs/api/* ., ls docs/api,
           binaries: Clockify.Net\bin\Debug\netstandard2.0\Clockify.Net.dll
           output-path: docs/api/
