@@ -6,6 +6,7 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Description>.Net Client for Clockify</Description>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+	<GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageProjectUrl>https://github.com/Morasiu/Clockify.Net</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Morasiu/Clockify.Net</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -17,16 +18,6 @@
 - Property `ClientId` and `ClientName`  to the `TimeEntryDtoImpl` (PR #20)</PackageReleaseNotes>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
-	  <DocumentationFile></DocumentationFile>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
-	  <DocumentationFile></DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -44,11 +35,4 @@
   <ItemGroup>
     <Folder Include="Configuration\" />
   </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Clockify.Net.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>
