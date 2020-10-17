@@ -5,7 +5,7 @@
     <Version>1.4.0</Version>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Description>.Net Client for Clockify</Description>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/Morasiu/Clockify.Net</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Morasiu/Clockify.Net</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -20,11 +20,13 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile></DocumentationFile>
+	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
+	  <DocumentationFile></DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>D:\Projekty\Clockify.Net\Clockify.Net\Clockify.Net.xml</DocumentationFile>
+	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
+	  <DocumentationFile>D:\Projekty\Clockify.Net\Clockify.Net\Clockify.Net.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
