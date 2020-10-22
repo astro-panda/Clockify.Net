@@ -23,7 +23,7 @@ namespace Clockify.Tests.Tests
         [OneTimeSetUp]
         public async Task Setup()
         {
-			_workspaceId = await SetupHelper.CreateOrFindWorkspaceAsync(_client, "Clockify.NetTestWorkspace");
+            _workspaceId = await SetupHelper.CreateOrFindWorkspaceAsync(_client, "Clockify.NetTestWorkspace");
         }
 
         // TODO Uncomment when Clockify add deleting workspaces again
@@ -31,10 +31,10 @@ namespace Clockify.Tests.Tests
         // [OneTimeTearDown]
         // public async Task Cleanup()
         // {
-	       //  var currentUser = await _client.GetCurrentUserAsync();
-	       //  var changeResponse =
-		      //   await _client.SetActiveWorkspaceFor(currentUser.Data.Id, DefaultWorkspaceFixture.DefaultWorkspaceId);
-	       //  changeResponse.IsSuccessful.Should().BeTrue();
+        //  var currentUser = await _client.GetCurrentUserAsync();
+        //  var changeResponse =
+        //   await _client.SetActiveWorkspaceFor(currentUser.Data.Id, DefaultWorkspaceFixture.DefaultWorkspaceId);
+        //  changeResponse.IsSuccessful.Should().BeTrue();
         //     var workspaceResponse = await _client.DeleteWorkspaceAsync(_workspaceId);
         //     workspaceResponse.IsSuccessful.Should().BeTrue();
         // }
@@ -133,10 +133,28 @@ namespace Clockify.Tests.Tests
         public async Task DeleteProjectAsync_ShouldDeleteProject()
         {
             // Create project to delete
-            var projectRequest = new ProjectRequest {Name = "DeleteProjectTest", Color = "#FFFFFF"};
+            var projectRequest = new ProjectRequest { Name = "DeleteProjectTest", Color = "#FFFFFF" };
             var response = await _client.CreateProjectAsync(_workspaceId, projectRequest);
             response.IsSuccessful.Should().BeTrue();
             var projectId = response.Data.Id;
+
+            // Delete project
+            var del = await _client.DeleteProjectAsync(_workspaceId, projectId);
+            del.IsSuccessful.Should().BeTrue();
+        }
+
+        [Test]
+        public async Task FindProjectByIdAsync_ShouldReturnProjectImplDto()
+        {
+            // Create project to be found
+            var projectRequest = new ProjectRequest { Name = "FindProjectByIdTest", Color = "#FFFFFF" };
+            var response = await _client.CreateProjectAsync(_workspaceId, projectRequest);
+            response.IsSuccessful.Should().BeTrue();
+            var projectId = response.Data.Id;
+
+            // Find project
+            var find = await _client.FindProjectByIdAsync(_workspaceId, projectId);
+            find.IsSuccessful.Should().BeTrue();
 
             // Delete project
             var del = await _client.DeleteProjectAsync(_workspaceId, projectId);
