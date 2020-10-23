@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Clockify.Net;
 using Clockify.Net.Models.TimeEntries;
-using Clockify.Net.Models.Workspaces;
 using Clockify.Tests.Helpers;
 using FluentAssertions;
 using FluentAssertions.Extensions;
