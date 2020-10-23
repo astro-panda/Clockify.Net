@@ -79,6 +79,9 @@ namespace Clockify.Tests.Tests
             var createResult = await _client.CreateTemplatesAsync(_workspaceId, templatePatchRequest);
             createResult.IsSuccessful.Should().BeTrue();
             createResult.Data.Should().NotBeNull();
+
+            var deleteProject = await _client.DeleteProjectAsync(_workspaceId, projectId);
+            deleteProject.IsSuccessful.Should().BeTrue();
         }
 
         [Test]
@@ -115,6 +118,9 @@ namespace Clockify.Tests.Tests
             var getResponse = await _client.GetTemplateAsync(_workspaceId, createResult.Data.First().Id);
             getResponse.IsSuccessful.Should().BeTrue();
             getResponse.Data.Should().BeEquivalentTo(createResult.Data.First());
+
+            var deleteProject = await _client.DeleteProjectAsync(_workspaceId, projectId);
+            deleteProject.IsSuccessful.Should().BeTrue();
         }
 
         [Test]
@@ -155,6 +161,9 @@ namespace Clockify.Tests.Tests
 
             getResponse.IsSuccessful.Should().BeTrue();
             getResponse.Data.Should().BeEquivalentTo(templateDto);
+
+            var deleteProject = await _client.DeleteProjectAsync(_workspaceId, projectId);
+            deleteProject.IsSuccessful.Should().BeTrue();
         }
 
         [Test]
@@ -191,6 +200,9 @@ namespace Clockify.Tests.Tests
             var deleteResponse = await _client.DeleteTemplateAsync(_workspaceId, createResult.Data.First().Id);
             deleteResponse.IsSuccessful.Should().BeTrue();
             deleteResponse.Data.Should().BeEquivalentTo(createResult.Data.First());
+
+            var deleteProject = await _client.DeleteProjectAsync(_workspaceId, projectId);
+            deleteProject.IsSuccessful.Should().BeTrue();
         }
 
         [Test]

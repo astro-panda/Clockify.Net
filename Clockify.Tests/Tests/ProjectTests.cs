@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Clockify.Net;
 using Clockify.Net.Models.Estimates;
 using Clockify.Net.Models.Projects;
-using Clockify.Net.Models.Workspaces;
 using Clockify.Tests.Helpers;
 using FluentAssertions;
 using NUnit.Framework;
@@ -61,6 +60,9 @@ namespace Clockify.Tests.Tests
             var findResult = await _client.FindAllProjectsOnWorkspaceAsync(_workspaceId);
             findResult.IsSuccessful.Should().BeTrue();
             findResult.Data.Should().ContainEquivalentOf(createResult.Data);
+
+            var deleteProject = await _client.DeleteProjectAsync(_workspaceId, createResult.Data.Id);
+            deleteProject.IsSuccessful.Should().BeTrue();
         }
 
         [Test]
@@ -80,6 +82,9 @@ namespace Clockify.Tests.Tests
             var findResult = await _client.FindAllProjectsOnWorkspaceAsync(_workspaceId);
             findResult.IsSuccessful.Should().BeTrue();
             findResult.Data.Should().ContainEquivalentOf(createResult.Data);
+
+            var deleteProject = await _client.DeleteProjectAsync(_workspaceId, createResult.Data.Id);
+            deleteProject.IsSuccessful.Should().BeTrue();
         }
 
         [Test]
@@ -99,6 +104,9 @@ namespace Clockify.Tests.Tests
             var findResult = await _client.FindAllProjectsOnWorkspaceAsync(_workspaceId);
             findResult.IsSuccessful.Should().BeTrue();
             findResult.Data.Should().ContainEquivalentOf(createResult.Data);
+
+            var deleteProject = await _client.DeleteProjectAsync(_workspaceId, createResult.Data.Id);
+            deleteProject.IsSuccessful.Should().BeTrue();
         }
 
         [Test]
