@@ -85,6 +85,11 @@
             Delete project with Id.
             </summary>
         </member>
+        <member name="M:Clockify.Net.ClockifyClient.FindProjectByIdAsync(System.String,System.String)">
+            <summary>
+            Find project with Id.
+            </summary>
+        </member>
         <member name="M:Clockify.Net.ClockifyClient.FindAllTagsOnWorkspaceAsync(System.String)">
             <summary>
             Find tags on workspace.

@@ -280,7 +280,16 @@ namespace Clockify.Net
             return _experimentalClient.ExecuteAsync(request, Method.DELETE);
         }
 
-        #endregion
+		/// <summary>
+		/// Find project with Id.
+		/// </summary>
+		public Task<IRestResponse> FindProjectByIdAsync(string workspaceId, string id)
+        {
+			var request = new RestRequest($"workspaces/{workspaceId}/projects/{id}");
+			return _experimentalClient.ExecuteAsync(request, Method.GET);
+        }
+
+		#endregion
 
         #region Tags
 
