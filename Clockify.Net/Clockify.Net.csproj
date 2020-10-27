@@ -2,22 +2,33 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.4.0</Version>
+    <Version>1.5.0</Version>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Description>.Net Client for Clockify</Description>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-	<GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/Morasiu/Clockify.Net</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Morasiu/Clockify.Net</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>clockify, client, httpclient</PackageTags>
     <Authors>Morasiu</Authors>
     <Company>Code Hydra</Company>
-    <PackageReleaseNotes>## [1.4.0] - 24.09.2020
+    <PackageReleaseNotes>
+## [1.5.0] - 27.10.2020
+
 ### Added
-- Property `ClientId` and `ClientName`  to the `TimeEntryDtoImpl` (PR #20)</PackageReleaseNotes>
+- Method `FindProjectByIdAsync` to `ClockifyClient`
+- Method `FindAllTimeEntriesForProjectAsync` to `ClockifyClient`</PackageReleaseNotes>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile></DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile></DocumentationFile>
+    <NoWarn>1701;1702;1591;1572;1571;1573;1587;1570;</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -35,4 +46,11 @@
   <ItemGroup>
     <Folder Include="Configuration\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Clockify.Net.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

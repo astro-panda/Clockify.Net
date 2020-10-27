@@ -1,7 +1,6 @@
 using System.Net;
 using System.Threading.Tasks;
 using Clockify.Net;
-using Clockify.Net.Models.Workspaces;
 using Clockify.Tests.Helpers;
 using FluentAssertions;
 using NUnit.Framework;

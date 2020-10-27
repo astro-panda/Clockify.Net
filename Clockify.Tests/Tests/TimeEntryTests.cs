@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Clockify.Net;
+using Clockify.Net.Models.Projects;
 using Clockify.Net.Models.TimeEntries;
-using Clockify.Net.Models.Workspaces;
 using Clockify.Tests.Helpers;
 using FluentAssertions;
 using FluentAssertions.Extensions;
@@ -79,7 +80,7 @@ namespace Clockify.Tests.Tests
             var timeEntryRequest = new TimeEntryRequest
             {
                 Start = now,
-                Description = ""
+                Description = Guid.NewGuid().ToString()
             };
             var createResult = await _client.CreateTimeEntryAsync(_workspaceId, timeEntryRequest);
             createResult.IsSuccessful.Should().BeTrue();
@@ -117,7 +118,7 @@ namespace Clockify.Tests.Tests
         [Test]
         public async Task UpdateTimeEntryAsync_NullStart_ShouldThrowArgumentException()
         {
-            var updateTimeEntryRequest = new UpdateTimeEntryRequest()
+            var updateTimeEntryRequest = new UpdateTimeEntryRequest 
             {
                 Start = null,
             };
@@ -129,7 +130,7 @@ namespace Clockify.Tests.Tests
         [Test]
         public async Task UpdateTimeEntryAsync_NullBillable_ShouldThrowArgumentException()
         {
-            var updateTimeEntryRequest = new UpdateTimeEntryRequest()
+            var updateTimeEntryRequest = new UpdateTimeEntryRequest 
             {
                 Start = DateTimeOffset.UtcNow,
                 Billable = null
@@ -145,7 +146,8 @@ namespace Clockify.Tests.Tests
             var now = DateTimeOffset.UtcNow;
             var timeEntryRequest = new TimeEntryRequest
             {
-                Start = now,
+	            Start = now,
+                Description = Guid.NewGuid().ToString(),
             };
             var createResult = await _client.CreateTimeEntryAsync(_workspaceId, timeEntryRequest);
             createResult.IsSuccessful.Should().BeTrue();
@@ -200,6 +202,76 @@ namespace Clockify.Tests.Tests
 
             response.IsSuccessful.Should().BeTrue();
             response.Data.Should().Contain(timeEntry => timeEntry.Id.Equals(createResult.Data.Id));
+        }
+
+        [Test]
+        public async Task FindAllTimeEntriesForProjectAsync_ShouldReturnTimeEntryDtoImplList()
+        {
+            // Create project
+            var projectRequest = new ProjectRequest
+            {
+                Name = "FindAllTimeEntriesForProjectAsync " + Guid.NewGuid(),
+                Color = "#FF00FF"
+            };
+            var createProject =await _client.CreateProjectAsync(_workspaceId,projectRequest);
+            createProject.IsSuccessful.Should().BeTrue();
+            createProject.Data.Should().NotBeNull();
+
+            ProjectDtoImpl project = createProject.Data;
+
+
+            // Create TimeEntries
+            var now = DateTimeOffset.UtcNow;
+            var timeEntry1Request = new TimeEntryRequest
+            {
+                ProjectId = project.Id,
+                Start = now,
+                End = now.AddMinutes(2),
+                Description = "TimeEntry1"
+            };
+
+            var addTimeEntry1 = await _client.CreateTimeEntryAsync(_workspaceId, timeEntry1Request);
+            addTimeEntry1.IsSuccessful.Should().BeTrue();
+            addTimeEntry1.Data.Should().NotBeNull();
+
+            TimeEntryDtoImpl timeEntry1 = addTimeEntry1.Data;
+
+            var timeEntry2Request = new TimeEntryRequest
+            {
+                ProjectId = project.Id,
+                Start = now.AddDays(-1),
+                End = now.AddMinutes(3),
+                Description = "TimeEntry2"
+            };
+
+
+            var addTimeEntry2 = await _client.CreateTimeEntryAsync(_workspaceId, timeEntry2Request);
+            addTimeEntry2.IsSuccessful.Should().BeTrue();
+            addTimeEntry2.Data.Should().NotBeNull();
+
+            TimeEntryDtoImpl timeEntry2 = addTimeEntry2.Data;
+
+
+            // Send request
+
+            var response = await _client.FindAllTimeEntriesForProjectAsync(_workspaceId, projectId: project.Id, start: DateTimeOffset.Now.AddDays(-1),
+                end: DateTimeOffset.Now.AddDays(1));
+            //response.IsSuccessful.Should().BeTrue();
+            response.Data.Should().NotBeNull();
+
+            List<TimeEntryDtoImpl> responseContent = response.Data as List<TimeEntryDtoImpl>;
+
+            responseContent.Should().Contain(timeEntry => timeEntry.Id.Equals(addTimeEntry1.Data.Id));
+            responseContent.Should().Contain(timeEntry => timeEntry.Id.Equals(addTimeEntry2.Data.Id));
+
+
+            // Delete created Entities
+            
+            var deleteTimeEntry1 = await _client.DeleteTimeEntryAsync(_workspaceId, addTimeEntry1.Data.Id);
+            var deleteTimeEntry2 = await _client.DeleteTimeEntryAsync(_workspaceId, addTimeEntry2.Data.Id);
+
+            var deleteProject = await _client.DeleteProjectAsync(_workspaceId,createProject.Data.Id);
+            
         }
     }
 }
