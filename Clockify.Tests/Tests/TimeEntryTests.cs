@@ -7,7 +7,6 @@ using Clockify.Net.Models.TimeEntries;
 using Clockify.Tests.Helpers;
 using FluentAssertions;
 using FluentAssertions.Extensions;
-using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace Clockify.Tests.Tests
@@ -119,7 +118,7 @@ namespace Clockify.Tests.Tests
         [Test]
         public async Task UpdateTimeEntryAsync_NullStart_ShouldThrowArgumentException()
         {
-            var updateTimeEntryRequest = new UpdateTimeEntryRequest()
+            var updateTimeEntryRequest = new UpdateTimeEntryRequest 
             {
                 Start = null,
             };
@@ -131,7 +130,7 @@ namespace Clockify.Tests.Tests
         [Test]
         public async Task UpdateTimeEntryAsync_NullBillable_ShouldThrowArgumentException()
         {
-            var updateTimeEntryRequest = new UpdateTimeEntryRequest()
+            var updateTimeEntryRequest = new UpdateTimeEntryRequest 
             {
                 Start = DateTimeOffset.UtcNow,
                 Billable = null
@@ -147,7 +146,7 @@ namespace Clockify.Tests.Tests
             var now = DateTimeOffset.UtcNow;
             var timeEntryRequest = new TimeEntryRequest
             {
-                Start = now,
+	            Start = now,
             };
             var createResult = await _client.CreateTimeEntryAsync(_workspaceId, timeEntryRequest);
             createResult.IsSuccessful.Should().BeTrue();
@@ -208,9 +207,9 @@ namespace Clockify.Tests.Tests
         public async Task FindAllTimeEntriesForProjectAsync_ShouldReturnTimeEntryDtoImplList()
         {
             // Create project
-            var projectRequest = new Net.Models.Projects.ProjectRequest
+            var projectRequest = new ProjectRequest
             {
-                Name = "FindAllTimeEntriesForProjectAsync",
+                Name = "FindAllTimeEntriesForProjectAsync " + Guid.NewGuid(),
                 Color = "#FF00FF"
             };
             var createProject =await _client.CreateProjectAsync(_workspaceId,projectRequest);
