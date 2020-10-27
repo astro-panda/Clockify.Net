@@ -533,10 +533,10 @@ namespace Clockify.Net
         /// </summary>
         public async Task<IRestResponse<IEnumerable<TimeEntryDtoImpl>>> FindAllTimeEntriesForProjectAsync(
             string workspaceId,
+            string projectId,
             string description = null,
             DateTimeOffset? start = null,
             DateTimeOffset? end = null,
-            string projectId = null,
             string task = null,
             bool? projectRequired = null,
             bool? taskRequired = null,
