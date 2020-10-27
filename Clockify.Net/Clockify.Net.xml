@@ -155,6 +155,11 @@
             Get hydrated time entries for current user on specified workspace. See Clockify docs for query params explanation.
             </summary>
         </member>
+        <member name="M:Clockify.Net.ClockifyClient.FindAllTimeEntriesForProjectAsync(System.String,System.String,System.String,System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset},System.String,System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Int32,System.Int32)">
+            <summary>
+            Get all time entries for a project.
+            </summary>
+        </member>
         <member name="P:Clockify.Net.Models.Projects.ProjectRequest.Color">
             <summary>
             Should be in HEX "#FF00FF"

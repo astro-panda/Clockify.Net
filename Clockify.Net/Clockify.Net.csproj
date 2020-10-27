@@ -27,7 +27,8 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>D:\Projekty\Clockify.Net\Clockify.Net\Clockify.Net.xml</DocumentationFile>
+    <DocumentationFile></DocumentationFile>
+    <NoWarn>1701;1702;1591;1572;1571;1573;1587;1570;</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
