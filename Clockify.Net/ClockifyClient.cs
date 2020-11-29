@@ -23,7 +23,7 @@ namespace Clockify.Net
     public class ClockifyClient
     {
         private const string BaseUrl = "https://api.clockify.me/api/v1";
-        private const string ExperimentalApiUrl = "https://api.clockify.me/api/";
+        private const string ExperimentalApiUrl = "https://global.api.clockify.me/";
         private const string ApiKeyHeaderName = "X-Api-Key";
         private const string ApiKeyVariableName = "CAPI_KEY";
         private IRestClient _client;
@@ -424,6 +424,19 @@ namespace Clockify.Net
         }
 
         /// <summary>
+        /// Ends the current time entry in the workspace.
+        /// </summary>
+        public Task<IRestResponse> EndTimeEntryAsync(string workspaceId)
+        {
+            var jsonObject = new Newtonsoft.Json.Linq.JObject();
+            // you can explicitly add values here using class interface
+            jsonObject.Add("end", DateTime.Now);
+            var request = new RestRequest($"workspaces/{workspaceId}/timeEntries/endStarted", Method.PUT);
+            request.AddJsonBody(jsonObject);
+            return _experimentalClient.ExecuteAsync(request);
+        }
+
+        /// <summary>
         /// Get time entry from. workspace. See Clockify docs for query params explanation.
         /// </summary>
         public Task<IRestResponse<TimeEntryDtoImpl>> GetTimeEntryAsync(
@@ -606,7 +619,7 @@ namespace Clockify.Net
 
             _experimentalClient = new RestClient(ExperimentalApiUrl);
             _experimentalClient.AddDefaultHeader(ApiKeyHeaderName, apiKey);
-            _client.UseNewtonsoftJson(jsonSerializerSettings);
+            _experimentalClient.UseNewtonsoftJson(jsonSerializerSettings);
         }
 
         #endregion
