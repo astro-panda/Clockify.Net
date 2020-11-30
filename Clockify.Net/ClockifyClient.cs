@@ -23,7 +23,7 @@ namespace Clockify.Net
     public class ClockifyClient
     {
         private const string BaseUrl = "https://api.clockify.me/api/v1";
-        private const string ExperimentalApiUrl = "https://global.api.clockify.me/";
+        private const string ExperimentalApiUrl = "https://api.clockify.me/api/";
         private const string ApiKeyHeaderName = "X-Api-Key";
         private const string ApiKeyVariableName = "CAPI_KEY";
         private IRestClient _client;
