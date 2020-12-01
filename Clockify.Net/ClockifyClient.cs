@@ -424,6 +424,21 @@ namespace Clockify.Net
         }
 
         /// <summary>
+        /// Add a new time entry to workspace foranother user. If end is not sent in request means that stopwatch mode is active, otherwise time entry is manually added.
+        /// </summary>
+        public Task<IRestResponse<TimeEntryDtoImpl>> CreateTimeEntryForAnotherUserAsync(string workspaceId, TimeEntryRequest timeEntryRequest)
+        {
+            if (timeEntryRequest == null) { throw new ArgumentNullException(nameof(timeEntryRequest)); }
+            if (timeEntryRequest.Start == null) { throw new ArgumentNullException(nameof(timeEntryRequest.Start)); }
+            if (timeEntryRequest.UserId == null) { throw new ArgumentNullException(nameof(timeEntryRequest.UserId)); }
+
+            var request = new RestRequest($"workspaces/{workspaceId}/user/{timeEntryRequest.UserId}/time-entries", Method.POST);
+            request.AddJsonBody(timeEntryRequest);
+            return _client.ExecutePostAsync<TimeEntryDtoImpl>(request);
+        }
+
+
+        /// <summary>
         /// Get time entry from. workspace. See Clockify docs for query params explanation.
         /// </summary>
         public Task<IRestResponse<TimeEntryDtoImpl>> GetTimeEntryAsync(
