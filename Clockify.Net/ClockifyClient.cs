@@ -424,7 +424,7 @@ namespace Clockify.Net
         }
 
         /// <summary>
-        /// Add a new time entry to workspace foranother user. If end is not sent in request means that stopwatch mode is active, otherwise time entry is manually added.
+        /// Add a new time entry to workspace for another user. If end is not sent in request means that stopwatch mode is active, otherwise time entry is manually added.
         /// </summary>
         public Task<IRestResponse<TimeEntryDtoImpl>> CreateTimeEntryForAnotherUserAsync(string workspaceId, TimeEntryRequest timeEntryRequest)
         {

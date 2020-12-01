@@ -72,9 +72,10 @@ namespace Clockify.Tests.Tests
             var timeEntryRequest = new TimeEntryRequest
             {
                 Start = now,
+                End = now.AddHours(1),
                 UserId = response.Data.Id // Using my own user for testing
             };
-            var createResult = await _client.CreateTimeEntryAsync(_workspaceId, timeEntryRequest);
+            var createResult = await _client.CreateTimeEntryForAnotherUserAsync(_workspaceId, timeEntryRequest);
             createResult.IsSuccessful.Should().BeTrue();
             createResult.Data.Should().NotBeNull();
             createResult.Data.TimeInterval.Start.Should().BeCloseTo(now, 1.Seconds());
