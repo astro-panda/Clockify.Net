@@ -54,6 +54,7 @@ namespace Clockify.Tests.Tests
             var timeEntryRequest = new TimeEntryRequest
             {
                 Start = now,
+                End = now.AddSeconds(1),
             };
             var createResult = await _client.CreateTimeEntryAsync(_workspaceId, timeEntryRequest);
             createResult.IsSuccessful.Should().BeTrue();
@@ -80,6 +81,7 @@ namespace Clockify.Tests.Tests
             var timeEntryRequest = new TimeEntryRequest
             {
                 Start = now,
+                End = now.AddSeconds(1),
                 Description = Guid.NewGuid().ToString()
             };
             var createResult = await _client.CreateTimeEntryAsync(_workspaceId, timeEntryRequest);
@@ -100,6 +102,7 @@ namespace Clockify.Tests.Tests
             var timeEntryRequest = new TimeEntryRequest
             {
                 Start = now,
+                End = now.AddSeconds(1),
             };
             var createResult = await _client.CreateTimeEntryAsync(_workspaceId, timeEntryRequest);
             createResult.IsSuccessful.Should().BeTrue();
@@ -147,6 +150,7 @@ namespace Clockify.Tests.Tests
             var timeEntryRequest = new TimeEntryRequest
             {
 	            Start = now,
+                End = now.AddSeconds(1),
                 Description = Guid.NewGuid().ToString(),
             };
             var createResult = await _client.CreateTimeEntryAsync(_workspaceId, timeEntryRequest);
@@ -164,6 +168,7 @@ namespace Clockify.Tests.Tests
             var timeEntryRequest = new TimeEntryRequest
             {
                 Start = now,
+                End = now.AddSeconds(1),
                 Description = ""
             };
             var createResult = await _client.CreateTimeEntryAsync(_workspaceId, timeEntryRequest);
@@ -188,6 +193,7 @@ namespace Clockify.Tests.Tests
             var timeEntryRequest = new TimeEntryRequest
             {
                 Start = now,
+                End = now.AddSeconds(1),
             };
             var createResult = await _client.CreateTimeEntryAsync(_workspaceId, timeEntryRequest);
             createResult.IsSuccessful.Should().BeTrue();
@@ -261,8 +267,8 @@ namespace Clockify.Tests.Tests
 
             List<TimeEntryDtoImpl> responseContent = response.Data as List<TimeEntryDtoImpl>;
 
-            responseContent.Should().Contain(timeEntry => timeEntry.Id.Equals(addTimeEntry1.Data.Id));
-            responseContent.Should().Contain(timeEntry => timeEntry.Id.Equals(addTimeEntry2.Data.Id));
+            responseContent.Should().Contain(timeEntry => timeEntry.Id.Equals(timeEntry1.Id));
+            responseContent.Should().Contain(timeEntry => timeEntry.Id.Equals(timeEntry2.Id));
 
 
             // Delete created Entities
