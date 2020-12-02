@@ -430,7 +430,7 @@ namespace Clockify.Net
         {
             if (timeEntryRequest == null) { throw new ArgumentNullException(nameof(timeEntryRequest)); }
             if (timeEntryRequest.Start == null) { throw new ArgumentNullException(nameof(timeEntryRequest.Start)); }
-            if (timeEntryRequest.UserId == null) { throw new ArgumentNullException(nameof(timeEntryRequest.UserId)); }
+            if (userId == null) { throw new ArgumentNullException(nameof(timeEntryRequest.UserId)); }
 
             var request = new RestRequest($"workspaces/{workspaceId}/user/{userId}/time-entries", Method.POST);
             request.AddJsonBody(timeEntryRequest);
