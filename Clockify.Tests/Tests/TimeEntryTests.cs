@@ -63,6 +63,27 @@ namespace Clockify.Tests.Tests
         }
 
         [Test]
+        public async Task CreateTimeEntryAsyncForAnotherUser_ShouldCreteTimeEntryAndReturnTimeEntryDtoImpl()
+        {
+            var response = await _client.GetCurrentUserAsync();
+            response.IsSuccessful.Should().BeTrue();
+            response.Data.Should().NotBeNull();
+
+            var now = DateTimeOffset.UtcNow;
+            var timeEntryRequest = new TimeEntryRequest
+            {
+                Start = now,
+                End = now.AddHours(1)
+                
+            };
+            var userId = response.Data.Id; // Using my own user for testing
+            var createResult = await _client.CreateTimeEntryForAnotherUserAsync(_workspaceId, userId, timeEntryRequest);
+            createResult.IsSuccessful.Should().BeTrue();
+            createResult.Data.Should().NotBeNull();
+            createResult.Data.TimeInterval.Start.Should().BeCloseTo(now, 1.Seconds());
+        }
+
+        [Test]
         public async Task CreateTimeEntryAsync_NullStart_ShouldThrowArgumentException()
         {
             var timeEntryRequest = new TimeEntryRequest
