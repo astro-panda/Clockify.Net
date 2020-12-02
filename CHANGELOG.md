@@ -7,7 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.6.0] - ???
+## [1.7.0] - ???
+
+
+## [1.6.0] - 02.12.2020
+
+### Added
+- Method `CreateTimeEntryForAnotherUserAsync` to `ClockifyClient`
 
 
 ## [1.5.0] - 27.10.2020

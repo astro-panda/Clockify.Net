@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace Clockify.Net.Models.Estimates
+﻿namespace Clockify.Net.Models.Estimates
 {
     public class EstimateRequest
     {

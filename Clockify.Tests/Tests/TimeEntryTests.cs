@@ -292,13 +292,11 @@ namespace Clockify.Tests.Tests
             responseContent.Should().Contain(timeEntry => timeEntry.Id.Equals(timeEntry2.Id));
 
 
-            // Delete created Entities
-            
-            var deleteTimeEntry1 = await _client.DeleteTimeEntryAsync(_workspaceId, addTimeEntry1.Data.Id);
-            var deleteTimeEntry2 = await _client.DeleteTimeEntryAsync(_workspaceId, addTimeEntry2.Data.Id);
+            // Clean up
+            await _client.DeleteTimeEntryAsync(_workspaceId, addTimeEntry1.Data.Id);
+            await _client.DeleteTimeEntryAsync(_workspaceId, addTimeEntry2.Data.Id);
+            await _client.DeleteProjectAsync(_workspaceId,createProject.Data.Id);
 
-            var deleteProject = await _client.DeleteProjectAsync(_workspaceId,createProject.Data.Id);
-            
         }
     }
 }
