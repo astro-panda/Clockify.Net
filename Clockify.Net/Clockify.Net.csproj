@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.5.0</Version>
+    <Version>1.6.0</Version>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Description>.Net Client for Clockify</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -12,12 +12,10 @@
     <PackageTags>clockify, client, httpclient</PackageTags>
     <Authors>Morasiu</Authors>
     <Company>Code Hydra</Company>
-    <PackageReleaseNotes>
-## [1.5.0] - 27.10.2020
+    <PackageReleaseNotes>## [1.6.0] - 02.12.2020
 
 ### Added
-- Method `FindProjectByIdAsync` to `ClockifyClient`
-- Method `FindAllTimeEntriesForProjectAsync` to `ClockifyClient`</PackageReleaseNotes>
+- Method `CreateTimeEntryForAnotherUserAsync` to `ClockifyClient`</PackageReleaseNotes>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
   </PropertyGroup>

@@ -54,8 +54,30 @@ namespace Clockify.Tests.Tests
             var timeEntryRequest = new TimeEntryRequest
             {
                 Start = now,
+                End = now.AddSeconds(1),
             };
             var createResult = await _client.CreateTimeEntryAsync(_workspaceId, timeEntryRequest);
+            createResult.IsSuccessful.Should().BeTrue();
+            createResult.Data.Should().NotBeNull();
+            createResult.Data.TimeInterval.Start.Should().BeCloseTo(now, 1.Seconds());
+        }
+
+        [Test]
+        public async Task CreateTimeEntryAsyncForAnotherUser_ShouldCreteTimeEntryAndReturnTimeEntryDtoImpl()
+        {
+            var response = await _client.GetCurrentUserAsync();
+            response.IsSuccessful.Should().BeTrue();
+            response.Data.Should().NotBeNull();
+
+            var now = DateTimeOffset.UtcNow;
+            var timeEntryRequest = new TimeEntryRequest
+            {
+                Start = now,
+                End = now.AddHours(1)
+                
+            };
+            var userId = response.Data.Id; // Using my own user for testing
+            var createResult = await _client.CreateTimeEntryForAnotherUserAsync(_workspaceId, userId, timeEntryRequest);
             createResult.IsSuccessful.Should().BeTrue();
             createResult.Data.Should().NotBeNull();
             createResult.Data.TimeInterval.Start.Should().BeCloseTo(now, 1.Seconds());
@@ -80,6 +102,7 @@ namespace Clockify.Tests.Tests
             var timeEntryRequest = new TimeEntryRequest
             {
                 Start = now,
+                End = now.AddSeconds(1),
                 Description = Guid.NewGuid().ToString()
             };
             var createResult = await _client.CreateTimeEntryAsync(_workspaceId, timeEntryRequest);
@@ -100,6 +123,7 @@ namespace Clockify.Tests.Tests
             var timeEntryRequest = new TimeEntryRequest
             {
                 Start = now,
+                End = now.AddSeconds(1),
             };
             var createResult = await _client.CreateTimeEntryAsync(_workspaceId, timeEntryRequest);
             createResult.IsSuccessful.Should().BeTrue();
@@ -147,6 +171,7 @@ namespace Clockify.Tests.Tests
             var timeEntryRequest = new TimeEntryRequest
             {
 	            Start = now,
+                End = now.AddSeconds(1),
                 Description = Guid.NewGuid().ToString(),
             };
             var createResult = await _client.CreateTimeEntryAsync(_workspaceId, timeEntryRequest);
@@ -164,6 +189,7 @@ namespace Clockify.Tests.Tests
             var timeEntryRequest = new TimeEntryRequest
             {
                 Start = now,
+                End = now.AddSeconds(1),
                 Description = ""
             };
             var createResult = await _client.CreateTimeEntryAsync(_workspaceId, timeEntryRequest);
@@ -188,6 +214,7 @@ namespace Clockify.Tests.Tests
             var timeEntryRequest = new TimeEntryRequest
             {
                 Start = now,
+                End = now.AddSeconds(1),
             };
             var createResult = await _client.CreateTimeEntryAsync(_workspaceId, timeEntryRequest);
             createResult.IsSuccessful.Should().BeTrue();
@@ -261,17 +288,15 @@ namespace Clockify.Tests.Tests
 
             List<TimeEntryDtoImpl> responseContent = response.Data as List<TimeEntryDtoImpl>;
 
-            responseContent.Should().Contain(timeEntry => timeEntry.Id.Equals(addTimeEntry1.Data.Id));
-            responseContent.Should().Contain(timeEntry => timeEntry.Id.Equals(addTimeEntry2.Data.Id));
+            responseContent.Should().Contain(timeEntry => timeEntry.Id.Equals(timeEntry1.Id));
+            responseContent.Should().Contain(timeEntry => timeEntry.Id.Equals(timeEntry2.Id));
 
 
-            // Delete created Entities
-            
-            var deleteTimeEntry1 = await _client.DeleteTimeEntryAsync(_workspaceId, addTimeEntry1.Data.Id);
-            var deleteTimeEntry2 = await _client.DeleteTimeEntryAsync(_workspaceId, addTimeEntry2.Data.Id);
+            // Clean up
+            await _client.DeleteTimeEntryAsync(_workspaceId, addTimeEntry1.Data.Id);
+            await _client.DeleteTimeEntryAsync(_workspaceId, addTimeEntry2.Data.Id);
+            await _client.DeleteProjectAsync(_workspaceId,createProject.Data.Id);
 
-            var deleteProject = await _client.DeleteProjectAsync(_workspaceId,createProject.Data.Id);
-            
         }
     }
 }

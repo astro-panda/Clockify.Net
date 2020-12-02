@@ -17,7 +17,7 @@ namespace Clockify.Tests.Fixtures
 			// RestClient setup
 	        var client = new RestClient();
 			var apiKey = Environment.GetEnvironmentVariable("CAPI_KEY");
-			client.AddDefaultHeader("X-Api-Key", apiKey);
+			client.AddDefaultHeader("X-Api-Key", apiKey ?? throw new InvalidOperationException());
 
 			var workspaces = client.Get<List<WorkspaceDto>>(new RestRequest(BaseUrl + "/workspaces"));
 			var defaultWorkspace = workspaces.Data.SingleOrDefault(w => w.Name == DefaultWorkspaceName);

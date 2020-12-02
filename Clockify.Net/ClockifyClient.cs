@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 using System.Threading.Tasks;
 using Clockify.Net.Models.Clients;
 using Clockify.Net.Models.Estimates;
@@ -263,7 +261,7 @@ namespace Clockify.Net
             if (projectRequest == null) { throw new ArgumentNullException(nameof(projectRequest)); }
             if (projectRequest.Name == null) throw new ArgumentNullException(nameof(projectRequest.Name));
             if (projectRequest.Color == null) throw new ArgumentNullException(nameof(projectRequest.Color));
-            if (projectRequest.Estimate != null && (projectRequest.Estimate.Type == null || !Enum.IsDefined(typeof(EstimateType), projectRequest.Estimate.Type)))
+            if (projectRequest.Estimate != null && !Enum.IsDefined(typeof(EstimateType), projectRequest.Estimate.Type))
                 throw new ArgumentOutOfRangeException(nameof(projectRequest.Estimate.Type));
 
             var request = new RestRequest($"workspaces/{workspaceId}/projects", Method.POST);
@@ -422,6 +420,21 @@ namespace Clockify.Net
             request.AddJsonBody(timeEntryRequest);
             return _client.ExecutePostAsync<TimeEntryDtoImpl>(request);
         }
+
+        /// <summary>
+        /// Add a new time entry to workspace for another user. If end is not sent in request means that stopwatch mode is active, otherwise time entry is manually added.
+        /// </summary>
+        public Task<IRestResponse<TimeEntryDtoImpl>> CreateTimeEntryForAnotherUserAsync(string workspaceId, string userId, TimeEntryRequest timeEntryRequest)
+        {
+            if (timeEntryRequest == null) { throw new ArgumentNullException(nameof(timeEntryRequest)); }
+            if (timeEntryRequest.Start == null) { throw new ArgumentNullException(nameof(timeEntryRequest.Start)); }
+            if (string.IsNullOrEmpty(userId)) { throw new ArgumentNullException(nameof(userId)); }
+
+            var request = new RestRequest($"workspaces/{workspaceId}/user/{userId}/time-entries", Method.POST);
+            request.AddJsonBody(timeEntryRequest);
+            return _client.ExecutePostAsync<TimeEntryDtoImpl>(request);
+        }
+
 
         /// <summary>
         /// Get time entry from. workspace. See Clockify docs for query params explanation.
