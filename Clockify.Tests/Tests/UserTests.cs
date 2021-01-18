@@ -53,9 +53,22 @@ namespace Clockify.Tests.Tests
         }
 
         [Test]
-        public async Task FindAllUsersOnWorkspace_GoodWorkspace_ShouldReturnCurrentUser()
+        public async Task FindAllUsersOnWorkspace_GoodWorkspace_ShouldReturnCurrentUsers()
         {
             var response = await _client.FindAllUsersOnWorkspaceAsync(_workspaceId);
+            response.IsSuccessful.Should().BeTrue();
+            response.Data.Should().NotBeNullOrEmpty();
+        }
+
+        /// <summary>
+        /// Only shows different results in comparsion to (FindAllUsersOnWorkspace_GoodWorkspace_ShouldReturnCurrentUsers)
+        /// if more han 50 users are available in clockify
+        /// </summary>
+        /// <returns></returns>
+        [Test]
+        public async Task FindAllUsersOnWorkspace_GoodWorkspace_ShouldReturnCurrentUsersWithExtendedPageSize()
+        {
+            var response = await _client.FindAllUsersOnWorkspaceAsync(_workspaceId,1,10000);
             response.IsSuccessful.Should().BeTrue();
             response.Data.Should().NotBeNullOrEmpty();
         }
