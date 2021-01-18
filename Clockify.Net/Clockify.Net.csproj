@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.6.0</Version>
+    <Version>1.7.0</Version>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Description>.Net Client for Clockify</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -16,8 +16,6 @@
 
 ### Added
 - Method `CreateTimeEntryForAnotherUserAsync` to `ClockifyClient`</PackageReleaseNotes>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

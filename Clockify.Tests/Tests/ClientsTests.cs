@@ -54,5 +54,18 @@ namespace Clockify.Tests.Tests
             var workspaceResponse = await _client.FindAllClientsOnWorkspaceAsync(_workspaceId);
             workspaceResponse.IsSuccessful.Should().BeTrue();
         }
+
+
+        /// <summary>
+        /// Only shows different results in comparsion to (FindAllClientsOnWorkspaceAsync_ShouldReturnClientsList)
+        /// if more han 50 clients are available in clockify
+        /// </summary>
+        /// <returns></returns>
+        [Test]
+        public async Task FindAllClientsOnWorkspaceAsync_ShouldReturnClientsListWithExtendedPageSize()
+        {
+            var workspaceResponse = await _client.FindAllClientsOnWorkspaceAsync(_workspaceId,1,10000);
+            workspaceResponse.IsSuccessful.Should().BeTrue();
+        }
     }
 }

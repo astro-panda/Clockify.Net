@@ -121,9 +121,13 @@ namespace Clockify.Net
         /// <summary>
         /// Find all users on workspace
         /// </summary>
-        public Task<IRestResponse<List<UserDto>>> FindAllUsersOnWorkspaceAsync(string workspaceId)
+        public Task<IRestResponse<List<UserDto>>> FindAllUsersOnWorkspaceAsync(string workspaceId,int page=1,int pageSize = 50)
         {
             var request = new RestRequest($"workspaces/{workspaceId}/users");
+            
+            request.AddQueryParameter(nameof(page), page.ToString());
+            request.AddQueryParameter("page-size", pageSize.ToString());
+
             return _client.ExecuteGetAsync<List<UserDto>>(request);
         }
 
@@ -186,9 +190,13 @@ namespace Clockify.Net
         /// <summary>
         /// Find clients on workspace
         /// </summary>
-        public Task<IRestResponse<List<ClientDto>>> FindAllClientsOnWorkspaceAsync(string workspaceId)
+        public Task<IRestResponse<List<ClientDto>>> FindAllClientsOnWorkspaceAsync(string workspaceId,int page=1,int pageSize=50)
         {
             var request = new RestRequest($"workspaces/{workspaceId}/clients");
+
+            request.AddQueryParameter(nameof(page), page.ToString());
+            request.AddQueryParameter("page-size", pageSize.ToString());
+
             return _client.ExecuteGetAsync<List<ClientDto>>(request);
         }
 

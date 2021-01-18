@@ -7,8 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.7.0] - ???
+## [1.x.x] - ???
 
+## [1.7.0] - 18.01.2020
+- Added support for paging in `FindAllUsersOnWorkspaceAsync`
+- Added support for paging in `FindAllClientsOnWorkspaceAsync`
 
 ## [1.6.0] - 02.12.2020
 
