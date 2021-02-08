@@ -606,10 +606,17 @@ namespace Clockify.Net
 
         #region Private methods
 
+        private static void OnError(object source, ErrorEventArgs e)
+        {
+            Console.WriteLine(("The file system watcher experienced an internal buffer overflow: " + e.ErrorContext.Error.Message));
+            int mk = 0;
+        }
+
         private void InitClients(string apiKey)
         {
             var jsonSerializerSettings = new JsonSerializerSettings()
             {
+                Error = OnError,
                 Converters = new List<JsonConverter>
                 {
                     new StringEnumConverter(),
@@ -622,8 +629,14 @@ namespace Clockify.Net
             };
 
             _client = new RestClient(BaseUrl);
+
+            _client.ThrowOnAnyError = true;
+            _client.ThrowOnDeserializationError = true;
+
             _client.AddDefaultHeader(ApiKeyHeaderName, apiKey);
             _client.UseNewtonsoftJson(jsonSerializerSettings);
+
+
 
             _experimentalClient = new RestClient(ExperimentalApiUrl);
             _experimentalClient.AddDefaultHeader(ApiKeyHeaderName, apiKey);

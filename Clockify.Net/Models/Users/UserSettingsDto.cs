@@ -2,7 +2,10 @@
 {
     public class UserSettingsDto
     {
+        public string WeekStart { get; set; }
         public bool? CollapseAllProjectLists { get; set; }
+        public bool? GroupSimilarEntriesDisabled { get; set; }
+        public string MyStartOfDay { get; set; }
         public bool? DashboardPinToTop { get; set; }
         public DashboardSelection? DashboardSelection { get; set; }
         public DashboardViewType? DashboardViewType { get; set; }

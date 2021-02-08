@@ -4,6 +4,7 @@
     {
         Active,
         PendingEmailVerification,
-        Deleted
+        Deleted,
+        Not_registered
     }
 }
