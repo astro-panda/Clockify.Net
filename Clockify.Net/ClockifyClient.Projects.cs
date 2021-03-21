@@ -76,7 +76,7 @@ namespace Clockify.Net
         public Task<IRestResponse> DeleteProjectAsync(string workspaceId, string id)
         {
             var request = new RestRequest($"workspaces/{workspaceId}/projects/{id}");
-            return _experimentalClient.ExecuteAsync(request, Method.DELETE);
+            return _client.ExecuteAsync(request, Method.DELETE);
         }
 
         /// <summary>
@@ -86,6 +86,16 @@ namespace Clockify.Net
         {
             var request = new RestRequest($"workspaces/{workspaceId}/projects/{id}");
             return _experimentalClient.ExecuteAsync(request, Method.GET);
+        }
+        
+        /// <summary>
+        /// Update project on workspace.
+        /// </summary>
+        public Task<IRestResponse<ProjectDtoImpl>> UpdateProjectAsync(string workspaceId, string projectId, ProjectUpdateRequest project)
+        {
+            var request = new RestRequest($"workspaces/{workspaceId}/projects/{projectId}");
+            request.AddJsonBody(project);
+            return _client.ExecuteAsync<ProjectDtoImpl>(request, Method.PUT);
         }
     }
 }

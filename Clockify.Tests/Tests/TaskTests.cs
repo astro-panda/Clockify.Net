@@ -50,7 +50,7 @@ namespace Clockify.Tests.Tests
             var response = await _client.FindAllTasksAsync(_workspaceId, projectId);
             response.IsSuccessful.Should().BeTrue();
 
-            var deleteProject = await _client.DeleteProjectAsync(_workspaceId, createResult.Data.Id);
+            var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, projectId);
             deleteProject.IsSuccessful.Should().BeTrue();
         }
 
@@ -75,7 +75,7 @@ namespace Clockify.Tests.Tests
             findResult.IsSuccessful.Should().BeTrue();
             findResult.Data.Should().ContainEquivalentOf(createResult.Data);
 
-            var deleteProject = await _client.DeleteProjectAsync(_workspaceId, projectId);
+            var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, projectId);
             deleteProject.IsSuccessful.Should().BeTrue();
         }
 
@@ -126,7 +126,7 @@ namespace Clockify.Tests.Tests
             findResult2.IsSuccessful.Should().BeTrue();
             findResult2.Data.Should().ContainEquivalentOf(updateResult.Data);
 
-            var deleteProject = await _client.DeleteProjectAsync(_workspaceId, projectId);
+            var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, projectId);
             deleteProject.IsSuccessful.Should().BeTrue();
         }
 
@@ -158,7 +158,7 @@ namespace Clockify.Tests.Tests
             findResult2.IsSuccessful.Should().BeTrue();
             findResult2.Data.Should().BeEmpty();
 
-            var deleteProject = await _client.DeleteProjectAsync(_workspaceId, projectId);
+            var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, projectId);
             deleteProject.IsSuccessful.Should().BeTrue();
         }
     }

@@ -9,9 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.x.x] - ???
 
+## [1.8.0] - 21.03.2021
+
+### Added
+- Method `UpdateProjectAsync` to `ClockifyClient`
+
 ## [1.7.0] - 18.01.2020
-- Added support for paging in `FindAllUsersOnWorkspaceAsync`
-- Added support for paging in `FindAllClientsOnWorkspaceAsync`
+
+### Added
+- Support for paging in `FindAllUsersOnWorkspaceAsync`
+- Support for paging in `FindAllClientsOnWorkspaceAsync`
 
 ## [1.6.0] - 02.12.2020
 
