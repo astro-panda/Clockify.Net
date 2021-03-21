@@ -12,10 +12,11 @@
     <PackageTags>clockify, client, httpclient</PackageTags>
     <Authors>Morasiu</Authors>
     <Company>Code Hydra</Company>
-    <PackageReleaseNotes>## [1.6.0] - 02.12.2020
+    <PackageReleaseNotes>## [1.8.0] - 21.03.2021
 
 ### Added
-- Method `CreateTimeEntryForAnotherUserAsync` to `ClockifyClient`</PackageReleaseNotes>
+- Method `UpdateProjectAsync` to `ClockifyClient`</PackageReleaseNotes>
+    <PackageVersion>1.8.0</PackageVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
