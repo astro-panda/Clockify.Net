@@ -61,7 +61,7 @@ namespace Clockify.Tests.Tests
             findResult.IsSuccessful.Should().BeTrue();
             findResult.Data.Should().ContainEquivalentOf(createResult.Data);
 
-            var deleteProject = await _client.DeleteProjectAsync(_workspaceId, createResult.Data.Id);
+            var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, createResult.Data.Id);
             deleteProject.IsSuccessful.Should().BeTrue();
         }
 
@@ -83,7 +83,7 @@ namespace Clockify.Tests.Tests
             findResult.IsSuccessful.Should().BeTrue();
             findResult.Data.Should().ContainEquivalentOf(createResult.Data);
 
-            var deleteProject = await _client.DeleteProjectAsync(_workspaceId, createResult.Data.Id);
+            var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, createResult.Data.Id);
             deleteProject.IsSuccessful.Should().BeTrue();
         }
 
@@ -105,7 +105,7 @@ namespace Clockify.Tests.Tests
             findResult.IsSuccessful.Should().BeTrue();
             findResult.Data.Should().ContainEquivalentOf(createResult.Data);
 
-            var deleteProject = await _client.DeleteProjectAsync(_workspaceId, createResult.Data.Id);
+            var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, createResult.Data.Id);
             deleteProject.IsSuccessful.Should().BeTrue();
         }
 
@@ -141,21 +141,24 @@ namespace Clockify.Tests.Tests
         public async Task DeleteProjectAsync_ShouldDeleteProject()
         {
             // Create project to delete
-            var projectRequest = new ProjectRequest { Name = "DeleteProjectTest", Color = "#FFFFFF" };
+            var projectRequest = new ProjectRequest { Name = "DeleteProjectTest " + Guid.NewGuid(), Color = "#FFFFFF" };
             var response = await _client.CreateProjectAsync(_workspaceId, projectRequest);
             response.IsSuccessful.Should().BeTrue();
             var projectId = response.Data.Id;
-
+            // Archive project
+            var projectUpdateRequest = new ProjectUpdateRequest {Archived = true};
+            var archiveProjectResponse = await _client.UpdateProjectAsync(_workspaceId, projectId, projectUpdateRequest);
+            archiveProjectResponse.IsSuccessful.Should().BeTrue();
             // Delete project
             var del = await _client.DeleteProjectAsync(_workspaceId, projectId);
             del.IsSuccessful.Should().BeTrue();
         }
-
+        
         [Test]
         public async Task FindProjectByIdAsync_ShouldReturnProjectImplDto()
         {
             // Create project to be found
-            var projectRequest = new ProjectRequest { Name = "FindProjectByIdTest", Color = "#FFFFFF" };
+            var projectRequest = new ProjectRequest { Name = "FindProjectByIdTest " + Guid.NewGuid(), Color = "#FFFFFF" };
             var response = await _client.CreateProjectAsync(_workspaceId, projectRequest);
             response.IsSuccessful.Should().BeTrue();
             var projectId = response.Data.Id;
@@ -165,8 +168,41 @@ namespace Clockify.Tests.Tests
             find.IsSuccessful.Should().BeTrue();
 
             // Delete project
-            var del = await _client.DeleteProjectAsync(_workspaceId, projectId);
-            del.IsSuccessful.Should().BeTrue();
+            var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, projectId);
+            deleteProject.IsSuccessful.Should().BeTrue();
+        }
+        
+        [Test]
+        public async Task UpdateProjectAsync_ShouldUpdateProjectAndReturnProjectImplDto()
+        {
+            var projectRequest = new ProjectRequest
+            {
+                Name = "Test project " + Guid.NewGuid(),
+                Color = "#FF00FF"
+            };
+            var createResult = await _client.CreateProjectAsync(_workspaceId, projectRequest);
+            createResult.IsSuccessful.Should().BeTrue();
+            createResult.Data.Should().NotBeNull();
+
+            var projectUpdateRequest = new ProjectUpdateRequest {
+                Name = "Updated project " + Guid.NewGuid(),
+                Archived = true,
+                Billable = true,
+                Color = "#000000",
+                Note = "Test note" + Guid.NewGuid(),
+                IsPublic = true
+            };
+            var updateProjectAsync = await _client.UpdateProjectAsync(_workspaceId, createResult.Data.Id, projectUpdateRequest);
+            updateProjectAsync.IsSuccessful.Should().BeTrue();
+            updateProjectAsync.Data.Name.Should().Be(projectUpdateRequest.Name);
+            updateProjectAsync.Data.Archived.Should().Be(projectUpdateRequest.Archived);
+            updateProjectAsync.Data.Billable.Should().Be(projectUpdateRequest.Billable);
+            updateProjectAsync.Data.Color.Should().Be(projectUpdateRequest.Color);
+            updateProjectAsync.Data.Note.Should().Be(projectUpdateRequest.Note);
+            updateProjectAsync.Data.Public.Should().Be(projectUpdateRequest.IsPublic);
+
+            var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, createResult.Data.Id);
+            deleteProject.IsSuccessful.Should().BeTrue();
         }
     }
 }
