@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.x.x] - ???
 
+## [1.8.1] - 21.03.2021
+
+### Fixed
+- Issue #38 - Now UserStatus enum is deserialized correctly
+
 ## [1.8.0] - 21.03.2021
 
 ### Added

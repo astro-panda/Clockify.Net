@@ -1,9 +1,18 @@
-﻿namespace Clockify.Net.Models.Users
+﻿using System.Runtime.Serialization;
+
+namespace Clockify.Net.Models.Users
 {
     public enum UserStatus
     {
+        [EnumMember(Value = "ACTIVE")]
         Active,
+        [EnumMember(Value = "PENDING_EMAIL_VERIFICATION")]
         PendingEmailVerification,
-        Deleted
+        [EnumMember(Value = "DELETED")]
+        Deleted,
+        [EnumMember(Value = "DECLINED")]
+        Declined,
+        [EnumMember(Value = "INACTIVE")]
+        Inactive
     }
 }
