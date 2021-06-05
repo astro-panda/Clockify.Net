@@ -14,6 +14,8 @@ namespace Clockify.Net.Models.Projects
         public string Color { get; set; }
         public string Duration { get; set; }
         public EstimateDto Estimate { get; set; }
+        public BudgetEstimateDto BudgetEstimate { get; set; }
+        public TimeEstimateDto TimeEstimate { get; set; }
         public HourlyRateDto HourlyRate { get; set; }
         public string Id { get; set; }
         public List<MembershipDto> Memberships { get; set; }

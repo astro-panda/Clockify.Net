@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Threading.Tasks;
 using Clockify.Net;
 using Clockify.Net.Models.Estimates;
@@ -201,6 +202,107 @@ namespace Clockify.Tests.Tests
             updateProjectAsync.Data.Note.Should().Be(projectUpdateRequest.Note);
             updateProjectAsync.Data.Public.Should().Be(projectUpdateRequest.IsPublic);
 
+            var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, createResult.Data.Id);
+            deleteProject.IsSuccessful.Should().BeTrue();
+        }
+        
+        [Test]
+        public async Task UpdateProjectTimeEstimateAsync_ShouldUpdateProjectTimeEstimateAndReturnProjectImplDtoWithActiveTimeEstimate()
+        {
+            var projectRequest = new ProjectRequest
+            {
+                Name = "Test project " + Guid.NewGuid(),
+                Color = "#FF00FF"
+            };
+            var createResult = await _client.CreateProjectAsync(_workspaceId, projectRequest);
+            createResult.IsSuccessful.Should().BeTrue();
+            createResult.Data.Should().NotBeNull();
+
+            var estimateUpdateRequest = new EstimateUpdateRequest {
+                TimeEstimate = new TimeEstimateRequest
+                {
+                    Type = EstimateType.Manual,
+                    Active = true,
+                    Estimate = "PT10H30M0S",
+                    ResetOption = ResetOptionType.Monthly
+                }
+            };
+            var updateProjectAsync = await _client.UpdateProjectEstimatesAsync(_workspaceId, createResult.Data.Id, estimateUpdateRequest);
+            updateProjectAsync.IsSuccessful.Should().BeTrue();
+            updateProjectAsync.Data.TimeEstimate.Active.Should().Be(true);
+            updateProjectAsync.Data.TimeEstimate.ResetOption.Should().Be(ResetOptionType.Monthly);
+            
+            var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, createResult.Data.Id);
+            deleteProject.IsSuccessful.Should().BeTrue();
+        }
+        
+        [Test]
+        public async Task UpdateProjectBudgetEstimateAsync_ShouldUpdateProjectBudgetEstimateAndReturnProjectImplDtoWithActiveBudgetEstimate()
+        {
+            var projectRequest = new ProjectRequest
+            {
+                Name = "Test project " + Guid.NewGuid(),
+                Color = "#FF00FF"
+            };
+            var createResult = await _client.CreateProjectAsync(_workspaceId, projectRequest);
+            createResult.IsSuccessful.Should().BeTrue();
+            createResult.Data.Should().NotBeNull();
+
+            var estimateUpdateRequest = new EstimateUpdateRequest {
+                BudgetEstimate = new BudgetEstimateRequest
+                {
+                    Type = EstimateType.Manual,
+                    Active = true,
+                    Estimate = 10
+                }
+            };
+            var updateProjectAsync = await _client.UpdateProjectEstimatesAsync(_workspaceId, createResult.Data.Id, estimateUpdateRequest);
+            if (!updateProjectAsync.IsSuccessful && updateProjectAsync.StatusCode == HttpStatusCode.Forbidden)
+            {
+                await TestContext.Out.WriteLineAsync("Budget estimate update unsuccessful and forbidden. Pro subscription required to test.");
+                return;
+            }
+            
+            updateProjectAsync.IsSuccessful.Should().BeTrue();
+            updateProjectAsync.Data.TimeEstimate.Active.Should().Be(true);
+            updateProjectAsync.Data.TimeEstimate.ResetOption.Should().Be(null);
+            
+            var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, createResult.Data.Id);
+            deleteProject.IsSuccessful.Should().BeTrue();
+        }
+        
+        [Test]
+        public async Task UpdateProjectTimeAndBudgetEstimatesAsync_ShouldThrowArgumentException()
+        {
+            var projectRequest = new ProjectRequest
+            {
+                Name = "Test project " + Guid.NewGuid(),
+                Color = "#FF00FF"
+            };
+            var createResult = await _client.CreateProjectAsync(_workspaceId, projectRequest);
+            createResult.IsSuccessful.Should().BeTrue();
+            createResult.Data.Should().NotBeNull();
+
+            var estimateUpdateRequest = new EstimateUpdateRequest {
+                TimeEstimate = new TimeEstimateRequest
+                {
+                    Type = EstimateType.Manual,
+                    Active = true,
+                    Estimate = "PT1H0M0S",
+                    ResetOption = ResetOptionType.Monthly
+                },
+                BudgetEstimate = new BudgetEstimateRequest
+                {
+                    Type = EstimateType.Manual,
+                    Active = true,
+                    Estimate = 10
+                }
+            };
+            
+            Func<Task> update = async () => await _client.UpdateProjectEstimatesAsync(_workspaceId, createResult.Data.Id, estimateUpdateRequest);
+            await update.Should().ThrowAsync<ArgumentException>()
+                .WithMessage($"{nameof(BudgetEstimateRequest)} and {nameof(TimeEstimateRequest)} cannot both be active.");
+            
             var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, createResult.Data.Id);
             deleteProject.IsSuccessful.Should().BeTrue();
         }
