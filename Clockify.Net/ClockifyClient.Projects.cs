@@ -115,10 +115,10 @@ namespace Clockify.Net
         /// <summary>
         /// Update memberships on a project.
         /// </summary>
-        public Task<IRestResponse<ProjectDtoImpl>> UpdateProjectMembershipsAsync(string workspaceId, string projectId, IReadOnlyCollection<MembershipRequest> membershipRequests)
+        public Task<IRestResponse<ProjectDtoImpl>> UpdateProjectMembershipsAsync(string workspaceId, string projectId, UpdateMembershipsRequest updateMembershipsRequest)
         {
             var request = new RestRequest($"/workspaces/{workspaceId}/projects/{projectId}/memberships");
-            request.AddJsonBody(membershipRequests);
+            request.AddJsonBody(updateMembershipsRequest);
             return _client.ExecuteAsync<ProjectDtoImpl>(request, Method.PATCH);
         }
     }

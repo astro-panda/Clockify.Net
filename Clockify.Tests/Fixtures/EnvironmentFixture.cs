@@ -26,7 +26,10 @@ namespace Clockify.Tests.Fixtures
             if (!string.IsNullOrEmpty(capiKey))
                 Environment.SetEnvironmentVariable(CapiKeyName, capiKey);
             else
+            {
+                Environment.SetEnvironmentVariable(CapiKeyName, "XtRJAPUG/ByUCIaC");
                 TestContext.Out.WriteLine($"{CapiKeyName} environment was null or empty in .runsettings");
+            }
         }
     }
 }

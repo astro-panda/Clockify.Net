@@ -1,8 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Clockify.Net;
+using Clockify.Net.Models.Clients;
 using Clockify.Net.Models.Estimates;
+using Clockify.Net.Models.HourlyRates;
+using Clockify.Net.Models.Memberships;
 using Clockify.Net.Models.Projects;
 using Clockify.Tests.Helpers;
 using FluentAssertions;
@@ -304,6 +309,42 @@ namespace Clockify.Tests.Tests
                 .WithMessage($"{nameof(BudgetEstimateRequest)} and {nameof(TimeEstimateRequest)} cannot both be active.");
             
             var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, createResult.Data.Id);
+            deleteProject.IsSuccessful.Should().BeTrue();
+        }
+        
+        [Test]
+        public async Task UpdateProjectMembershipsAsync_ShouldUpdateProjectMembershipsAndReturnProjectImplDtoWithAdditionalMembers()
+        {
+            var projectRequest = new ProjectRequest
+            {
+                Name = "Test project " + Guid.NewGuid(),
+                Color = "#FF00FF"
+            };
+            var createProjectResult = await _client.CreateProjectAsync(_workspaceId, projectRequest);
+            createProjectResult.IsSuccessful.Should().BeTrue();
+            createProjectResult.Data.Should().NotBeNull();
+
+            var allUsers = await _client.FindAllUsersOnWorkspaceAsync(_workspaceId);
+            var updateMembershipRequests = new UpdateMembershipsRequest
+            {
+                Memberships = allUsers.Data.Select(x =>
+                    new UpdateMembershipRequest
+                    {
+                        UserId = x.ID,
+                        HourlyRate = new HourlyRateRequest
+                        {
+                            Amount = 100,
+                        }
+                    }).ToArray()
+            };
+            
+            var updateProjectAsync = await _client.UpdateProjectMembershipsAsync(_workspaceId, createProjectResult.Data.Id, updateMembershipRequests);
+            
+            updateProjectAsync.IsSuccessful.Should().BeTrue();
+            updateProjectAsync.Data.Memberships.First().HourlyRate.Amount.Should().Be(100);
+            updateProjectAsync.Data.Memberships.Count.Should().Be(allUsers.Data.Count);
+
+            var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, createProjectResult.Data.Id);
             deleteProject.IsSuccessful.Should().BeTrue();
         }
     }
