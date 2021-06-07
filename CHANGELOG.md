@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.x.x] - ???
 
+## [1.9.0] - 07.06.2021
+
+### Added
+- Method `UpdateProjectEstimatesAsync` to `ClockifyClient`
+- Method `UpdateProjectMembershipsAsync` to `ClockifyClient`
+
+
 ## [1.8.1] - 21.03.2021
 
 ### Fixed
