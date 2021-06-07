@@ -90,6 +90,16 @@
             Find project with Id.
             </summary>
         </member>
+        <member name="M:Clockify.Net.ClockifyClient.UpdateProjectEstimatesAsync(System.String,System.String,Clockify.Net.Models.Estimates.EstimateUpdateRequest)">
+            <summary>
+            Update estimates assigned to a project.
+            </summary>
+        </member>
+        <member name="M:Clockify.Net.ClockifyClient.UpdateProjectMembershipsAsync(System.String,System.String,Clockify.Net.Models.Memberships.UpdateMembershipsRequest)">
+            <summary>
+            Update memberships assigned to a project.
+            </summary>
+        </member>
         <member name="M:Clockify.Net.ClockifyClient.FindAllTagsOnWorkspaceAsync(System.String)">
             <summary>
             Find tags on workspace.

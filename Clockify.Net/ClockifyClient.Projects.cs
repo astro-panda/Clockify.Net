@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Clockify.Net.Models.Estimates;
+using Clockify.Net.Models.Memberships;
 using Clockify.Net.Models.Projects;
 using RestSharp;
 
@@ -96,6 +97,29 @@ namespace Clockify.Net
             var request = new RestRequest($"workspaces/{workspaceId}/projects/{projectId}");
             request.AddJsonBody(project);
             return _client.ExecuteAsync<ProjectDtoImpl>(request, Method.PUT);
+        }
+        
+        /// <summary>
+        /// Update estimates on a project.
+        /// </summary>
+        public Task<IRestResponse<ProjectDtoImpl>> UpdateProjectEstimatesAsync(string workspaceId, string projectId, EstimateUpdateRequest estimateUpdateRequest)
+        {
+            if (estimateUpdateRequest.BudgetEstimate?.Active == true &&
+                estimateUpdateRequest.TimeEstimate?.Active == true) throw new ArgumentException($"{nameof(BudgetEstimateRequest)} and {nameof(TimeEstimateRequest)} cannot both be active.");
+            
+            var request = new RestRequest($"/workspaces/{workspaceId}/projects/{projectId}/estimate");
+            request.AddJsonBody(estimateUpdateRequest);
+            return _client.ExecuteAsync<ProjectDtoImpl>(request, Method.PATCH);
+        }
+        
+        /// <summary>
+        /// Update memberships on a project.
+        /// </summary>
+        public Task<IRestResponse<ProjectDtoImpl>> UpdateProjectMembershipsAsync(string workspaceId, string projectId, UpdateMembershipsRequest updateMembershipsRequest)
+        {
+            var request = new RestRequest($"/workspaces/{workspaceId}/projects/{projectId}/memberships");
+            request.AddJsonBody(updateMembershipsRequest);
+            return _client.ExecuteAsync<ProjectDtoImpl>(request, Method.PATCH);
         }
     }
 }
