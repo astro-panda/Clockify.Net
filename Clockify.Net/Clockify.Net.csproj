@@ -12,11 +12,10 @@
     <PackageTags>clockify, client, httpclient</PackageTags>
     <Authors>Morasiu</Authors>
     <Company>Code Hydra</Company>
-    <PackageReleaseNotes>## [1.8.1] - 21.03.2021
-
-### Fixed
-- Issue #38 - Now UserStatus enum is deserialized correctly</PackageReleaseNotes>
-    <PackageVersion></PackageVersion>
+    <PackageReleaseNotes>### Added
+- Method `UpdateProjectEstimatesAsync` to `ClockifyClient`
+- Method `UpdateProjectMembershipsAsync` to `ClockifyClient`</PackageReleaseNotes>
+    <PackageVersion>1.9.0</PackageVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
