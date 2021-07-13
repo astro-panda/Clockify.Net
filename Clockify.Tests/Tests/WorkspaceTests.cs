@@ -1,7 +1,9 @@
 using System;
+using System.Net;
 using System.Threading.Tasks;
 using Clockify.Net;
 using Clockify.Net.Models.Workspaces;
+using Clockify.Tests.Helpers;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -39,11 +41,30 @@ namespace Clockify.Tests.Tests
             // var id = response.Data.Id;
             //var currentUser = await _client.GetCurrentUserAsync();
             //var changeWorkspaceResponse =
-	           // await _client.SetActiveWorkspaceFor(currentUser.Data.Id, DefaultWorkspaceFixture.DefaultWorkspaceId);
+                  // await _client.SetActiveWorkspaceFor(currentUser.Data.Id, DefaultWorkspaceFixture.DefaultWorkspaceId);
             //changeWorkspaceResponse.IsSuccessful.Should().BeTrue();
             // var del = await _client.DeleteWorkspaceAsync(id);
             //
             // del.IsSuccessful.Should().BeTrue();
+        }
+
+        /// <summary>
+        /// The example.com domain was used here because it was created for
+        /// this purpose. See https://en.wikipedia.org/wiki/Example.com.
+        /// </summary>
+        /// <returns></returns>
+        [Test]
+        public async Task AddUserToWorkspace_ShouldReturnWorkspaceSettings()
+        {
+            string _workspaceId = await SetupHelper.CreateOrFindWorkspaceAsync(_client, "Clockify.NetTestWorkspace");
+
+            var request = new WorkspaceAddUserRequest
+            {
+                Email = Guid.NewGuid() + "@example.com",
+            };
+
+            var response = await _client.AddWorkspaceUser(_workspaceId, request);
+            response.StatusCode.Equals(HttpStatusCode.Created);
         }
     }
 }
