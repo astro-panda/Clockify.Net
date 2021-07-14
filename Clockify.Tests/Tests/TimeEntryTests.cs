@@ -295,7 +295,7 @@ namespace Clockify.Tests.Tests
 
             // Send request
 
-            var response = await _client.FindAllTimeEntriesForProjectAsync(_workspaceId, projectId: project.Id, start: DateTimeOffset.Now.AddDays(-1),
+            var response = await _client.FindAllTimeEntriesForProjectAsync(_workspaceId, projectId: project.Id, start: DateTimeOffset.Now.AddDays(-2),
                 end: DateTimeOffset.Now.AddDays(1));
             //response.IsSuccessful.Should().BeTrue();
             response.Data.Should().NotBeNull();
