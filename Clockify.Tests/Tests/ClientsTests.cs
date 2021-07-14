@@ -67,5 +67,22 @@ namespace Clockify.Tests.Tests
             var workspaceResponse = await _client.FindAllClientsOnWorkspaceAsync(_workspaceId,1,10000);
             workspaceResponse.IsSuccessful.Should().BeTrue();
         }
+
+        [Test]
+        public async Task UpdateClientNameOnWorkspace_ShouldReturnClientUpdateDto()
+        {
+            var clientRequest = new ClientRequest { Name = "Test add client " + Guid.NewGuid() };
+            var createResult = await _client.CreateClientAsync(_workspaceId, clientRequest);
+            createResult.IsSuccessful.Should().BeTrue();
+            createResult.Data.Should().NotBeNull();
+
+            string updatedClientName = "Test update client " + Guid.NewGuid();
+
+            var updateClientNameRequest = new ClientName { Name = updatedClientName };
+            var updateClientNameResponse = await _client.UpdateClientNameAsync(_workspaceId, createResult.Data.Id, updateClientNameRequest);
+            updateClientNameResponse.IsSuccessful.Should().BeTrue();
+            updateClientNameResponse.Data.Should().NotBeNull();
+            updateClientNameResponse.Data.Name.Should().Match(updatedClientName);
+        }
     }
 }
