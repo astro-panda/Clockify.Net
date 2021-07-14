@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Clockify.Net;
 using Clockify.Net.Models.Projects;
+using Clockify.Net.Models.Tags;
 using Clockify.Net.Models.TimeEntries;
 using Clockify.Tests.Helpers;
 using FluentAssertions;
@@ -185,15 +186,25 @@ namespace Clockify.Tests.Tests
         [Test]
         public async Task FindAllTimeEntriesForUserAsync_ShouldReturnTimeEntryDtoImplList()
         {
+            var tagRequest = new TagRequest
+            {
+                Name = "Test tag " + Guid.NewGuid(),
+            };
+            var createTagResult = await _client.CreateTagAsync(_workspaceId, tagRequest);
+            createTagResult.IsSuccessful.Should().BeTrue();
+            createTagResult.Data.Should().NotBeNull();
+
             var now = DateTimeOffset.UtcNow;
             var timeEntryRequest = new TimeEntryRequest
             {
                 Start = now,
                 End = now.AddSeconds(1),
-                Description = ""
+                Description = "",
+                TagIds = new List<string>() { createTagResult.Data.Id }
             };
-            var createResult = await _client.CreateTimeEntryAsync(_workspaceId, timeEntryRequest);
-            createResult.IsSuccessful.Should().BeTrue();
+
+            var createTimEntryResult = await _client.CreateTimeEntryAsync(_workspaceId, timeEntryRequest);
+            createTimEntryResult.IsSuccessful.Should().BeTrue();
 
             var userResponse = await _client.GetCurrentUserAsync();
             userResponse.IsSuccessful.Should().BeTrue();
@@ -204,7 +215,10 @@ namespace Clockify.Tests.Tests
 	            end: DateTimeOffset.Now.AddDays(1));
 
             response.IsSuccessful.Should().BeTrue();
-            response.Data.Should().ContainEquivalentOf(createResult.Data);
+            response.Data.Should().ContainEquivalentOf(createTimEntryResult.Data);
+
+            // Clean up
+            await _client.DeleteTimeEntryAsync(_workspaceId, createTimEntryResult.Data.Id);
         }
         
         [Test]
