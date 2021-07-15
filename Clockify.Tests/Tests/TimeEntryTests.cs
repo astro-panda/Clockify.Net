@@ -224,11 +224,25 @@ namespace Clockify.Tests.Tests
         [Test]
         public async Task FindAllHydratedTimeEntriesForUserAsync_ShouldReturnHydratedTimeEntryDtoImplList()
         {
+            // Create project
+            var projectRequest = new ProjectRequest
+            {
+                Name = "FindAllTimeEntriesForProjectAsync " + Guid.NewGuid(),
+                Color = "#FF00FF",
+                HourlyRate = new Net.Models.HourlyRates.HourlyRateRequest { Amount = 1234 }
+            };
+            var createProject = await _client.CreateProjectAsync(_workspaceId, projectRequest);
+            createProject.IsSuccessful.Should().BeTrue();
+            createProject.Data.Should().NotBeNull();
+
+            ProjectDtoImpl project = createProject.Data;
+
             var now = DateTimeOffset.UtcNow;
             var timeEntryRequest = new TimeEntryRequest
             {
                 Start = now,
                 End = now.AddSeconds(1),
+                ProjectId = project.Id
             };
             var createResult = await _client.CreateTimeEntryAsync(_workspaceId, timeEntryRequest);
             createResult.IsSuccessful.Should().BeTrue();
