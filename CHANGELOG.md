@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.x.x] - ???
 
-## [1.10.0] - ???
+## [1.10.0] - 15.07.2021
 
 ### Added
 - Support for tags in `FindAllTimeEntriesForUserAsync`
