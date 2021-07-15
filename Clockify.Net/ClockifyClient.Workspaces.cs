@@ -36,5 +36,16 @@ namespace Clockify.Net
             var request = new RestRequest($"workspaces/{id}");
             return _experimentalClient.ExecuteAsync(request, Method.DELETE);
         }
+
+        /// <summary>
+        /// Adds a user to workspace.
+        /// </summary>
+        public Task<IRestResponse<List<WorkspaceDto>>> AddWorkspaceUser(string workspaceId, WorkspaceAddUserRequest requestBody)
+        {
+            var request = new RestRequest($"/workspaces/{workspaceId}/users");
+            request.AddJsonBody(requestBody);
+
+            return _client.ExecuteAsync<List<WorkspaceDto>>(request, Method.POST);
+        }
     }
 }

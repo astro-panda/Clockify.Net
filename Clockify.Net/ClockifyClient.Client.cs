@@ -32,5 +32,17 @@ namespace Clockify.Net
             request.AddJsonBody(clientRequest);
             return _client.ExecutePostAsync<ClientDto>(request);
         }
+
+        /// <summary>
+        /// Update a client's name on workspace.
+        /// </summary>
+        public Task<IRestResponse<ClientUpdateDto>> UpdateClientNameAsync(string workspaceId, string clientId, ClientName clientName)
+        {
+            if (clientName == null) { throw new ArgumentNullException(nameof(clientName)); }
+
+            var request = new RestRequest($"workspaces/{workspaceId}/clients/{clientId}", Method.PUT);
+            request.AddJsonBody(clientName);
+            return _client.ExecuteAsync<ClientUpdateDto>(request);
+        }
     }
 }

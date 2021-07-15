@@ -93,7 +93,8 @@ namespace Clockify.Net
             bool? hydrated = null,
             bool? inProgress = null,
             int page = 1,
-            int pageSize = 50)
+            int pageSize = 50,
+            List<string> tags = null)
         {
             var request = new RestRequest($"workspaces/{workspaceId}/user/{userId}/time-entries");
 
@@ -107,6 +108,13 @@ namespace Clockify.Net
             if (considerDurationFormat != null) { request.AddQueryParameter("consider-duration-format", considerDurationFormat.ToString()); }
             if (hydrated != null) { request.AddQueryParameter(nameof(hydrated), hydrated.ToString()); }
             if (inProgress != null) { request.AddQueryParameter("in-progress", inProgress.ToString()); }
+            if (tags != null)
+            {
+                foreach(string tag in tags)
+                {
+                    request.AddQueryParameter(nameof(tags), tag);
+                }
+            }
 
             request.AddQueryParameter(nameof(page), page.ToString());
             request.AddQueryParameter("page-size", pageSize.ToString());
