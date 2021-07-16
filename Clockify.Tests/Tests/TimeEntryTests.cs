@@ -224,18 +224,35 @@ namespace Clockify.Tests.Tests
         [Test]
         public async Task FindAllHydratedTimeEntriesForUserAsync_ShouldReturnHydratedTimeEntryDtoImplList()
         {
+            const int hourlyRateAmount = 1234;
+
+            // Create project
+            var projectRequest = new ProjectRequest
+            {
+                Name = "FindAllTimeEntriesForProjectAsync " + Guid.NewGuid(),
+                Color = "#FF00FF",
+                HourlyRate = new Net.Models.HourlyRates.HourlyRateRequest { Amount = hourlyRateAmount }
+            };
+
+            var createProject = await _client.CreateProjectAsync(_workspaceId, projectRequest);
+            createProject.IsSuccessful.Should().BeTrue();
+            createProject.Data.Should().NotBeNull();
+
+            ProjectDtoImpl project = createProject.Data;
+
             var now = DateTimeOffset.UtcNow;
             var timeEntryRequest = new TimeEntryRequest
             {
                 Start = now,
                 End = now.AddSeconds(1),
+                ProjectId = project.Id
             };
+
             var createResult = await _client.CreateTimeEntryAsync(_workspaceId, timeEntryRequest);
             createResult.IsSuccessful.Should().BeTrue();
 
             var userResponse = await _client.GetCurrentUserAsync();
             userResponse.IsSuccessful.Should().BeTrue();
-
 
             var response = await _client.FindAllHydratedTimeEntriesForUserAsync(_workspaceId, userResponse.Data.Id, 
                 start: DateTimeOffset.Now.AddDays(-1), 
@@ -243,6 +260,7 @@ namespace Clockify.Tests.Tests
 
             response.IsSuccessful.Should().BeTrue();
             response.Data.Should().Contain(timeEntry => timeEntry.Id.Equals(createResult.Data.Id));
+            response.Data.Should().Contain(timeEntry => timeEntry.HourlyRate.Amount.Equals(hourlyRateAmount));
         }
 
         [Test]
