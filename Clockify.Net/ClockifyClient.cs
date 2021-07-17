@@ -12,10 +12,12 @@ namespace Clockify.Net
     {
         private const string BaseUrl = "https://api.clockify.me/api/v1";
         private const string ExperimentalApiUrl = "https://api.clockify.me/api/";
+        private const string ReportsApiUrl = "https://reports.api.clockify.me/api/v1";
         private const string ApiKeyHeaderName = "X-Api-Key";
         private const string ApiKeyVariableName = "CAPI_KEY";
         private IRestClient _client;
         private IRestClient _experimentalClient;
+        private IRestClient _reportsClient;
 
         public ClockifyClient(string apiKey)
         {
@@ -57,7 +59,11 @@ namespace Clockify.Net
 
             _experimentalClient = new RestClient(ExperimentalApiUrl);
             _experimentalClient.AddDefaultHeader(ApiKeyHeaderName, apiKey);
-            _client.UseNewtonsoftJson(jsonSerializerSettings);
+            _experimentalClient.UseNewtonsoftJson(jsonSerializerSettings);
+
+            _reportsClient = new RestClient(ReportsApiUrl);
+            _reportsClient.AddDefaultHeader(ApiKeyHeaderName, apiKey);
+            _reportsClient.UseNewtonsoftJson(jsonSerializerSettings);
         }
 
         #endregion
