@@ -16,7 +16,7 @@ namespace Clockify.Net
             var request = new RestRequest($"workspaces/{workspaceId}/reports/summary", Method.POST);
             request.AddJsonBody(summaryReportRequest);
 
-            return _client.ExecuteGetAsync<List<SummaryReportDto>>(request);
+            return _reportsClient.ExecuteGetAsync<List<SummaryReportDto>>(request);
         }
 
         /// <summary>
@@ -26,8 +26,8 @@ namespace Clockify.Net
         {
             var request = new RestRequest($"workspaces/{workspaceId}/reports/detailed", Method.POST);
             request.AddJsonBody(detailedReportRequest);
-
-            return _client.ExecutePostAsync<DetailedReportDto>(request);
+            
+            return _reportsClient.ExecutePostAsync<DetailedReportDto>(request);
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Clockify.Net
             var request = new RestRequest($"workspaces/{workspaceId}/reports/weekly", Method.POST);
             //request.AddJsonBody(requestBody);
 
-            return _client.ExecuteAsync<List<WeeklyReportDto>>(request, Method.POST);
+            return _reportsClient.ExecuteAsync<List<WeeklyReportDto>>(request, Method.POST);
         }
     }
 }

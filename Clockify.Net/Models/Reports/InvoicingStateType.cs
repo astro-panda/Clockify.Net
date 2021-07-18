@@ -1,9 +1,14 @@
-﻿namespace Clockify.Net.Models.Reports
+﻿using System.Runtime.Serialization;
+
+namespace Clockify.Net.Models.Reports
 {
     public enum InvoicingStateType
     {
-        INVOICE,
-        UNINVOICED,
-        ALL
+        [EnumMember(Value = "ALL")]
+        ALL,
+        [EnumMember(Value = "INVOICED")]
+        INVOICED,
+        [EnumMember(Value = "UNINVOICED")]
+        UNINVOICED
     }
 }

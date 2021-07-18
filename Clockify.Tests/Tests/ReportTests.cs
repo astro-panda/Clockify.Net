@@ -64,17 +64,21 @@ namespace Clockify.Tests.Tests
             var timeEntryRequest = new TimeEntryRequest
             {
                 Start = now,
-                End = now.AddSeconds(1),
+                End = now.AddSeconds(30),
                 ProjectId = project.Id
             };
 
             var createResult = await _client.CreateTimeEntryAsync(_workspaceId, timeEntryRequest);
             createResult.IsSuccessful.Should().BeTrue();
 
+            var userResponse = await _client.GetCurrentUserAsync();
+            userResponse.IsSuccessful.Should().BeTrue();
+
             var detailedReportRequest = new DetailedReportRequest
             {
-                DateRangeStart = now.AddMinutes(-2),
-                DateRangeEnd = now.AddMinutes(2),
+                ExportType = ExportType.JSON,
+                DateRangeStart = now.LocalDateTime.AddMinutes(-2),
+                DateRangeEnd = now.LocalDateTime.AddMinutes(2),
                 SortOrder = SortOrderType.DESCENDING,
                 Description = String.Empty,
                 Rounding = false,
@@ -91,7 +95,8 @@ namespace Clockify.Tests.Tests
                     SortColumn = SortColumnType.DATE,
                     Page = 1,
                     PageSize = 50
-                }
+                },
+                TimeZone = userResponse.Data.Settings.TimeZone
             };
 
             var getDetailedReportResult = await _client.GetDetailedReportAsync(_workspaceId, detailedReportRequest);

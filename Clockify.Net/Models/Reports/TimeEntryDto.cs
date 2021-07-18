@@ -11,7 +11,6 @@ namespace Clockify.Net.Models.Reports
         public bool? Billable { get; set; }
         public string TaskId { get; set; }
         public string ProjectId { get; set; }
-        public string ClientId { get; set; }
         public TimeIntervalDto TimeInterval { get; set; }
         public string ApprovalRequestId { get; set; }
         public string TaskName { get; set; }
@@ -26,5 +25,6 @@ namespace Clockify.Net.Models.Reports
         public string ProjectName { get; set; }
         public string ProjectColor { get; set; }
         public string ClientName { get; set; }
+        public string ClientId { get; set; }
     }
 }

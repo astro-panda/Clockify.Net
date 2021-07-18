@@ -12,7 +12,7 @@ namespace Clockify.Net
     {
         private const string BaseUrl = "https://api.clockify.me/api/v1";
         private const string ExperimentalApiUrl = "https://api.clockify.me/api/";
-        private const string ReportsApiUrl = "https://reports.api.clockify.me/api/v1";
+        private const string ReportsApiUrl = "https://reports.api.clockify.me/v1";
         private const string ApiKeyHeaderName = "X-Api-Key";
         private const string ApiKeyVariableName = "CAPI_KEY";
         private IRestClient _client;
