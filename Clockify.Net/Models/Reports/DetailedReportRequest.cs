@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace Clockify.Net.Models.Reports
 {
-    public class SummaryReportRequest
+    public class DetailedReportRequest
     {
         // REQUIRED
         public DateTimeOffset? DateRangeStart { get; set; }
         public DateTimeOffset? DateRangeEnd { get; set; }
-        public SummaryFilterDto SummaryFilter { get; set; }
+        public DetailedFilterDto DetailedFilter { get; set; }
 
         // SETTINGS (OPTIONAL)
         public SortOrderType SortOrder { get; set; }

@@ -22,10 +22,10 @@ namespace Clockify.Net
         /// <summary>
         /// Creates new workspace.
         /// </summary>
-        public Task<IRestResponse<DetailedReportDto>> GetDetailedReportAsyng(string workspaceId)
+        public Task<IRestResponse<DetailedReportDto>> GetDetailedReportAsync(string workspaceId, DetailedReportRequest detailedReportRequest)
         {
             var request = new RestRequest($"workspaces/{workspaceId}/reports/detailed", Method.POST);
-            //request.AddJsonBody(workspaceRequest);
+            request.AddJsonBody(detailedReportRequest);
 
             return _client.ExecutePostAsync<DetailedReportDto>(request);
         }

@@ -4,6 +4,7 @@
     {
         GROUP,
         DURATION,
-        AMOUNT
+        AMOUNT,
+        DATE
     }
 }
