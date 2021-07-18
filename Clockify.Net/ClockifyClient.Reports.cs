@@ -24,7 +24,7 @@ namespace Clockify.Net
         ///
         /// Obtains the requested Summary Report.
         /// </summary>
-        public Task<IRestResponse<List<SummaryReportDto>>> GetSummaryReportAsync(string workspaceId, SummaryReportRequest summaryReportRequest)
+        private Task<IRestResponse<List<SummaryReportDto>>> GetSummaryReportAsync(string workspaceId, SummaryReportRequest summaryReportRequest)
         {
             var request = new RestRequest($"workspaces/{workspaceId}/reports/summary", Method.POST);
             request.AddJsonBody(summaryReportRequest);
@@ -37,7 +37,7 @@ namespace Clockify.Net
         ///
         /// Obtains the requested Weekly Report.
         /// </summary>
-        public Task<IRestResponse<List<WeeklyReportDto>>> GetWeeklyReportAsync(string workspaceId)
+        private Task<IRestResponse<List<WeeklyReportDto>>> GetWeeklyReportAsync(string workspaceId)
         {
             var request = new RestRequest($"workspaces/{workspaceId}/reports/weekly", Method.POST);
             //request.AddJsonBody(requestBody);
