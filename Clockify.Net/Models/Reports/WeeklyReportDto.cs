@@ -6,6 +6,6 @@ namespace Clockify.Net.Models.Reports
 {
     public class WeeklyReportDto
     {
-        
+        // TODO: incomplete
     }
 }

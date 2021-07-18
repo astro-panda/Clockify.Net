@@ -6,6 +6,9 @@ namespace Clockify.Net.Models.Reports
 {
     public class SummaryReportDto
     {
-        
+        public List<TotalsDto> Totals { get; set; }
+
+        // TODO: incomplete
+
     }
 }

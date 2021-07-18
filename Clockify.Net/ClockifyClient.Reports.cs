@@ -9,7 +9,20 @@ namespace Clockify.Net
     public partial class ClockifyClient
     {
         /// <summary>
-        /// Find workspaces for currently logged in user
+        /// Obtains the requested Detailed Report.
+        /// </summary>
+        public Task<IRestResponse<DetailedReportDto>> GetDetailedReportAsync(string workspaceId, DetailedReportRequest detailedReportRequest)
+        {
+            var request = new RestRequest($"workspaces/{workspaceId}/reports/detailed", Method.POST);
+            request.AddJsonBody(detailedReportRequest);
+
+            return _reportsClient.ExecutePostAsync<DetailedReportDto>(request);
+        }
+
+        /// <summary>
+        /// NOT IMPLEMENTED
+        ///
+        /// Obtains the requested Summary Report.
         /// </summary>
         public Task<IRestResponse<List<SummaryReportDto>>> GetSummaryReportAsync(string workspaceId, SummaryReportRequest summaryReportRequest)
         {
@@ -20,18 +33,9 @@ namespace Clockify.Net
         }
 
         /// <summary>
-        /// Creates new workspace.
-        /// </summary>
-        public Task<IRestResponse<DetailedReportDto>> GetDetailedReportAsync(string workspaceId, DetailedReportRequest detailedReportRequest)
-        {
-            var request = new RestRequest($"workspaces/{workspaceId}/reports/detailed", Method.POST);
-            request.AddJsonBody(detailedReportRequest);
-            
-            return _reportsClient.ExecutePostAsync<DetailedReportDto>(request);
-        }
-
-        /// <summary>
-        /// Adds a user to workspace.
+        /// NOT IMPLEMENTED
+        ///
+        /// Obtains the requested Weekly Report.
         /// </summary>
         public Task<IRestResponse<List<WeeklyReportDto>>> GetWeeklyReportAsync(string workspaceId)
         {
