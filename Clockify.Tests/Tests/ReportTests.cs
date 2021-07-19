@@ -75,19 +75,20 @@ namespace Clockify.Tests.Tests
             var userResponse = await _client.GetCurrentUserAsync();
             userResponse.IsSuccessful.Should().BeTrue();
 
-            var nowTz = now.LocalDateTime;
+            // First, obtain the OS version of time zone based on the Clockify users' settings.
+            var tzi = TZConvert.GetTimeZoneInfo(userResponse.Data.Settings.TimeZone);
 
-            if (Environment.OSVersion.Platform.Equals(PlatformID.Win32NT))
-            {
-                string tz = TZConvert.IanaToWindows(userResponse.Data.Settings.TimeZone);
-                nowTz = now.ToOffset(TimeZoneInfo.FindSystemTimeZoneById(tz).BaseUtcOffset).DateTime;
-            }
+            // Second, translate current time into the Clockify users' time zone.
+            var nowTz = now.ToOffset(tzi.BaseUtcOffset).DateTime;
+
+            // Third, just to be safe we need to translate again to make sure Daylight Savings time is accounted for.
+            var nowTz2 = now.ToOffset(tzi.GetUtcOffset(nowTz)).DateTime;
 
             var detailedReportRequest = new DetailedReportRequest
             {
                 ExportType = ExportType.JSON,
-                DateRangeStart = nowTz.AddMinutes(-2), //now.LocalDateTime.AddMinutes(-2), // timezone must match Timezone in the request.
-                DateRangeEnd = nowTz.AddMinutes(2), //now.LocalDateTime.AddMinutes(2), // timezone must match Timezone in the request.
+                DateRangeStart = nowTz2.AddMinutes(-2),
+                DateRangeEnd = nowTz2.AddMinutes(2),
                 SortOrder = SortOrderType.DESCENDING,
                 Description = String.Empty,
                 Rounding = false,
