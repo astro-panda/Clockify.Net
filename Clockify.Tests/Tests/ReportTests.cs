@@ -8,6 +8,7 @@ using Clockify.Net.Models.TimeEntries;
 using Clockify.Tests.Helpers;
 using FluentAssertions;
 using NUnit.Framework;
+using TimeZoneConverter;
 
 namespace Clockify.Tests.Tests
 {
@@ -74,11 +75,19 @@ namespace Clockify.Tests.Tests
             var userResponse = await _client.GetCurrentUserAsync();
             userResponse.IsSuccessful.Should().BeTrue();
 
+            var nowTz = now.LocalDateTime;
+
+            if (Environment.OSVersion.Platform.Equals(PlatformID.Win32NT))
+            {
+                string tz = TZConvert.IanaToWindows(userResponse.Data.Settings.TimeZone);
+                nowTz = now.ToOffset(TimeZoneInfo.FindSystemTimeZoneById(tz).BaseUtcOffset).DateTime;
+            }
+
             var detailedReportRequest = new DetailedReportRequest
             {
                 ExportType = ExportType.JSON,
-                DateRangeStart = now.LocalDateTime.AddMinutes(-2),
-                DateRangeEnd = now.LocalDateTime.AddMinutes(2),
+                DateRangeStart = nowTz.AddMinutes(-2), //now.LocalDateTime.AddMinutes(-2), // timezone must match Timezone in the request.
+                DateRangeEnd = nowTz.AddMinutes(2), //now.LocalDateTime.AddMinutes(2), // timezone must match Timezone in the request.
                 SortOrder = SortOrderType.DESCENDING,
                 Description = String.Empty,
                 Rounding = false,
