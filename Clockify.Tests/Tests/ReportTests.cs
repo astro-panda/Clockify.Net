@@ -112,7 +112,7 @@ namespace Clockify.Tests.Tests
             var getDetailedReportResult = await _client.GetDetailedReportAsync(_workspaceId, detailedReportRequest);
             getDetailedReportResult.IsSuccessful.Should().BeTrue();
             getDetailedReportResult.Data.Should().NotBeNull();
-            getDetailedReportResult.Data.Timeentries.Count.Should().BeGreaterOrEqualTo(1);
+            getDetailedReportResult.Data.TimeEntries.Count.Should().BeGreaterOrEqualTo(1);
         }
     }
 }
