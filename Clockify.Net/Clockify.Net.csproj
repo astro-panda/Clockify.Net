@@ -33,6 +33,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Models\Reports\" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="..\LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
@@ -41,6 +44,7 @@
 
   <ItemGroup>
     <Folder Include="Configuration\" />
+    <Folder Include="Models\Reports\" />
   </ItemGroup>
 
   <ItemGroup>
