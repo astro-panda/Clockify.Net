@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.x.x] - ???
 
+## [1.11.0] - 21.07.2021
+
+### Added
+- Method `GetDetailedReportAsync` to get detailed report form report API
+
 ## [1.10.0] - 15.07.2021
 
 ### Added
