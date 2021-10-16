@@ -64,7 +64,8 @@ namespace Clockify.Tests.Tests
         [Test]
         public async Task FindAllClientsOnWorkspaceAsync_ShouldReturnClientsListWithExtendedPageSize()
         {
-            var workspaceResponse = await _client.FindAllClientsOnWorkspaceAsync(_workspaceId,1,10000);
+            var maxPageSize = 5000;
+            var workspaceResponse = await _client.FindAllClientsOnWorkspaceAsync(_workspaceId,1,maxPageSize);
             workspaceResponse.IsSuccessful.Should().BeTrue();
         }
 

@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.x.x] - ???
 
+## [1.11.1] - 16.10.2021
+
+### Fixed
+-  Fix related to error `Error converting value "NOT_REGISTERED"` (PR#53)
+
 ## [1.11.0] - 21.07.2021
 
 ### Added
