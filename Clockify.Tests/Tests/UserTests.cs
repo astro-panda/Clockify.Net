@@ -68,7 +68,8 @@ namespace Clockify.Tests.Tests
         [Test]
         public async Task FindAllUsersOnWorkspace_GoodWorkspace_ShouldReturnCurrentUsersWithExtendedPageSize()
         {
-            var response = await _client.FindAllUsersOnWorkspaceAsync(_workspaceId,1,10000);
+            var maxPageSize = 5000;
+            var response = await _client.FindAllUsersOnWorkspaceAsync(_workspaceId,1,maxPageSize);
             response.IsSuccessful.Should().BeTrue();
             response.Data.Should().NotBeNullOrEmpty();
         }

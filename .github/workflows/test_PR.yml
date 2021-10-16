@@ -22,5 +22,5 @@ jobs:
     - name: Test
       env: 
       # Test account API key
-       CAPI_KEY: "NWQzOTJkNDgtYzkyYS00MTJkLThmNzEtN2ViZTBjMTU4Zjdh"
+       CAPI_KEY: "M2Q4OGJkYWYtMGI3NC00MjA0LWE4NzItMzZiYmNlZjkxMjc4"
       run: dotnet test --no-build --verbosity normal
