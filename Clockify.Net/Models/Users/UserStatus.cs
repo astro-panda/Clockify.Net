@@ -13,6 +13,8 @@ namespace Clockify.Net.Models.Users
         [EnumMember(Value = "DECLINED")]
         Declined,
         [EnumMember(Value = "INACTIVE")]
-        Inactive
+        Inactive,
+        [EnumMember(Value = "NOT_REGISTERED")]
+        NotRegistered
     }
 }
