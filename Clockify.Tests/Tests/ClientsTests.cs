@@ -85,5 +85,17 @@ namespace Clockify.Tests.Tests
             updateClientNameResponse.Data.Should().NotBeNull();
             updateClientNameResponse.Data.Name.Should().Match(updatedClientName);
         }
+	    
+	[Test]
+        public async Task DeleteClientOnWorkspace_ShouldDeleteClient()
+        {
+            var clientRequest = new ClientRequest { Name = "Test add client " + Guid.NewGuid() };
+            var createResult = await _client.CreateClientAsync(_workspaceId, clientRequest);
+            createResult.IsSuccessful.Should().BeTrue();
+            createResult.Data.Should().NotBeNull();
+
+            var deleteClientResponse = await _client.DeleteClientAsync(_workspaceId, createResult.Data.Id);
+            deleteClientResponse.IsSuccessful.Should().BeTrue();
+        }
     }
 }
