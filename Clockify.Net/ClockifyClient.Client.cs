@@ -44,5 +44,14 @@ namespace Clockify.Net
             request.AddJsonBody(clientName);
             return _client.ExecuteAsync<ClientUpdateDto>(request);
         }
+        
+        /// <summary>
+        /// Delete a client from a workspace.
+        /// </summary>
+        public Task<IRestResponse> DeleteClientAsync(string workspaceId, string clientId)
+        {
+            var request = new RestRequest($"workspaces/{workspaceId}/clients/{clientId}");
+            return _client.ExecuteAsync(request, Method.DELETE);
+        }
     }
 }
