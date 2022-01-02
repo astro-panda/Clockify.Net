@@ -20,16 +20,18 @@ namespace Clockify.Net
         }
 
         /// <summary>
-        /// NOT IMPLEMENTED
-        ///
         /// Obtains the requested Summary Report.
         /// </summary>
-        private Task<IRestResponse<List<SummaryReportDto>>> GetSummaryReportAsync(string workspaceId, SummaryReportRequest summaryReportRequest)
+        public Task<IRestResponse<SummaryReportDto>> GetSummaryReportAsync(string workspaceId, SummaryReportRequest summaryReportRequest)
         {
+            if (summaryReportRequest.DateRangeStart == null) { throw new ArgumentNullException(nameof(summaryReportRequest.DateRangeStart)); }
+            if (summaryReportRequest.DateRangeEnd == null) { throw new ArgumentNullException(nameof(summaryReportRequest.DateRangeStart)); }
+            if (summaryReportRequest.SummaryFilter == null) { throw new ArgumentNullException(nameof(summaryReportRequest.SummaryFilter)); }
+            
             var request = new RestRequest($"workspaces/{workspaceId}/reports/summary", Method.POST);
             request.AddJsonBody(summaryReportRequest);
-
-            return _reportsClient.ExecuteGetAsync<List<SummaryReportDto>>(request);
+            
+            return _reportsClient.ExecuteAsync<SummaryReportDto>(request);
         }
 
         /// <summary>
