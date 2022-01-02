@@ -115,5 +115,47 @@ namespace Clockify.Tests.Tests {
 			var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, project.Id);
 			deleteProject.IsSuccessful.Should().BeTrue();
 		}
+		
+		[Test]
+		public async Task GetWeeklyReportAsync_ShouldReturnWeeklyReportDto() {
+			var now = DateTimeOffset.UtcNow;
+			var client = await SetupHelper.CreateTestClientAsync(_client, _workspaceId);
+			var project = await SetupHelper.CreateTestProjectAsync(_client, _workspaceId, client.Id);
+			await SetupHelper.CreateTestTimeEntryAsync(_client, _workspaceId, now, project.Id);
+			var userResponse = await _client.GetCurrentUserAsync();
+			userResponse.IsSuccessful.Should().BeTrue();
+
+			var nowWithTimeZone = DateTimeHelper.ConvertToTimeZone(userResponse.Data.Settings.TimeZone, now);
+
+			var weeklyReportRequest = new WeeklyReportRequest() {
+				ExportType = ExportType.JSON,
+				DateRangeStart = nowWithTimeZone.AddMinutes(-2),
+				DateRangeEnd = nowWithTimeZone.AddDays(7),
+				SortOrder = SortOrderType.DESCENDING,
+				Description = string.Empty,
+				Rounding = false,
+				WithoutDescription = false,
+				AmountShown = AmountShownType.EARNED,
+				Clients = new ClientsFilterDto {
+					Contains = ContainsType.CONTAINS,
+					Ids = new List<string> { client.Id },
+					Status = StatusType.ACTIVE
+				},
+				WeeklyFilter = new WeeklyFilterDto {
+					Group = WeeklyGroupType.USER,
+					Subgroup = WeeklySubgroupType.TIME
+				},
+				TimeZone = userResponse.Data.Settings.TimeZone
+			};
+
+			var getWeeklyReportResponse = await _client.GetWeeklyReportAsync(_workspaceId, weeklyReportRequest);
+			
+			getWeeklyReportResponse.IsSuccessful.Should().BeTrue();
+			getWeeklyReportResponse.Data.Should().NotBeNull();
+			
+			// Cleanup
+			var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, project.Id);
+			deleteProject.IsSuccessful.Should().BeTrue();
+		}
 	}
 }
