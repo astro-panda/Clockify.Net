@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Clockify.Net;
 using Clockify.Net.Models.Clients;
+using Clockify.Net.Models.HourlyRates;
 using Clockify.Net.Models.Projects;
 using Clockify.Net.Models.Reports;
 using Clockify.Net.Models.TimeEntries;
+using Clockify.Net.Models.Users;
 using Clockify.Tests.Helpers;
 using FluentAssertions;
 using NUnit.Framework;
+using RestSharp;
 using TimeZoneConverter;
 
 namespace Clockify.Tests.Tests {
@@ -27,60 +30,19 @@ namespace Clockify.Tests.Tests {
 
 		[Test]
 		public async Task GetDetailedReportAsync_ShouldReturnDetailedReportDto() {
-			const int hourlyRateAmount = 1234;
-
-			var guid = Guid.NewGuid().ToString();
 			var now = DateTimeOffset.UtcNow;
-
-			var clientRequest = new ClientRequest {
-				Name = "GetDetailedReportAsync " + guid
-			};
-
-			var createClientResponse = await _client.CreateClientAsync(_workspaceId, clientRequest);
-			createClientResponse.IsSuccessful.Should().BeTrue();
-			createClientResponse.Data.Should().NotBeNull();
-			createClientResponse.Data.Name.Should().Equals(clientRequest.Name);
-
-			ClientDto client = createClientResponse.Data;
-
-			var projectRequest = new ProjectRequest {
-				Name = "GetDetailedReportAsync " + guid,
-				Color = "#FF00FF",
-				HourlyRate = new Net.Models.HourlyRates.HourlyRateRequest { Amount = hourlyRateAmount },
-				ClientId = createClientResponse.Data.Id
-			};
-
-			var createProject = await _client.CreateProjectAsync(_workspaceId, projectRequest);
-			createProject.IsSuccessful.Should().BeTrue();
-			createProject.Data.Should().NotBeNull();
-
-			ProjectDtoImpl project = createProject.Data;
-
-			var timeEntryRequest = new TimeEntryRequest {
-				Start = now,
-				End = now.AddSeconds(30),
-				ProjectId = project.Id
-			};
-
-			var createResult = await _client.CreateTimeEntryAsync(_workspaceId, timeEntryRequest);
-			createResult.IsSuccessful.Should().BeTrue();
-
+			var client = await SetupHelper.CreateTestClientAsync(_client, _workspaceId);
+			var project = await SetupHelper.CreateTestProjectAsync(_client, _workspaceId, client.Id);
+			await SetupHelper.CreateTestTimeEntryAsync(_client, _workspaceId, now, project.Id);
 			var userResponse = await _client.GetCurrentUserAsync();
 			userResponse.IsSuccessful.Should().BeTrue();
 
-			// First, obtain the OS version of time zone based on the Clockify users' settings.
-			var tzi = TZConvert.GetTimeZoneInfo(userResponse.Data.Settings.TimeZone);
-
-			// Second, translate current time into the Clockify users' time zone.
-			var nowTz = now.ToOffset(tzi.BaseUtcOffset).DateTime;
-
-			// Third, just to be safe we need to translate again to make sure Daylight Savings time is accounted for.
-			var nowTz2 = now.ToOffset(tzi.GetUtcOffset(nowTz)).DateTime;
+			var nowWithTimeZone = DateTimeHelper.ConvertToTimeZone(userResponse.Data.Settings.TimeZone, now);
 
 			var detailedReportRequest = new DetailedReportRequest {
 				ExportType = ExportType.JSON,
-				DateRangeStart = nowTz2.AddMinutes(-2),
-				DateRangeEnd = nowTz2.AddMinutes(2),
+				DateRangeStart = nowWithTimeZone.AddMinutes(-2),
+				DateRangeEnd = nowWithTimeZone.AddMinutes(2),
 				SortOrder = SortOrderType.DESCENDING,
 				Description = String.Empty,
 				Rounding = false,
@@ -105,62 +67,23 @@ namespace Clockify.Tests.Tests {
 			getDetailedReportResult.Data.TimeEntries.Should().HaveCountGreaterOrEqualTo(1);
 		}
 
+
+
 		[Test]
 		public async Task GetSummaryReportAsync_ShouldReturnSummaryReportDto() {
-			const int hourlyRateAmount = 1234;
-
-			var guid = Guid.NewGuid().ToString();
 			var now = DateTimeOffset.UtcNow;
-
-			var clientRequest = new ClientRequest {
-				Name = "GetDetailedReportAsync " + guid
-			};
-
-			var createClientResponse = await _client.CreateClientAsync(_workspaceId, clientRequest);
-			createClientResponse.IsSuccessful.Should().BeTrue();
-			createClientResponse.Data.Should().NotBeNull();
-			createClientResponse.Data.Name.Should().Equals(clientRequest.Name);
-
-			ClientDto client = createClientResponse.Data;
-
-			var projectRequest = new ProjectRequest {
-				Name = "GetDetailedReportAsync " + guid,
-				Color = "#FF00FF",
-				HourlyRate = new Net.Models.HourlyRates.HourlyRateRequest { Amount = hourlyRateAmount },
-				ClientId = createClientResponse.Data.Id
-			};
-
-			var createProject = await _client.CreateProjectAsync(_workspaceId, projectRequest);
-			createProject.IsSuccessful.Should().BeTrue();
-			createProject.Data.Should().NotBeNull();
-
-			ProjectDtoImpl project = createProject.Data;
-
-			var timeEntryRequest = new TimeEntryRequest {
-				Start = now,
-				End = now.AddSeconds(30),
-				ProjectId = project.Id
-			};
-
-			var createResult = await _client.CreateTimeEntryAsync(_workspaceId, timeEntryRequest);
-			createResult.IsSuccessful.Should().BeTrue();
-
+			var client = await SetupHelper.CreateTestClientAsync(_client, _workspaceId);
+			var project = await SetupHelper.CreateTestProjectAsync(_client, _workspaceId, client.Id);
+			await SetupHelper.CreateTestTimeEntryAsync(_client, _workspaceId, now, project.Id);
 			var userResponse = await _client.GetCurrentUserAsync();
 			userResponse.IsSuccessful.Should().BeTrue();
 
-			// First, obtain the OS version of time zone based on the Clockify users' settings.
-			var tzi = TZConvert.GetTimeZoneInfo(userResponse.Data.Settings.TimeZone);
-
-			// Second, translate current time into the Clockify users' time zone.
-			var nowTz = now.ToOffset(tzi.BaseUtcOffset).DateTime;
-
-			// Third, just to be safe we need to translate again to make sure Daylight Savings time is accounted for.
-			var nowTz2 = now.ToOffset(tzi.GetUtcOffset(nowTz)).DateTime;
+			var nowWithTimeZone = DateTimeHelper.ConvertToTimeZone(userResponse.Data.Settings.TimeZone, now);
 
 			var summaryReportRequest = new SummaryReportRequest() {
 				ExportType = ExportType.JSON,
-				DateRangeStart = nowTz2.AddMinutes(-2),
-				DateRangeEnd = nowTz2.AddMinutes(2),
+				DateRangeStart = nowWithTimeZone.AddMinutes(-2),
+				DateRangeEnd = nowWithTimeZone.AddMinutes(2),
 				SortOrder = SortOrderType.DESCENDING,
 				Description = String.Empty,
 				Rounding = false,
