@@ -65,6 +65,10 @@ namespace Clockify.Tests.Tests {
 			getDetailedReportResult.IsSuccessful.Should().BeTrue();
 			getDetailedReportResult.Data.Should().NotBeNull();
 			getDetailedReportResult.Data.TimeEntries.Should().HaveCountGreaterOrEqualTo(1);
+			
+			// Cleanup
+			var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, project.Id);
+			deleteProject.IsSuccessful.Should().BeTrue();
 		}
 
 
@@ -106,6 +110,10 @@ namespace Clockify.Tests.Tests {
 			
 			getSummaryReportResult.IsSuccessful.Should().BeTrue();
 			getSummaryReportResult.Data.Should().NotBeNull();
+			
+			// Cleanup
+			var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, project.Id);
+			deleteProject.IsSuccessful.Should().BeTrue();
 		}
 	}
 }
