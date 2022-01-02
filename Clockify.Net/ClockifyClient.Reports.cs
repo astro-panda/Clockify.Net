@@ -35,16 +35,14 @@ namespace Clockify.Net
         }
 
         /// <summary>
-        /// NOT IMPLEMENTED
-        ///
         /// Obtains the requested Weekly Report.
         /// </summary>
-        private Task<IRestResponse<List<WeeklyReportDto>>> GetWeeklyReportAsync(string workspaceId)
+        public Task<IRestResponse<WeeklyReportDto>> GetWeeklyReportAsync(string workspaceId, WeeklyReportRequest weeklyReportRequest)
         {
             var request = new RestRequest($"workspaces/{workspaceId}/reports/weekly", Method.POST);
-            //request.AddJsonBody(requestBody);
+            request.AddJsonBody(weeklyReportRequest);
 
-            return _reportsClient.ExecuteAsync<List<WeeklyReportDto>>(request, Method.POST);
+            return _reportsClient.ExecuteAsync<WeeklyReportDto>(request, Method.POST);
         }
     }
 }
