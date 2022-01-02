@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Clockify.Net;
+using Clockify.Net.Models.HourlyRates;
 using Clockify.Net.Models.Projects;
 using Clockify.Net.Models.Tags;
 using Clockify.Net.Models.TimeEntries;
@@ -229,9 +230,9 @@ namespace Clockify.Tests.Tests
             // Create project
             var projectRequest = new ProjectRequest
             {
-                Name = "FindAllTimeEntriesForProjectAsync " + Guid.NewGuid(),
+                Name = "FindAllHydratedTimeEntriesForProjectAsync " + Guid.NewGuid(),
                 Color = "#FF00FF",
-                HourlyRate = new Net.Models.HourlyRates.HourlyRateRequest { Amount = hourlyRateAmount }
+                HourlyRate = new HourlyRateRequest { Amount = hourlyRateAmount }
             };
 
             var createProject = await _client.CreateProjectAsync(_workspaceId, projectRequest);
@@ -261,6 +262,9 @@ namespace Clockify.Tests.Tests
             response.IsSuccessful.Should().BeTrue();
             response.Data.Should().Contain(timeEntry => timeEntry.Id.Equals(createResult.Data.Id));
             response.Data.Should().Contain(timeEntry => timeEntry.HourlyRate.Amount.Equals(hourlyRateAmount));
+            
+            var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, project.Id);
+            deleteProject.IsSuccessful.Should().BeTrue();
         }
 
         [Test]
@@ -327,7 +331,8 @@ namespace Clockify.Tests.Tests
             // Clean up
             await _client.DeleteTimeEntryAsync(_workspaceId, addTimeEntry1.Data.Id);
             await _client.DeleteTimeEntryAsync(_workspaceId, addTimeEntry2.Data.Id);
-            await _client.DeleteProjectAsync(_workspaceId,createProject.Data.Id);
+            var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, createProject.Data.Id);
+            deleteProject.IsSuccessful.Should().BeTrue();
 
         }
     }

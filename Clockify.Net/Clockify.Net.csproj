@@ -12,8 +12,9 @@
     <Authors>Morasiu</Authors>
     <Company>Code Hydra</Company>
     <PackageReleaseNotes>### Added
-- Method `DeleteClientAsync` to delete client.</PackageReleaseNotes>
-    <PackageVersion>1.13.0</PackageVersion>
+- Method `GetSummaryReportAsync` to get summary report.
+- Method `GetWeeklyReportAsync` to get weekly report.</PackageReleaseNotes>
+    <PackageVersion>1.14.0</PackageVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -48,6 +49,12 @@
     <None Update="Clockify.Net.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\CHANGELOG.md">
+      <Link>CHANGELOG.md</Link>
+    </Content>
   </ItemGroup>
 
 </Project>
