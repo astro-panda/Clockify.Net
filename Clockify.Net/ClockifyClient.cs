@@ -45,6 +45,8 @@ namespace Clockify.Net
         {
             var jsonSerializerSettings = new JsonSerializerSettings()
             {
+                NullValueHandling = NullValueHandling.Ignore,
+                
                 Converters = new List<JsonConverter>
                 {
                     new StringEnumConverter(),
