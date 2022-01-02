@@ -50,4 +50,10 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="..\CHANGELOG.md">
+      <Link>CHANGELOG.md</Link>
+    </Content>
+  </ItemGroup>
+
 </Project>
