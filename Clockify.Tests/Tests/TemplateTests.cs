@@ -7,6 +7,7 @@ using Clockify.Net.Models.Projects;
 using Clockify.Net.Models.Tasks;
 using Clockify.Net.Models.Templates;
 using Clockify.Tests.Helpers;
+using Clockify.Tests.Setup;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -52,10 +53,9 @@ namespace Clockify.Tests.Tests
         public async Task CreateTemplatesAsync_ShouldCreteTemplateAndReturnTemplateDto()
         {
             // Create project for test
-            var projectRequest = new ProjectRequest {Name = "Create Template test project " + Guid.NewGuid(), Color = "#FFFFFF"};
-            var projectResponse = await _client.CreateProjectAsync(_workspaceId, projectRequest);
-            projectResponse.IsSuccessful.Should().BeTrue();
-            var projectId = projectResponse.Data.Id;
+            await using var projectSetup = new ProjectSetup(_client, _workspaceId);
+            var project = await projectSetup.SetupAsync();
+            var projectId = project.Id;
             // Create task
             var taskRequest = new TaskRequest {Name = "Template create task " + Guid.NewGuid()};
             var taskResponse = await _client.CreateTaskAsync(_workspaceId, projectId, taskRequest);
@@ -78,19 +78,15 @@ namespace Clockify.Tests.Tests
             var createResult = await _client.CreateTemplatesAsync(_workspaceId, templatePatchRequest);
             createResult.IsSuccessful.Should().BeTrue();
             createResult.Data.Should().NotBeNull();
-
-            var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, projectId);
-            deleteProject.IsSuccessful.Should().BeTrue();
         }
 
         [Test]
         public async Task GetTemplateAsync_ShouldReturnTemplateDto()
         {
             // Create project for test
-            var projectRequest = new ProjectRequest {Name = "Get Template test project " + Guid.NewGuid(), Color = "#FFFFFF"};
-            var projectResponse = await _client.CreateProjectAsync(_workspaceId, projectRequest);
-            projectResponse.IsSuccessful.Should().BeTrue();
-            var projectId = projectResponse.Data.Id;
+            await using var projectSetup = new ProjectSetup(_client, _workspaceId);
+            var project = await projectSetup.SetupAsync();
+            var projectId = project.Id;
             // Create task
             var taskRequest = new TaskRequest {Name = "Template create task " + Guid.NewGuid()};
             var taskResponse = await _client.CreateTaskAsync(_workspaceId, projectId, taskRequest);
@@ -117,19 +113,15 @@ namespace Clockify.Tests.Tests
             var getResponse = await _client.GetTemplateAsync(_workspaceId, createResult.Data.First().Id);
             getResponse.IsSuccessful.Should().BeTrue();
             getResponse.Data.Should().BeEquivalentTo(createResult.Data.First());
-
-            var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, projectId);
-            deleteProject.IsSuccessful.Should().BeTrue();
         }
 
         [Test]
         public async Task UpdateTemplateAsync_ShouldReturnTemplateDto()
         {
             // Create project for test
-            var projectRequest = new ProjectRequest {Name = "Update Template test project " + Guid.NewGuid(), Color = "#FFFFFF"};
-            var projectResponse = await _client.CreateProjectAsync(_workspaceId, projectRequest);
-            projectResponse.IsSuccessful.Should().BeTrue();
-            var projectId = projectResponse.Data.Id;
+            await using var projectSetup = new ProjectSetup(_client, _workspaceId);
+            var project = await projectSetup.SetupAsync();
+            var projectId = project.Id;
             // Create task
             var taskRequest = new TaskRequest {Name = "Template create task " + Guid.NewGuid()};
             var taskResponse = await _client.CreateTaskAsync(_workspaceId, projectId, taskRequest);
@@ -160,19 +152,15 @@ namespace Clockify.Tests.Tests
 
             getResponse.IsSuccessful.Should().BeTrue();
             getResponse.Data.Should().BeEquivalentTo(templateDto);
-
-            var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, projectId);
-            deleteProject.IsSuccessful.Should().BeTrue();
         }
 
         [Test]
         public async Task DeleteTemplateAsync_ShouldReturnTemplateDto()
         {
             // Create project for test
-            var projectRequest = new ProjectRequest {Name = "Delete Template test project " + Guid.NewGuid(), Color = "#FFFFFF"};
-            var projectResponse = await _client.CreateProjectAsync(_workspaceId, projectRequest);
-            projectResponse.IsSuccessful.Should().BeTrue();
-            var projectId = projectResponse.Data.Id;
+            await using var projectSetup = new ProjectSetup(_client, _workspaceId);
+            var project = await projectSetup.SetupAsync();
+            var projectId = project.Id;
             // Create task
             var taskRequest = new TaskRequest {Name = "Template create task " + Guid.NewGuid()};
             var taskResponse = await _client.CreateTaskAsync(_workspaceId, projectId, taskRequest);
@@ -199,9 +187,6 @@ namespace Clockify.Tests.Tests
             var deleteResponse = await _client.DeleteTemplateAsync(_workspaceId, createResult.Data.First().Id);
             deleteResponse.IsSuccessful.Should().BeTrue();
             deleteResponse.Data.Should().BeEquivalentTo(createResult.Data.First());
-
-            var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, projectId);
-            deleteProject.IsSuccessful.Should().BeTrue();
         }
 
         [Test]

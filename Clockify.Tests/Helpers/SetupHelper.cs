@@ -4,8 +4,6 @@ using System.Net;
 using System.Threading.Tasks;
 using Clockify.Net;
 using Clockify.Net.Models.Clients;
-using Clockify.Net.Models.HourlyRates;
-using Clockify.Net.Models.Projects;
 using Clockify.Net.Models.TimeEntries;
 using Clockify.Net.Models.Workspaces;
 using FluentAssertions;
@@ -35,7 +33,6 @@ namespace Clockify.Tests.Helpers {
 				throw new InvalidOperationException($"Cannot create or find workspace: {workspaceResponse.Content}");
 			}
 
-
 			return workspaceId;
 		}
 
@@ -50,22 +47,6 @@ namespace Clockify.Tests.Helpers {
 			var createClientResponse = await client.CreateClientAsync(workspaceName, clientRequest);
 			createClientResponse.IsSuccessful.Should().BeTrue();
 			return createClientResponse.Data;
-		}
-	
-		public static async Task<ProjectDtoImpl> CreateTestProjectAsync(ClockifyClient client, string workspaceName, string clientId) {
-			var projectRequest = new ProjectRequest {
-				Name = "GetDetailedReportAsync " + Guid.NewGuid(),
-				Color = "#FF00FF",
-				HourlyRate = new HourlyRateRequest { Amount = 1234 },
-				ClientId = clientId
-			};
-
-			var createProject = await client.CreateProjectAsync(workspaceName, projectRequest);
-			createProject.IsSuccessful.Should().BeTrue();
-			createProject.Data.Should().NotBeNull();
-
-			ProjectDtoImpl project = createProject.Data;
-			return project;
 		}
 		
 		public static async Task<TimeEntryDtoImpl> CreateTestTimeEntryAsync(ClockifyClient client, string workspaceId, DateTimeOffset start, string projectId) {

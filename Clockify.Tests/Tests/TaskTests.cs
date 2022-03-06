@@ -4,6 +4,7 @@ using Clockify.Net;
 using Clockify.Net.Models.Projects;
 using Clockify.Net.Models.Tasks;
 using Clockify.Tests.Helpers;
+using Clockify.Tests.Setup;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -42,26 +43,21 @@ namespace Clockify.Tests.Tests
         public async Task FindAllTasksAsync_ShouldReturnTaskList()
         {
             // Prepare some project
-            var projectRequest = new ProjectRequest {Name = "Task find project " + Guid.NewGuid(), Color = "#FF00FF"};
-            var createResult = await _client.CreateProjectAsync(_workspaceId, projectRequest);
-            createResult.IsSuccessful.Should().BeTrue();
-            var projectId = createResult.Data.Id;
+            await using var projectSetup = new ProjectSetup(_client, _workspaceId);
+            var project = await projectSetup.SetupAsync();
+            var projectId = project.Id;
 
             var response = await _client.FindAllTasksAsync(_workspaceId, projectId);
             response.IsSuccessful.Should().BeTrue();
-
-            var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, projectId);
-            deleteProject.IsSuccessful.Should().BeTrue();
         }
 
         [Test]
         public async Task CreateTagAsync_ShouldCreteTagAndReturnTagDto()
         {
             // Prepare some project
-            var projectRequest = new ProjectRequest {Name = "Create task project " + Guid.NewGuid(), Color = "#FF00FF"};
-            var createProjectResult = await _client.CreateProjectAsync(_workspaceId, projectRequest);
-            createProjectResult.IsSuccessful.Should().BeTrue();
-            var projectId = createProjectResult.Data.Id;
+            await using var projectSetup = new ProjectSetup(_client, _workspaceId);
+            var project = await projectSetup.SetupAsync();
+            var projectId = project.Id;
 
             var taskRequest = new TaskRequest
             {
@@ -74,9 +70,6 @@ namespace Clockify.Tests.Tests
             var findResult = await _client.FindAllTasksAsync(_workspaceId, projectId);
             findResult.IsSuccessful.Should().BeTrue();
             findResult.Data.Should().ContainEquivalentOf(createResult.Data);
-
-            var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, projectId);
-            deleteProject.IsSuccessful.Should().BeTrue();
         }
 
         [Test]
@@ -96,10 +89,9 @@ namespace Clockify.Tests.Tests
         public async Task UpdateTaskAsync_ShouldUpdateTask()
         {
             // Prepare some project
-            var projectRequest = new ProjectRequest { Name = "Update task project" + Guid.NewGuid(), Color = "#FF00FF" };
-            var createProjectResult = await _client.CreateProjectAsync(_workspaceId, projectRequest);
-            createProjectResult.IsSuccessful.Should().BeTrue();
-            var projectId = createProjectResult.Data.Id;
+            await using var projectSetup = new ProjectSetup(_client, _workspaceId);
+            var project = await projectSetup.SetupAsync();
+            var projectId = project.Id;
 
             var taskRequest = new TaskRequest
             {
@@ -125,19 +117,15 @@ namespace Clockify.Tests.Tests
             var findResult2 = await _client.FindAllTasksAsync(_workspaceId, projectId);
             findResult2.IsSuccessful.Should().BeTrue();
             findResult2.Data.Should().ContainEquivalentOf(updateResult.Data);
-
-            var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, projectId);
-            deleteProject.IsSuccessful.Should().BeTrue();
         }
 
         [Test]
         public async Task DeleteTaskAsync_ShouldRemoveTask()
         {
             // Prepare some project
-            var projectRequest = new ProjectRequest { Name = "Delete task project" + Guid.NewGuid(), Color = "#FF00FF" };
-            var createProjectResult = await _client.CreateProjectAsync(_workspaceId, projectRequest);
-            createProjectResult.IsSuccessful.Should().BeTrue();
-            var projectId = createProjectResult.Data.Id;
+            await using var projectSetup = new ProjectSetup(_client, _workspaceId);
+            var project = await projectSetup.SetupAsync();
+            var projectId = project.Id;
 
             var taskRequest = new TaskRequest
             {
@@ -157,9 +145,6 @@ namespace Clockify.Tests.Tests
             var findResult2 = await _client.FindAllTasksAsync(_workspaceId, projectId);
             findResult2.IsSuccessful.Should().BeTrue();
             findResult2.Data.Should().BeEmpty();
-
-            var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, projectId);
-            deleteProject.IsSuccessful.Should().BeTrue();
         }
     }
 }

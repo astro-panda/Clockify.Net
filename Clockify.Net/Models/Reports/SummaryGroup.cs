@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Clockify.Net.Json.Converters;
 using Newtonsoft.Json;
 
 namespace Clockify.Net.Models.Reports {
@@ -6,11 +7,13 @@ namespace Clockify.Net.Models.Reports {
 		[JsonProperty("duration")]
 		public long Duration { get; set; }
 
-		[JsonProperty("amount")]
-		public decimal Amount { get; set; }
+		[JsonProperty("amounts")]
+		[JsonConverter(typeof(SingleOrArrayConverter<decimal>))]
+		public List<decimal> Amounts { get; set; }
 
 		[JsonProperty("_id")]
-		public string Id { get; set; }
+		[JsonConverter(typeof(SingleOrArrayConverter<string>))]
+		public List<string> Id { get; set; }
 
 		[JsonProperty("name")]
 		public string Name { get; set; }
