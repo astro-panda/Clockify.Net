@@ -11,10 +11,8 @@
     <PackageTags>clockify, client, httpclient</PackageTags>
     <Authors>Morasiu</Authors>
     <Company>Code Hydra</Company>
-    <PackageReleaseNotes>### Added
-- Method `GetSummaryReportAsync` to get summary report.
-- Method `GetWeeklyReportAsync` to get weekly report.</PackageReleaseNotes>
-    <PackageVersion>1.14.0</PackageVersion>
+    <PackageReleaseNotes>See CHANGELOG.md</PackageReleaseNotes>
+    <PackageVersion>1.15.0</PackageVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

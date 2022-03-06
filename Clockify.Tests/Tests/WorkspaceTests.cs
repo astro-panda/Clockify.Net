@@ -54,6 +54,7 @@ namespace Clockify.Tests.Tests
         /// </summary>
         /// <returns></returns>
         [Test]
+        [Ignore("Require paid plan")]
         public async Task AddUserToWorkspace_ShouldReturnWorkspaceSettings()
         {
             string _workspaceId = await SetupHelper.CreateOrFindWorkspaceAsync(_client, "Clockify.NetTestWorkspace");
@@ -64,7 +65,7 @@ namespace Clockify.Tests.Tests
             };
 
             var response = await _client.AddWorkspaceUser(_workspaceId, request);
-            response.StatusCode.Equals(HttpStatusCode.Created);
+            response.IsSuccessful.Should().BeTrue(response.Content);
         }
     }
 }

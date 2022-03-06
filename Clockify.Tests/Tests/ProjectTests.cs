@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Clockify.Net;
-using Clockify.Net.Models.Clients;
 using Clockify.Net.Models.Estimates;
 using Clockify.Net.Models.HourlyRates;
 using Clockify.Net.Models.Memberships;
 using Clockify.Net.Models.Projects;
 using Clockify.Tests.Helpers;
+using Clockify.Tests.Setup;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -147,49 +146,38 @@ namespace Clockify.Tests.Tests
         public async Task DeleteProjectAsync_ShouldDeleteProject()
         {
             // Create project to delete
-            var projectRequest = new ProjectRequest { Name = "DeleteProjectTest " + Guid.NewGuid(), Color = "#FFFFFF" };
-            var response = await _client.CreateProjectAsync(_workspaceId, projectRequest);
-            response.IsSuccessful.Should().BeTrue();
-            var projectId = response.Data.Id;
+            await using var projectSetup = new ProjectSetup(_client, _workspaceId);
+            var response = await projectSetup.SetupAsync();
+            var projectId = response.Id;
             // Archive project
             var projectUpdateRequest = new ProjectUpdateRequest {Archived = true};
             var archiveProjectResponse = await _client.UpdateProjectAsync(_workspaceId, projectId, projectUpdateRequest);
             archiveProjectResponse.IsSuccessful.Should().BeTrue();
             // Delete project
-            var del = await _client.DeleteProjectAsync(_workspaceId, projectId);
-            del.IsSuccessful.Should().BeTrue();
+            var deleteProject = await _client.DeleteProjectAsync(_workspaceId, projectId);
+            deleteProject.IsSuccessful.Should().BeTrue();
         }
         
         [Test]
         public async Task FindProjectByIdAsync_ShouldReturnProjectImplDto()
         {
             // Create project to be found
-            var projectRequest = new ProjectRequest { Name = "FindProjectByIdTest " + Guid.NewGuid(), Color = "#FFFFFF" };
-            var response = await _client.CreateProjectAsync(_workspaceId, projectRequest);
-            response.IsSuccessful.Should().BeTrue();
-            var projectId = response.Data.Id;
+            await using var projectSetup = new ProjectSetup(_client, _workspaceId);
+            var response = await projectSetup.SetupAsync();
+            var projectId = response.Id;
 
             // Find project
             var find = await _client.FindProjectByIdAsync(_workspaceId, projectId);
             find.IsSuccessful.Should().BeTrue();
-
-            // Delete project
-            var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, projectId);
-            deleteProject.IsSuccessful.Should().BeTrue();
         }
         
         [Test]
         public async Task UpdateProjectAsync_ShouldUpdateProjectAndReturnProjectImplDto()
         {
-            var projectRequest = new ProjectRequest
-            {
-                Name = "Test project " + Guid.NewGuid(),
-                Color = "#FF00FF"
-            };
-            var createResult = await _client.CreateProjectAsync(_workspaceId, projectRequest);
-            createResult.IsSuccessful.Should().BeTrue();
-            createResult.Data.Should().NotBeNull();
-
+            // Arrange
+            await using var projectSetup = new ProjectSetup(_client, _workspaceId);
+            var response = await projectSetup.SetupAsync();
+            var projectId = response.Id;
             var projectUpdateRequest = new ProjectUpdateRequest {
                 Name = "Updated project " + Guid.NewGuid(),
                 Archived = true,
@@ -198,7 +186,9 @@ namespace Clockify.Tests.Tests
                 Note = "Test note" + Guid.NewGuid(),
                 IsPublic = true
             };
-            var updateProjectAsync = await _client.UpdateProjectAsync(_workspaceId, createResult.Data.Id, projectUpdateRequest);
+            // Act
+            var updateProjectAsync = await _client.UpdateProjectAsync(_workspaceId, projectId, projectUpdateRequest);
+            // Assert
             updateProjectAsync.IsSuccessful.Should().BeTrue();
             updateProjectAsync.Data.Name.Should().Be(projectUpdateRequest.Name);
             updateProjectAsync.Data.Archived.Should().Be(projectUpdateRequest.Archived);
@@ -206,23 +196,15 @@ namespace Clockify.Tests.Tests
             updateProjectAsync.Data.Color.Should().Be(projectUpdateRequest.Color);
             updateProjectAsync.Data.Note.Should().Be(projectUpdateRequest.Note);
             updateProjectAsync.Data.Public.Should().Be(projectUpdateRequest.IsPublic);
-
-            var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, createResult.Data.Id);
-            deleteProject.IsSuccessful.Should().BeTrue();
         }
         
         [Test]
         [Ignore("Probably it needs a PRO account")]
         public async Task UpdateProjectTimeEstimateAsync_ShouldUpdateProjectTimeEstimateAndReturnProjectImplDtoWithActiveTimeEstimate()
         {
-            var projectRequest = new ProjectRequest
-            {
-                Name = "Test project " + Guid.NewGuid(),
-                Color = "#FF00FF"
-            };
-            var createResult = await _client.CreateProjectAsync(_workspaceId, projectRequest);
-            createResult.IsSuccessful.Should().BeTrue();
-            createResult.Data.Should().NotBeNull();
+            await using var projectSetup = new ProjectSetup(_client, _workspaceId);
+            var response = await projectSetup.SetupAsync();
+            var projectId = response.Id;
 
             var estimateUpdateRequest = new EstimateUpdateRequest {
                 TimeEstimate = new TimeEstimateRequest
@@ -233,26 +215,18 @@ namespace Clockify.Tests.Tests
                     ResetOption = ResetOptionType.Monthly
                 }
             };
-            var updateProjectAsync = await _client.UpdateProjectEstimatesAsync(_workspaceId, createResult.Data.Id, estimateUpdateRequest);
+            var updateProjectAsync = await _client.UpdateProjectEstimatesAsync(_workspaceId, projectId, estimateUpdateRequest);
             updateProjectAsync.IsSuccessful.Should().BeTrue();
             updateProjectAsync.Data.TimeEstimate.Active.Should().Be(true);
             updateProjectAsync.Data.TimeEstimate.ResetOption.Should().Be(ResetOptionType.Monthly);
-            
-            var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, createResult.Data.Id);
-            deleteProject.IsSuccessful.Should().BeTrue();
         }
         
         [Test]
         public async Task UpdateProjectBudgetEstimateAsync_ShouldUpdateProjectBudgetEstimateAndReturnProjectImplDtoWithActiveBudgetEstimate()
         {
-            var projectRequest = new ProjectRequest
-            {
-                Name = "Test project " + Guid.NewGuid(),
-                Color = "#FF00FF"
-            };
-            var createResult = await _client.CreateProjectAsync(_workspaceId, projectRequest);
-            createResult.IsSuccessful.Should().BeTrue();
-            createResult.Data.Should().NotBeNull();
+            await using var projectSetup = new ProjectSetup(_client, _workspaceId);
+            var response = await projectSetup.SetupAsync();
+            var projectId = response.Id;
 
             var estimateUpdateRequest = new EstimateUpdateRequest {
                 BudgetEstimate = new BudgetEstimateRequest
@@ -262,32 +236,24 @@ namespace Clockify.Tests.Tests
                     Estimate = 10
                 }
             };
-            var updateProjectAsync = await _client.UpdateProjectEstimatesAsync(_workspaceId, createResult.Data.Id, estimateUpdateRequest);
+            var updateProjectAsync = await _client.UpdateProjectEstimatesAsync(_workspaceId, projectId, estimateUpdateRequest);
             if (!updateProjectAsync.IsSuccessful && updateProjectAsync.StatusCode == HttpStatusCode.Forbidden)
             {
                 await TestContext.Out.WriteLineAsync("Budget estimate update unsuccessful and forbidden. Pro subscription required to test.");
-                return;
             }
-            
-            updateProjectAsync.IsSuccessful.Should().BeTrue();
-            updateProjectAsync.Data.TimeEstimate.Active.Should().Be(true);
-            updateProjectAsync.Data.TimeEstimate.ResetOption.Should().Be(null);
-            
-            var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, createResult.Data.Id);
-            deleteProject.IsSuccessful.Should().BeTrue();
+            else {
+                updateProjectAsync.IsSuccessful.Should().BeTrue();
+                updateProjectAsync.Data.TimeEstimate.Active.Should().Be(true);
+                updateProjectAsync.Data.TimeEstimate.ResetOption.Should().Be(null);
+            }
         }
         
         [Test]
         public async Task UpdateProjectTimeAndBudgetEstimatesAsync_ShouldThrowArgumentException()
         {
-            var projectRequest = new ProjectRequest
-            {
-                Name = "Test project " + Guid.NewGuid(),
-                Color = "#FF00FF"
-            };
-            var createResult = await _client.CreateProjectAsync(_workspaceId, projectRequest);
-            createResult.IsSuccessful.Should().BeTrue();
-            createResult.Data.Should().NotBeNull();
+            await using var projectSetup = new ProjectSetup(_client, _workspaceId);
+            var response = await projectSetup.SetupAsync();
+            var projectId = response.Id;
 
             var estimateUpdateRequest = new EstimateUpdateRequest {
                 TimeEstimate = new TimeEstimateRequest
@@ -305,25 +271,17 @@ namespace Clockify.Tests.Tests
                 }
             };
             
-            Func<Task> update = async () => await _client.UpdateProjectEstimatesAsync(_workspaceId, createResult.Data.Id, estimateUpdateRequest);
+            Func<Task> update = async () => await _client.UpdateProjectEstimatesAsync(_workspaceId, projectId, estimateUpdateRequest);
             await update.Should().ThrowAsync<ArgumentException>()
                 .WithMessage($"{nameof(BudgetEstimateRequest)} and {nameof(TimeEstimateRequest)} cannot both be active.");
-            
-            var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, createResult.Data.Id);
-            deleteProject.IsSuccessful.Should().BeTrue();
         }
         
         [Test]
         public async Task UpdateProjectMembershipsAsync_ShouldUpdateProjectMembershipsAndReturnProjectImplDtoWithAdditionalMembers()
         {
-            var projectRequest = new ProjectRequest
-            {
-                Name = "Test project " + Guid.NewGuid(),
-                Color = "#FF00FF"
-            };
-            var createProjectResult = await _client.CreateProjectAsync(_workspaceId, projectRequest);
-            createProjectResult.IsSuccessful.Should().BeTrue();
-            createProjectResult.Data.Should().NotBeNull();
+            await using var projectSetup = new ProjectSetup(_client, _workspaceId);
+            var response = await projectSetup.SetupAsync();
+            var projectId = response.Id;
 
             var allUsers = await _client.FindAllUsersOnWorkspaceAsync(_workspaceId);
             var updateMembershipRequests = new UpdateMembershipsRequest
@@ -339,14 +297,11 @@ namespace Clockify.Tests.Tests
                     }).ToArray()
             };
             
-            var updateProjectAsync = await _client.UpdateProjectMembershipsAsync(_workspaceId, createProjectResult.Data.Id, updateMembershipRequests);
+            var updateProjectAsync = await _client.UpdateProjectMembershipsAsync(_workspaceId, projectId, updateMembershipRequests);
             
             updateProjectAsync.IsSuccessful.Should().BeTrue();
             updateProjectAsync.Data.Memberships.First().HourlyRate.Amount.Should().Be(100);
             updateProjectAsync.Data.Memberships.Count.Should().Be(allUsers.Data.Count);
-
-            var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, createProjectResult.Data.Id);
-            deleteProject.IsSuccessful.Should().BeTrue();
         }
     }
 }

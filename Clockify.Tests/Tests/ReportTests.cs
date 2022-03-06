@@ -2,17 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Clockify.Net;
-using Clockify.Net.Models.Clients;
-using Clockify.Net.Models.HourlyRates;
-using Clockify.Net.Models.Projects;
 using Clockify.Net.Models.Reports;
-using Clockify.Net.Models.TimeEntries;
-using Clockify.Net.Models.Users;
 using Clockify.Tests.Helpers;
+using Clockify.Tests.Setup;
 using FluentAssertions;
 using NUnit.Framework;
-using RestSharp;
-using TimeZoneConverter;
 
 namespace Clockify.Tests.Tests {
 	public class ReportTests {
@@ -32,7 +26,8 @@ namespace Clockify.Tests.Tests {
 		public async Task GetDetailedReportAsync_ShouldReturnDetailedReportDto() {
 			var now = DateTimeOffset.UtcNow;
 			var client = await SetupHelper.CreateTestClientAsync(_client, _workspaceId);
-			var project = await SetupHelper.CreateTestProjectAsync(_client, _workspaceId, client.Id);
+			await using var projectSetup = new ProjectSetup(_client, _workspaceId);
+			var project = await projectSetup.SetupAsync();
 			await SetupHelper.CreateTestTimeEntryAsync(_client, _workspaceId, now, project.Id);
 			var userResponse = await _client.GetCurrentUserAsync();
 			userResponse.IsSuccessful.Should().BeTrue();
@@ -44,7 +39,7 @@ namespace Clockify.Tests.Tests {
 				DateRangeStart = nowWithTimeZone.AddMinutes(-2),
 				DateRangeEnd = nowWithTimeZone.AddMinutes(2),
 				SortOrder = SortOrderType.DESCENDING,
-				Description = String.Empty,
+				Description = string.Empty,
 				Rounding = false,
 				WithoutDescription = false,
 				AmountShown = AmountShownType.EARNED,
@@ -67,41 +62,42 @@ namespace Clockify.Tests.Tests {
 			getDetailedReportResult.Data.TimeEntries.Should().HaveCountGreaterOrEqualTo(1);
 			
 			// Cleanup
-			var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, project.Id);
-			deleteProject.IsSuccessful.Should().BeTrue();
+			var deleteClient = await _client.DeleteClientAsync(_workspaceId, client.Id);
+			deleteClient.IsSuccessful.Should().BeTrue();
 		}
 
-
-
 		[Test]
-		public async Task GetSummaryReportAsync_ShouldReturnSummaryReportDto() {
+		public async Task GetSummaryReportAsync_SingleId_ShouldReturnSummaryReportDto() {
 			var now = DateTimeOffset.UtcNow;
 			var client = await SetupHelper.CreateTestClientAsync(_client, _workspaceId);
-			var project = await SetupHelper.CreateTestProjectAsync(_client, _workspaceId, client.Id);
-			await SetupHelper.CreateTestTimeEntryAsync(_client, _workspaceId, now, project.Id);
+            await using var projectSetup = new ProjectSetup(_client, _workspaceId);
+            var project = await projectSetup.SetupAsync();
+            await SetupHelper.CreateTestTimeEntryAsync(_client, _workspaceId, now, project.Id);
 			var userResponse = await _client.GetCurrentUserAsync();
 			userResponse.IsSuccessful.Should().BeTrue();
 
+			
 			var nowWithTimeZone = DateTimeHelper.ConvertToTimeZone(userResponse.Data.Settings.TimeZone, now);
 
 			var summaryReportRequest = new SummaryReportRequest() {
 				ExportType = ExportType.JSON,
-				DateRangeStart = nowWithTimeZone.AddMinutes(-2),
-				DateRangeEnd = nowWithTimeZone.AddMinutes(2),
+				DateRangeStart = nowWithTimeZone.AddDays(-2),
+				DateRangeEnd = nowWithTimeZone.AddDays(2),
 				SortOrder = SortOrderType.DESCENDING,
-				Description = String.Empty,
+				Description = string.Empty,
 				Rounding = false,
 				WithoutDescription = false,
-				AmountShown = AmountShownType.EARNED,
 				Clients = new ClientsFilterDto {
 					Contains = ContainsType.CONTAINS,
 					Ids = new List<string> { client.Id },
-					Status = StatusType.ACTIVE
+					Status = StatusType.ALL
 				},
 				SummaryFilter = new SummaryFilterDto() {
 					Groups = new List<GroupType>() {
-						GroupType.PROJECT
-					}
+						GroupType.TAG,
+						GroupType.DATE
+					},
+					SortColumn = SortColumnType.GROUP
 				},
 				TimeZone = userResponse.Data.Settings.TimeZone
 			};
@@ -112,16 +108,62 @@ namespace Clockify.Tests.Tests {
 			getSummaryReportResult.Data.Should().NotBeNull();
 			
 			// Cleanup
-			var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, project.Id);
-			deleteProject.IsSuccessful.Should().BeTrue();
+			var deleteClient = await _client.DeleteClientAsync(_workspaceId, client.Id);
+			deleteClient.IsSuccessful.Should().BeTrue();
+		}
+
+		[Test]
+		public async Task GetSummaryReportAsync_ArrayId_ShouldReturnSummaryReportDto() {
+			var now = DateTimeOffset.UtcNow;
+			var client = await SetupHelper.CreateTestClientAsync(_client, _workspaceId);
+            await using var projectSetup = new ProjectSetup(_client, _workspaceId);
+            var project = await projectSetup.SetupAsync();
+            await SetupHelper.CreateTestTimeEntryAsync(_client, _workspaceId, now, project.Id);
+			var userResponse = await _client.GetCurrentUserAsync();
+			userResponse.IsSuccessful.Should().BeTrue();
+
+			var nowWithTimeZone = DateTimeHelper.ConvertToTimeZone(userResponse.Data.Settings.TimeZone, now);
+
+			var summaryReportRequest = new SummaryReportRequest() {
+				ExportType = ExportType.JSON,
+				DateRangeStart = nowWithTimeZone.AddDays(-2),
+				DateRangeEnd = nowWithTimeZone.AddDays(2),
+				SortOrder = SortOrderType.DESCENDING,
+				// Description = string.Empty,
+				// Rounding = false,
+				// WithoutDescription = false,
+				// Clients = new ClientsFilterDto {
+				// 	Contains = ContainsType.CONTAINS,
+				// 	Ids = new List<string> { client.Id },
+				// 	Status = StatusType.ALL
+				// },
+				SummaryFilter = new SummaryFilterDto() {
+					Groups = new List<GroupType>() {
+						GroupType.TAG,
+						GroupType.DATE
+					},
+					SortColumn = SortColumnType.GROUP
+				},
+				TimeZone = userResponse.Data.Settings.TimeZone
+			};
+
+			var getSummaryReportResult = await _client.GetSummaryReportAsync(_workspaceId, summaryReportRequest);
+			
+			getSummaryReportResult.IsSuccessful.Should().BeTrue();
+			getSummaryReportResult.Data.Should().NotBeNull();
+			
+			// Cleanup
+			var deleteClient = await _client.DeleteClientAsync(_workspaceId, client.Id);
+			deleteClient.IsSuccessful.Should().BeTrue();
 		}
 		
 		[Test]
 		public async Task GetWeeklyReportAsync_ShouldReturnWeeklyReportDto() {
 			var now = DateTimeOffset.UtcNow;
 			var client = await SetupHelper.CreateTestClientAsync(_client, _workspaceId);
-			var project = await SetupHelper.CreateTestProjectAsync(_client, _workspaceId, client.Id);
-			await SetupHelper.CreateTestTimeEntryAsync(_client, _workspaceId, now, project.Id);
+            await using var projectSetup = new ProjectSetup(_client, _workspaceId);
+            var project = await projectSetup.SetupAsync();
+            await SetupHelper.CreateTestTimeEntryAsync(_client, _workspaceId, now, project.Id);
 			var userResponse = await _client.GetCurrentUserAsync();
 			userResponse.IsSuccessful.Should().BeTrue();
 
@@ -154,8 +196,8 @@ namespace Clockify.Tests.Tests {
 			getWeeklyReportResponse.Data.Should().NotBeNull();
 			
 			// Cleanup
-			var deleteProject = await _client.ArchiveAndDeleteProject(_workspaceId, project.Id);
-			deleteProject.IsSuccessful.Should().BeTrue();
+			var deleteClient = await _client.DeleteClientAsync(_workspaceId, client.Id);
+			deleteClient.IsSuccessful.Should().BeTrue();
 		}
 	}
 }
