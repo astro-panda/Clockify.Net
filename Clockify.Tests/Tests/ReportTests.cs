@@ -27,7 +27,7 @@ namespace Clockify.Tests.Tests {
 			var now = DateTimeOffset.UtcNow;
 			var client = await SetupHelper.CreateTestClientAsync(_client, _workspaceId);
 			await using var projectSetup = new ProjectSetup(_client, _workspaceId);
-			var project = await projectSetup.SetupAsync();
+			var project = await projectSetup.SetupAsync(client.Id);
 			await SetupHelper.CreateTestTimeEntryAsync(_client, _workspaceId, now, project.Id);
 			var userResponse = await _client.GetCurrentUserAsync();
 			userResponse.IsSuccessful.Should().BeTrue();
