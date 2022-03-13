@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Clockify.Net;
+using Clockify.Net.Models;
 using Clockify.Net.Models.Clients;
 using Clockify.Net.Models.TimeEntries;
 using Clockify.Net.Models.Workspaces;
@@ -66,7 +67,7 @@ namespace Clockify.Tests.Helpers {
 		}
 
 
-		private static bool WorkspaceAlreadyExist(IRestResponse<WorkspaceDto> workspaceResponse) {
+		private static bool WorkspaceAlreadyExist(Response<WorkspaceDto> workspaceResponse) {
 			return workspaceResponse.StatusCode == HttpStatusCode.BadRequest &&
 			       workspaceResponse.Content.Contains("already exist");
 		}
