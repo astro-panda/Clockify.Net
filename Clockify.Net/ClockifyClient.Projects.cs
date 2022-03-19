@@ -67,7 +67,7 @@ namespace Clockify.Net
             if (projectRequest.Estimate != null && !Enum.IsDefined(typeof(EstimateType), projectRequest.Estimate.Type))
                 throw new ArgumentOutOfRangeException(nameof(projectRequest.Estimate.Type));
 
-            var request = new RestRequest($"workspaces/{workspaceId}/projects");
+            var request = new RestRequest($"workspaces/{workspaceId}/projects", Method.Post);
             request.AddJsonBody(projectRequest);
             return Response<ProjectDtoImpl>.FromRestResponse(await _client.ExecuteAsync<ProjectDtoImpl>(request).ConfigureAwait(false));
         }
