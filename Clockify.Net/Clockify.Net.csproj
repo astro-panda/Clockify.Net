@@ -12,7 +12,7 @@
     <Authors>Morasiu</Authors>
     <Company>Code Hydra</Company>
     <PackageReleaseNotes>See CHANGELOG.md</PackageReleaseNotes>
-    <PackageVersion>1.15.0</PackageVersion>
+    <PackageVersion>2.0.0</PackageVersion>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
   </PropertyGroup>
