@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Clockify.Net.Models;
 using Clockify.Net.Models.Tags;
 using RestSharp;
 
@@ -11,23 +12,23 @@ namespace Clockify.Net
         /// <summary>
         /// Find tags on workspace.
         /// </summary>
-        public Task<IRestResponse<List<TagDto>>> FindAllTagsOnWorkspaceAsync(string workspaceId)
+        public async Task<Response<List<TagDto>>> FindAllTagsOnWorkspaceAsync(string workspaceId)
         {
             var request = new RestRequest($"workspaces/{workspaceId}/tags");
-            return _client.ExecuteGetAsync<List<TagDto>>(request);
+            return Response<List<TagDto>>.FromRestResponse(await _client.ExecuteGetAsync<List<TagDto>>(request).ConfigureAwait(false));
         }
 
         /// <summary>
         /// Add a new client to workspace.
         /// </summary>
-        public Task<IRestResponse<TagDto>> CreateTagAsync(string workspaceId, TagRequest projectRequest)
+        public async Task<Response<TagDto>> CreateTagAsync(string workspaceId, TagRequest projectRequest)
         {
             if (projectRequest == null) { throw new ArgumentNullException(nameof(projectRequest)); }
             if (projectRequest.Name == null) { throw new ArgumentNullException(nameof(projectRequest.Name)); }
 
-            var request = new RestRequest($"workspaces/{workspaceId}/tags", Method.POST);
+            var request = new RestRequest($"workspaces/{workspaceId}/tags", Method.Post);
             request.AddJsonBody(projectRequest);
-            return _client.ExecutePostAsync<TagDto>(request);
+            return Response<TagDto>.FromRestResponse(await _client.ExecutePostAsync<TagDto>(request).ConfigureAwait(false));
         }
     }
 }

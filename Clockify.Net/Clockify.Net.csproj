@@ -13,6 +13,8 @@
     <Company>Code Hydra</Company>
     <PackageReleaseNotes>See CHANGELOG.md</PackageReleaseNotes>
     <PackageVersion>1.15.0</PackageVersion>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -25,8 +27,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="RestSharp" Version="106.12.0" />
-    <PackageReference Include="RestSharp.Serializers.NewtonsoftJson" Version="106.11.4" />
+    <PackageReference Include="RestSharp" Version="107.3.0" />
+    <PackageReference Include="RestSharp.Serializers.NewtonsoftJson" Version="107.3.0" />
   </ItemGroup>
 
   <ItemGroup>
