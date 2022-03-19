@@ -8,7 +8,7 @@ namespace Clockify.Net.Models.Users
         Active,
         [EnumMember(Value = "PENDING_EMAIL_VERIFICATION")]
         PendingEmailVerification,
-        [EnumMember(Value = "DELETED")]
+        [EnumMember(Value = "DeleteD")]
         Deleted,
         [EnumMember(Value = "DECLINED")]
         Declined,

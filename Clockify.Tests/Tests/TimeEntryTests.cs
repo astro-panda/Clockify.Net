@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Clockify.Net;
-using Clockify.Net.Models.HourlyRates;
-using Clockify.Net.Models.Projects;
 using Clockify.Net.Models.Tags;
 using Clockify.Net.Models.TimeEntries;
 using Clockify.Tests.Helpers;

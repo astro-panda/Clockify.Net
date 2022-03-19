@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Clockify.Net.Models;
 using Clockify.Net.Models.Estimates;
 using Clockify.Net.Models.Memberships;
 using Clockify.Net.Models.Projects;
@@ -13,7 +14,7 @@ namespace Clockify.Net
         /// <summary>
         /// Find projects on workspace. See Clockify docs for query params explanation.
         /// </summary>
-        public Task<IRestResponse<List<ProjectDtoImpl>>> FindAllProjectsOnWorkspaceAsync(string workspaceId,
+        public async Task<Response<List<ProjectDtoImpl>>> FindAllProjectsOnWorkspaceAsync(string workspaceId,
             bool? archived = null,
             string name = null,
             bool? billable = null,
@@ -52,13 +53,13 @@ namespace Clockify.Net
             request.AddQueryParameter(nameof(page), page.ToString());
             request.AddQueryParameter("page-size", pageSize.ToString());
 
-            return _client.ExecuteGetAsync<List<ProjectDtoImpl>>(request);
+            return Response<List<ProjectDtoImpl>>.FromRestResponse(await _client.ExecuteGetAsync<List<ProjectDtoImpl>>(request).ConfigureAwait(false));
         }
 
         /// <summary>
         /// Add a new project to workspace.
         /// </summary>
-        public Task<IRestResponse<ProjectDtoImpl>> CreateProjectAsync(string workspaceId, ProjectRequest projectRequest)
+        public async Task<Response<ProjectDtoImpl>> CreateProjectAsync(string workspaceId, ProjectRequest projectRequest)
         {
             if (projectRequest == null) { throw new ArgumentNullException(nameof(projectRequest)); }
             if (projectRequest.Name == null) throw new ArgumentNullException(nameof(projectRequest.Name));
@@ -66,60 +67,60 @@ namespace Clockify.Net
             if (projectRequest.Estimate != null && !Enum.IsDefined(typeof(EstimateType), projectRequest.Estimate.Type))
                 throw new ArgumentOutOfRangeException(nameof(projectRequest.Estimate.Type));
 
-            var request = new RestRequest($"workspaces/{workspaceId}/projects", Method.POST);
+            var request = new RestRequest($"workspaces/{workspaceId}/projects", Method.Post);
             request.AddJsonBody(projectRequest);
-            return _client.ExecutePostAsync<ProjectDtoImpl>(request);
+            return Response<ProjectDtoImpl>.FromRestResponse(await _client.ExecuteAsync<ProjectDtoImpl>(request).ConfigureAwait(false));
         }
 
         /// <summary>
         /// Delete project with Id.
         /// </summary>
-        public Task<IRestResponse> DeleteProjectAsync(string workspaceId, string id)
+        public async Task<Response> DeleteProjectAsync(string workspaceId, string id)
         {
             var request = new RestRequest($"workspaces/{workspaceId}/projects/{id}");
-            return _client.ExecuteAsync(request, Method.DELETE);
+            return Response.FromRestResponse(await _client.ExecuteAsync(request, Method.Delete).ConfigureAwait(false));
         }
 
         /// <summary>
         /// Find project with Id.
         /// </summary>
-        public Task<IRestResponse> FindProjectByIdAsync(string workspaceId, string id)
+        public async Task<Response> FindProjectByIdAsync(string workspaceId, string id)
         {
             var request = new RestRequest($"workspaces/{workspaceId}/projects/{id}");
-            return _experimentalClient.ExecuteAsync(request, Method.GET);
+            return Response.FromRestResponse(await _experimentalClient.ExecuteAsync(request, Method.Get).ConfigureAwait(false));
         }
         
         /// <summary>
         /// Update project on workspace.
         /// </summary>
-        public Task<IRestResponse<ProjectDtoImpl>> UpdateProjectAsync(string workspaceId, string projectId, ProjectUpdateRequest project)
+        public async Task<Response<ProjectDtoImpl>> UpdateProjectAsync(string workspaceId, string projectId, ProjectUpdateRequest project)
         {
             var request = new RestRequest($"workspaces/{workspaceId}/projects/{projectId}");
             request.AddJsonBody(project);
-            return _client.ExecuteAsync<ProjectDtoImpl>(request, Method.PUT);
+            return Response<ProjectDtoImpl>.FromRestResponse(await _client.ExecuteAsync<ProjectDtoImpl>(request, Method.Put).ConfigureAwait(false));
         }
         
         /// <summary>
         /// Update estimates on a project.
         /// </summary>
-        public Task<IRestResponse<ProjectDtoImpl>> UpdateProjectEstimatesAsync(string workspaceId, string projectId, EstimateUpdateRequest estimateUpdateRequest)
+        public async Task<Response<ProjectDtoImpl>> UpdateProjectEstimatesAsync(string workspaceId, string projectId, EstimateUpdateRequest estimateUpdateRequest)
         {
             if (estimateUpdateRequest.BudgetEstimate?.Active == true &&
                 estimateUpdateRequest.TimeEstimate?.Active == true) throw new ArgumentException($"{nameof(BudgetEstimateRequest)} and {nameof(TimeEstimateRequest)} cannot both be active.");
             
             var request = new RestRequest($"/workspaces/{workspaceId}/projects/{projectId}/estimate");
             request.AddJsonBody(estimateUpdateRequest);
-            return _client.ExecuteAsync<ProjectDtoImpl>(request, Method.PATCH);
+            return Response<ProjectDtoImpl>.FromRestResponse(await _client.ExecuteAsync<ProjectDtoImpl>(request, Method.Patch).ConfigureAwait(false));
         }
         
         /// <summary>
         /// Update memberships on a project.
         /// </summary>
-        public Task<IRestResponse<ProjectDtoImpl>> UpdateProjectMembershipsAsync(string workspaceId, string projectId, UpdateMembershipsRequest updateMembershipsRequest)
+        public async Task<Response<ProjectDtoImpl>> UpdateProjectMembershipsAsync(string workspaceId, string projectId, UpdateMembershipsRequest updateMembershipsRequest)
         {
             var request = new RestRequest($"/workspaces/{workspaceId}/projects/{projectId}/memberships");
             request.AddJsonBody(updateMembershipsRequest);
-            return _client.ExecuteAsync<ProjectDtoImpl>(request, Method.PATCH);
+            return Response<ProjectDtoImpl>.FromRestResponse(await _client.ExecuteAsync<ProjectDtoImpl>(request, Method.Patch).ConfigureAwait(false));
         }
     }
 }
