@@ -19,6 +19,8 @@ https://clockify.github.io/clockify_api_docs/
 
 Also check [CHANGELOG](CHANGELOG.md).
 
+> ⚠ Breaking changes in version 2.0.0. See [CHANGELOG](CHANGELOG.md).
+
 > If you like this project, give it a star ⭐. It really motives me to work on it.
 
 ## Usage
