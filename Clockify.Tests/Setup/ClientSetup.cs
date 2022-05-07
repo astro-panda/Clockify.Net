@@ -28,6 +28,9 @@ namespace Clockify.Tests.Setup {
 				Name = $"Setup client {Guid.NewGuid()}: {callerName}",
 			};
 
+			// Tag cannot be longer than 100
+			if (request.Name.Length > 100) request.Name = request.Name.Substring(0, 99);
+			
 			var response = await _client.CreateClientAsync(_workspaceName, request);
 			response.IsSuccessful.Should().BeTrue();
 			response.Data.Should().NotBeNull();
