@@ -58,6 +58,9 @@ namespace Clockify.Tests.Tests
             var findResult = await _client.FindAllTagsOnWorkspaceAsync(_workspaceId);
             findResult.IsSuccessful.Should().BeTrue();
             findResult.Data.Should().ContainEquivalentOf(createResult.Data);
+
+            var removeTag = await _client.DeleteTagAsync(_workspaceId, createResult.Data.Id);
+            removeTag.IsSuccessful.Should().BeTrue();
         }
 
         [Test]

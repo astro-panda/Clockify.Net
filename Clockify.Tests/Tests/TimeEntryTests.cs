@@ -218,12 +218,12 @@ namespace Clockify.Tests.Tests {
 			userResponse.IsSuccessful.Should().BeTrue();
 
 			var response = await _client.FindAllHydratedTimeEntriesForUserAsync(_workspaceId, userResponse.Data.Id,
-				start: DateTimeOffset.Now.AddDays(-1),
-				end: DateTimeOffset.Now.AddDays(1));
+				start: now.AddDays(-1),
+				end: now.AddDays(1));
 
 			response.IsSuccessful.Should().BeTrue();
 			response.Data.Should().Contain(timeEntry => timeEntry.Id.Equals(createResult.Data.Id));
-			response.Data.Should().Contain(timeEntry => timeEntry.HourlyRate.Amount.Equals(hourlyRateAmount));
+			response.Data.Should().Contain(timeEntry => timeEntry.HourlyRate != null && timeEntry.HourlyRate.Amount.Equals(hourlyRateAmount));
 		}
 
 		[Test]
