@@ -245,7 +245,6 @@ namespace Clockify.Net {
             bool? projectRequired = null,
             bool? taskRequired = null,
             bool? considerDurationFormat = null,
-            bool? hydrated = null,
             bool? inProgress = null,
             int page = 1,
             int pageSize = 50) {
