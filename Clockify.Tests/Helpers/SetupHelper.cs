@@ -37,19 +37,6 @@ namespace Clockify.Tests.Helpers {
 			return workspaceId;
 		}
 
-		/// <summary>
-		/// Creates client
-		/// </summary>
-		public static async Task<ClientDto> CreateTestClientAsync(ClockifyClient client, string workspaceName) {
-			var clientRequest = new ClientRequest {
-				Name = "GetDetailedReportAsync " + Guid.NewGuid()
-			};
-
-			var createClientResponse = await client.CreateClientAsync(workspaceName, clientRequest);
-			createClientResponse.IsSuccessful.Should().BeTrue();
-			return createClientResponse.Data;
-		}
-		
 		public static async Task<TimeEntryDtoImpl> CreateTestTimeEntryAsync(ClockifyClient client, string workspaceId, DateTimeOffset start, string projectId) {
 			var timeEntryRequest = new TimeEntryRequest {
 				Start = start,
