@@ -113,7 +113,6 @@ namespace Clockify.Net {
             bool? projectRequired = null,
             bool? taskRequired = null,
             bool? considerDurationFormat = null,
-            bool? hydrated = null,
             bool? inProgress = null,
             int page = 1,
             int pageSize = 50,
@@ -150,10 +149,6 @@ namespace Clockify.Net {
 
             if (considerDurationFormat != null) {
                 request.AddQueryParameter("consider-duration-format", considerDurationFormat.ToString());
-            }
-
-            if (hydrated != null) {
-                request.AddQueryParameter(nameof(hydrated), hydrated.ToString());
             }
 
             if (inProgress != null) {
@@ -250,7 +245,6 @@ namespace Clockify.Net {
             bool? projectRequired = null,
             bool? taskRequired = null,
             bool? considerDurationFormat = null,
-            bool? hydrated = null,
             bool? inProgress = null,
             int page = 1,
             int pageSize = 50) {
@@ -267,8 +261,7 @@ namespace Clockify.Net {
             Response<List<TimeEntryDtoImpl>> timeEntryResponse = new Response<List<TimeEntryDtoImpl>>();
             foreach (var member in project.Memberships) {
                 timeEntryResponse = await FindAllTimeEntriesForUserAsync(workspaceId, member.UserId,
-                    description, start, end, project.Id, task, projectRequired, taskRequired, considerDurationFormat,
-                    hydrated, inProgress, page, pageSize).ConfigureAwait(false);
+                    description, start, end, project.Id, task, projectRequired, taskRequired, considerDurationFormat,inProgress, page, pageSize).ConfigureAwait(false);
 
                 if (timeEntryResponse.IsSuccessful && timeEntryResponse.Data != null)
                     timeEntriesProject.AddRange(timeEntryResponse.Data);

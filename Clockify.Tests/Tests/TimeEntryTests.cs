@@ -163,19 +163,15 @@ namespace Clockify.Tests.Tests {
 
 		[Test]
 		public async Task FindAllTimeEntriesForUserAsync_ShouldReturnTimeEntryDtoImplList() {
-			var tagRequest = new TagRequest {
-				Name = "Test tag " + Guid.NewGuid(),
-			};
-			var createTagResult = await _client.CreateTagAsync(_workspaceId, tagRequest);
-			createTagResult.IsSuccessful.Should().BeTrue();
-			createTagResult.Data.Should().NotBeNull();
+			await using var tagSetup = new TagSetup(_client, _workspaceId);
+			var tag = await tagSetup.SetupAsync();
 
 			var now = DateTimeOffset.UtcNow;
 			var timeEntryRequest = new TimeEntryRequest {
 				Start = now,
 				End = now.AddSeconds(1),
 				Description = "",
-				TagIds = new List<string>() { createTagResult.Data.Id }
+				TagIds = new List<string>() { tag.Id }
 			};
 
 			var createTimEntryResult = await _client.CreateTimeEntryAsync(_workspaceId, timeEntryRequest);
@@ -201,8 +197,8 @@ namespace Clockify.Tests.Tests {
 			const int hourlyRateAmount = 1234;
 
 			// Create project
-            await using var projectSetup = new ProjectSetup(_client, _workspaceId);
-            var project = await projectSetup.SetupAsync();
+			await using var projectSetup = new ProjectSetup(_client, _workspaceId);
+			var project = await projectSetup.SetupAsync();
 
 			var now = DateTimeOffset.UtcNow;
 			var timeEntryRequest = new TimeEntryRequest {
@@ -218,12 +214,13 @@ namespace Clockify.Tests.Tests {
 			userResponse.IsSuccessful.Should().BeTrue();
 
 			var response = await _client.FindAllHydratedTimeEntriesForUserAsync(_workspaceId, userResponse.Data.Id,
-				start: DateTimeOffset.Now.AddDays(-1),
-				end: DateTimeOffset.Now.AddDays(1));
+				start: now.AddDays(-1),
+				end: now.AddDays(1));
 
 			response.IsSuccessful.Should().BeTrue();
 			response.Data.Should().Contain(timeEntry => timeEntry.Id.Equals(createResult.Data.Id));
-			response.Data.Should().Contain(timeEntry => timeEntry.HourlyRate.Amount.Equals(hourlyRateAmount));
+			response.Data.Should().Contain(timeEntry =>
+				timeEntry.HourlyRate != null && timeEntry.HourlyRate.Amount.Equals(hourlyRateAmount));
 		}
 
 		[Test]

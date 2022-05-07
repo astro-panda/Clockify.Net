@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Clockify.Net;
 using Clockify.Net.Models.Tags;
 using Clockify.Tests.Helpers;
+using Clockify.Tests.Setup;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -45,7 +46,7 @@ namespace Clockify.Tests.Tests
         }
 
         [Test]
-        public async Task CreateTagAsync_ShouldCreteTagAndReturnTagDto()
+        public async Task CreateTagAsync_ShouldCreateTagAndReturnTagDto()
         {
             var tagRequest = new TagRequest
             {
@@ -58,6 +59,9 @@ namespace Clockify.Tests.Tests
             var findResult = await _client.FindAllTagsOnWorkspaceAsync(_workspaceId);
             findResult.IsSuccessful.Should().BeTrue();
             findResult.Data.Should().ContainEquivalentOf(createResult.Data);
+
+            var removeTag = await _client.DeleteTagAsync(_workspaceId, createResult.Data.Id);
+            removeTag.IsSuccessful.Should().BeTrue();
         }
 
         [Test]
@@ -70,6 +74,20 @@ namespace Clockify.Tests.Tests
             Func<Task> create = () => _client.CreateTagAsync(_workspaceId, tagRequest);
             await create.Should().ThrowAsync<ArgumentException>()
                 .WithMessage($"Value cannot be null. (Parameter '{nameof(TagRequest.Name)}')");
+        }
+        
+        [Test]
+        public async Task DeleteTag_ShouldDeleteTag()
+        {
+            await using var tagSetup = new TagSetup(_client, _workspaceId);
+            var tag = await tagSetup.SetupAsync();
+
+            var removeTag = await _client.DeleteTagAsync(_workspaceId, tag.Id);
+            removeTag.IsSuccessful.Should().BeTrue();
+            
+            var findResult = await _client.FindAllTagsOnWorkspaceAsync(_workspaceId);
+            findResult.IsSuccessful.Should().BeTrue();
+            findResult.Data.Should().NotContain(x => x.Id == tag.Id);
         }
     }
 }

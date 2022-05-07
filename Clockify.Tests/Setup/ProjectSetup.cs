@@ -13,8 +13,8 @@ namespace Clockify.Tests.Setup {
 		private readonly string _workspaceName;
 		private string _projectId = string.Empty;
 
-		public ProjectSetup(ClockifyClient _client, string workspaceName) {
-			this._client = _client;
+		public ProjectSetup(ClockifyClient client, string workspaceName) {
+			this._client = client;
 			_workspaceName = workspaceName;
 		}
 

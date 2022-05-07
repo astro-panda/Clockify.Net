@@ -16,7 +16,7 @@ namespace Clockify.Net
             string workspaceId,
             string projectId,
             bool? isActive = null,
-            string name = null,
+            string? name = null,
             int page = 1,
             int pageSize = 50)
         {

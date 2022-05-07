@@ -25,7 +25,8 @@ namespace Clockify.Tests.Tests {
 		[Test]
 		public async Task GetDetailedReportAsync_ShouldReturnDetailedReportDto() {
 			var now = DateTimeOffset.UtcNow;
-			var client = await SetupHelper.CreateTestClientAsync(_client, _workspaceId);
+			await using var clientSetup = new ClientSetup(_client, _workspaceId);
+			var client = await clientSetup.SetupAsync(); 
 			await using var projectSetup = new ProjectSetup(_client, _workspaceId);
 			var project = await projectSetup.SetupAsync(client.Id);
 			await SetupHelper.CreateTestTimeEntryAsync(_client, _workspaceId, now, project.Id);
@@ -60,23 +61,19 @@ namespace Clockify.Tests.Tests {
 			getDetailedReportResult.IsSuccessful.Should().BeTrue();
 			getDetailedReportResult.Data.Should().NotBeNull();
 			getDetailedReportResult.Data.TimeEntries.Should().HaveCountGreaterOrEqualTo(1);
-			
-			// Cleanup
-			var deleteClient = await _client.DeleteClientAsync(_workspaceId, client.Id);
-			deleteClient.IsSuccessful.Should().BeTrue();
 		}
 
 		[Test]
 		public async Task GetSummaryReportAsync_SingleId_ShouldReturnSummaryReportDto() {
 			var now = DateTimeOffset.UtcNow;
-			var client = await SetupHelper.CreateTestClientAsync(_client, _workspaceId);
+			await using var clientSetup = new ClientSetup(_client, _workspaceId);
+			var client = await clientSetup.SetupAsync(); 
             await using var projectSetup = new ProjectSetup(_client, _workspaceId);
             var project = await projectSetup.SetupAsync();
             await SetupHelper.CreateTestTimeEntryAsync(_client, _workspaceId, now, project.Id);
 			var userResponse = await _client.GetCurrentUserAsync();
 			userResponse.IsSuccessful.Should().BeTrue();
 
-			
 			var nowWithTimeZone = DateTimeHelper.ConvertToTimeZone(userResponse.Data.Settings.TimeZone, now);
 
 			var summaryReportRequest = new SummaryReportRequest() {
@@ -106,16 +103,13 @@ namespace Clockify.Tests.Tests {
 			
 			getSummaryReportResult.IsSuccessful.Should().BeTrue();
 			getSummaryReportResult.Data.Should().NotBeNull();
-			
-			// Cleanup
-			var deleteClient = await _client.DeleteClientAsync(_workspaceId, client.Id);
-			deleteClient.IsSuccessful.Should().BeTrue();
 		}
 
 		[Test]
 		public async Task GetSummaryReportAsync_ArrayId_ShouldReturnSummaryReportDto() {
 			var now = DateTimeOffset.UtcNow;
-			var client = await SetupHelper.CreateTestClientAsync(_client, _workspaceId);
+			await using var clientSetup = new ClientSetup(_client, _workspaceId);
+			var client = await clientSetup.SetupAsync(); 
             await using var projectSetup = new ProjectSetup(_client, _workspaceId);
             var project = await projectSetup.SetupAsync();
             await SetupHelper.CreateTestTimeEntryAsync(_client, _workspaceId, now, project.Id);
@@ -151,16 +145,13 @@ namespace Clockify.Tests.Tests {
 			
 			getSummaryReportResult.IsSuccessful.Should().BeTrue();
 			getSummaryReportResult.Data.Should().NotBeNull();
-			
-			// Cleanup
-			var deleteClient = await _client.DeleteClientAsync(_workspaceId, client.Id);
-			deleteClient.IsSuccessful.Should().BeTrue();
 		}
 		
 		[Test]
 		public async Task GetWeeklyReportAsync_ShouldReturnWeeklyReportDto() {
 			var now = DateTimeOffset.UtcNow;
-			var client = await SetupHelper.CreateTestClientAsync(_client, _workspaceId);
+			await using var clientSetup = new ClientSetup(_client, _workspaceId);
+			var client = await clientSetup.SetupAsync(); 
             await using var projectSetup = new ProjectSetup(_client, _workspaceId);
             var project = await projectSetup.SetupAsync();
             await SetupHelper.CreateTestTimeEntryAsync(_client, _workspaceId, now, project.Id);
@@ -194,10 +185,6 @@ namespace Clockify.Tests.Tests {
 			
 			getWeeklyReportResponse.IsSuccessful.Should().BeTrue();
 			getWeeklyReportResponse.Data.Should().NotBeNull();
-			
-			// Cleanup
-			var deleteClient = await _client.DeleteClientAsync(_workspaceId, client.Id);
-			deleteClient.IsSuccessful.Should().BeTrue();
 		}
 	}
 }
