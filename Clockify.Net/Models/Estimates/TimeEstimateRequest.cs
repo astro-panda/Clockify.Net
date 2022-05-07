@@ -2,6 +2,6 @@
 {
     public class TimeEstimateRequest : EstimateBase
     {   
-        public string Estimate { get; set; }
+        public string? Estimate { get; set; }
     }
 }

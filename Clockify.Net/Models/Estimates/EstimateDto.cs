@@ -2,7 +2,7 @@
 {
     public class EstimateDto
     {
-        public string Estimate { get; set; }        
-        public EstimateType Type { get; set; }
+        public string? Estimate { get; set; }        
+        public EstimateType? Type { get; set; }
     }
 }

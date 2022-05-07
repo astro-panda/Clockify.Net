@@ -14,7 +14,7 @@ namespace Clockify.Net
         /// </summary>
         public async Task<Response<List<TemplateDto>>> FindAllTemplatesOnWorkspaceAsync(
             string workspaceId,
-            string name = null,
+            string? name = null,
             bool cleansed = false,
             bool hydrated = false,
             int page = 1,

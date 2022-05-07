@@ -39,7 +39,7 @@ namespace Clockify.Net
         /// <summary>
         /// Update a client's name on workspace.
         /// </summary>
-        public async Task<Response<ClientUpdateDto>> UpdateClientNameAsync(string workspaceId, string clientId, ClientName clientName)
+        public async Task<Response<ClientUpdateDto>> UpdateClientNameAsync(string workspaceId, string? clientId, ClientName clientName)
         {
             if (clientName == null) { throw new ArgumentNullException(nameof(clientName)); }
 
@@ -51,7 +51,7 @@ namespace Clockify.Net
         /// <summary>
         /// Delete a client from a workspace.
         /// </summary>
-        public async Task<Response> DeleteClientAsync(string workspaceId, string clientId)
+        public async Task<Response> DeleteClientAsync(string workspaceId, string? clientId)
         {
             var request = new RestRequest($"workspaces/{workspaceId}/clients/{clientId}");
             return Response.FromRestResponse(await _client.ExecuteAsync(request, Method.Delete).ConfigureAwait(false));
