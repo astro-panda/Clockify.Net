@@ -14,7 +14,7 @@ namespace Clockify.Net.Models.Reports
         public TimeIntervalDto TimeInterval { get; set; }
         public string ApprovalRequestId { get; set; }
         public string TaskName { get; set; }
-        public List<string> Tags { get; set; }
+        public List<TagDto> Tags { get; set; }
         public bool? IsLocked { get; set; }
         public List<CustomFieldDto> CustomFields { get; set; }
         public InvoicingInfoDto InvoicingInfo { get; set; }
