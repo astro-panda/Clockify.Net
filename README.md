@@ -13,10 +13,6 @@ Stable API docs:
 
 https://clockify.me/developers-api
 
-EXPERIMENTAL API
-
-https://clockify.github.io/clockify_api_docs/
-
 Also check [CHANGELOG](CHANGELOG.md).
 
 > ⚠ Breaking changes in version 2.0.0. See [CHANGELOG](CHANGELOG.md).
@@ -62,5 +58,3 @@ Also check our [Project tab](https://github.com/Morasiu/Clockify.Net/projects/) 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
-
-<a href="https://www.buymeacoffee.com/morasiu" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
