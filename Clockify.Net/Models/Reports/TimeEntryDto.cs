@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 using Clockify.Net.Models.TimeEntries;
 
 namespace Clockify.Net.Models.Reports
 {
     public class TimeEntryDto
     {
+        [JsonProperty("_id")]
         public string Id { get; set; }
         public string Description { get; set; }
         public string UserId { get; set; }
