@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Marked `UpdateClientNameAsync` as `**deprecated**
 - `ClientUpdateDto.Archived` to `bool?`
+- `DetailedReportRequest.Project` to type `ProjectFilterDto`
 
 ## [2.1.2] - 27.10.2022
 
