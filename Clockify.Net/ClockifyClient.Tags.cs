@@ -33,14 +33,30 @@ namespace Clockify.Net
 
         
         /// <summary>
+        /// Update tag.
+        /// </summary>
+        public async Task<Response<TagDto>> UpdateTagAsync(string workspaceId, string? tagId, TagUpdateRequest updateRequest)
+        {
+            var request = new RestRequest($"workspaces/{workspaceId}/tags/{tagId}", Method.Put);
+            request.AddJsonBody(updateRequest);
+            var response = await _client.ExecuteAsync<TagDto>(request).ConfigureAwait(false);
+            return Response<TagDto>.FromRestResponse(response);
+        }
+        
+        /// <summary>
         /// Delete tag from workspace.
         /// </summary>
-        /// <param name="workspaceId"></param>
-        /// <param name="tagId"></param>
-        /// <exception cref="NotImplementedException"></exception>
-        public async Task<Response> DeleteTagAsync(string workspaceId, string tagId) {
+        public async Task<Response<TagDto>> DeleteTagAsync(string workspaceId, string tagId) {
             var request = new RestRequest($"workspaces/{workspaceId}/tags/{tagId}", Method.Delete);
-            return Response.FromRestResponse(await _client.DeleteAsync(request).ConfigureAwait(false));
+            var response = await _client.ExecuteAsync<TagDto>(request).ConfigureAwait(false);
+            return Response<TagDto>.FromRestResponse(response);
+        }
+
+        public async Task<Response<TagDto>> ArchiveAndDeleteTagAsync(string workspaceId, string tagId) {
+            var updateRequest = new TagUpdateRequest() {Archived = true, Name = Guid.NewGuid().ToString()};
+            var updateResponse = await UpdateTagAsync(workspaceId, tagId, updateRequest).ConfigureAwait(false);
+            if (!updateResponse.IsSuccessful) return updateResponse;
+            return await this.DeleteTagAsync(workspaceId, tagId).ConfigureAwait(false);
         }
     }
 }
