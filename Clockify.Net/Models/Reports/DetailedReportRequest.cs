@@ -23,7 +23,7 @@ namespace Clockify.Net.Models.Reports
         public ApprovalStateType ApprovalState { get; set; }
         public string UserGroups { get; set; }
         public ClientsFilterDto Clients { get; set; }
-        public string Projects { get; set; }
+        public ProjectFilterDto Projects { get; set; }
         public string Tasks { get; set; }
         public TagsFilterDto Tags { get; set; }
         public bool? Billable { get; set; }

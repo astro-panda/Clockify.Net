@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Clockify.Net;
 using Clockify.Net.Models.Clients;
 using Clockify.Tests.Helpers;
+using Clockify.Tests.Setup;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -43,7 +44,7 @@ namespace Clockify.Tests.Tests {
 			findResult.Data.Should().ContainEquivalentOf(createResult.Data);
 
 			// Cleanup
-			var deleteClient = await _client.DeleteClientAsync(_workspaceId, createResult.Data.Id);
+			var deleteClient = await _client.ArchiveAndDeleteClientAsync(_workspaceId, createResult.Data.Id);
 			deleteClient.IsSuccessful.Should().BeTrue();
 		}
 
@@ -68,32 +69,55 @@ namespace Clockify.Tests.Tests {
 
 		[Test]
 		public async Task UpdateClientNameOnWorkspace_ShouldReturnClientUpdateDto() {
-			var clientRequest = new ClientRequest { Name = "Test add client " + Guid.NewGuid() };
-			var createResult = await _client.CreateClientAsync(_workspaceId, clientRequest);
-			createResult.IsSuccessful.Should().BeTrue();
-			createResult.Data.Should().NotBeNull();
+			await using var setup = new ClientSetup(_client, _workspaceId);
+			var clientDto = await setup.SetupAsync();
 
 			string updatedClientName = "Test update client " + Guid.NewGuid();
 
 			var updateClientNameRequest = new ClientName { Name = updatedClientName };
 			var updateClientNameResponse =
-				await _client.UpdateClientNameAsync(_workspaceId, createResult.Data.Id, updateClientNameRequest);
+				await _client.UpdateClientNameAsync(_workspaceId, clientDto.Id, updateClientNameRequest);
 			updateClientNameResponse.IsSuccessful.Should().BeTrue();
 			updateClientNameResponse.Data.Should().NotBeNull();
 			updateClientNameResponse.Data.Name.Should().Match(updatedClientName);
+		}
+		
+		[Test]
+		public async Task UpdateClient_ShouldReturnClientUpdateDto() {
+			await using var setup = new ClientSetup(_client, _workspaceId);
+			var clientDto = await setup.SetupAsync();
 
-			var deleteClient = await _client.DeleteClientAsync(_workspaceId, createResult.Data.Id);
-			deleteClient.IsSuccessful.Should().BeTrue();
+			string updatedClientName = "Test update client " + Guid.NewGuid();
+
+			var updateClientRequest = new ClientUpdateRequest() 
+			{
+				Name = updatedClientName, 
+				Note = "Update note " + Guid.NewGuid(), 
+				Archived = true
+			};
+			var updateClientResponse =
+				await _client.UpdateClientAsync(_workspaceId, clientDto.Id, updateClientRequest);
+			updateClientResponse.IsSuccessful.Should().BeTrue();
+			updateClientResponse.Data.Should().NotBeNull();
+			updateClientResponse.Data.Name.Should().Be(updateClientRequest.Name);
+			updateClientResponse.Data.Note.Should().Be(updateClientRequest.Note);
+			updateClientResponse.Data.Archived.Should().Be(updateClientRequest.Archived);
 		}
 
 		[Test]
 		public async Task DeleteClientOnWorkspace_ShouldDeleteClient() {
-			var clientRequest = new ClientRequest { Name = "Test add client " + Guid.NewGuid() };
-			var createResult = await _client.CreateClientAsync(_workspaceId, clientRequest);
-			createResult.IsSuccessful.Should().BeTrue();
-			createResult.Data.Should().NotBeNull();
-
-			var deleteClientResponse = await _client.DeleteClientAsync(_workspaceId, createResult.Data.Id);
+			// Setup
+			await using var setup = new ClientSetup(_client, _workspaceId);
+			var clientDto = await setup.SetupAsync();
+			var updateClientRequest = new ClientUpdateRequest() 
+			{
+				Name = clientDto.Name, 
+				Archived = true
+			};
+			var updateClientResponse =
+				await _client.UpdateClientAsync(_workspaceId, clientDto.Id, updateClientRequest);
+			
+			var deleteClientResponse = await _client.DeleteClientAsync(_workspaceId, clientDto.Id);
 			deleteClientResponse.IsSuccessful.Should().BeTrue();
 		}
 	}

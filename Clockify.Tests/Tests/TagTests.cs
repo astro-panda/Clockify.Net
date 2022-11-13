@@ -60,8 +60,8 @@ namespace Clockify.Tests.Tests
             findResult.IsSuccessful.Should().BeTrue();
             findResult.Data.Should().ContainEquivalentOf(createResult.Data);
 
-            var removeTag = await _client.DeleteTagAsync(_workspaceId, createResult.Data.Id);
-            removeTag.IsSuccessful.Should().BeTrue();
+            var deleteTag = await _client.ArchiveAndDeleteTagAsync(_workspaceId, createResult.Data.Id);
+            deleteTag.IsSuccessful.Should().BeTrue();
         }
 
         [Test]
@@ -82,8 +82,15 @@ namespace Clockify.Tests.Tests
             await using var tagSetup = new TagSetup(_client, _workspaceId);
             var tag = await tagSetup.SetupAsync();
 
-            var removeTag = await _client.DeleteTagAsync(_workspaceId, tag.Id);
-            removeTag.IsSuccessful.Should().BeTrue();
+            var tagUpdateRequest = new TagUpdateRequest() {
+                Archived = true,
+                Name = tag.Name
+            };
+            var archiveTag = await _client.UpdateTagAsync(_workspaceId, tag.Id, tagUpdateRequest);
+            archiveTag.IsSuccessful.Should().BeTrue();
+
+            var deleteTag = await _client.DeleteTagAsync(_workspaceId, tag.Id);
+            deleteTag.IsSuccessful.Should().BeTrue();
             
             var findResult = await _client.FindAllTagsOnWorkspaceAsync(_workspaceId);
             findResult.IsSuccessful.Should().BeTrue();
