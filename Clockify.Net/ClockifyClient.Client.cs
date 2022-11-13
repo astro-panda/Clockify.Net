@@ -39,6 +39,7 @@ namespace Clockify.Net
         /// <summary>
         /// Update a client's name on workspace.
         /// </summary>
+        [Obsolete($"Use {nameof(UpdateClientAsync)} instead.")]
         public async Task<Response<ClientUpdateDto>> UpdateClientNameAsync(string workspaceId, string? clientId, ClientName clientName)
         {
             if (clientName == null) { throw new ArgumentNullException(nameof(clientName)); }
@@ -49,12 +50,33 @@ namespace Clockify.Net
         }
         
         /// <summary>
+        /// Update a client's name on workspace.
+        /// </summary>
+        public async Task<Response<ClientUpdateDto>> UpdateClientAsync(string workspaceId, string? clientId, ClientUpdateRequest updateRequest)
+        {
+            var request = new RestRequest($"workspaces/{workspaceId}/clients/{clientId}", Method.Put);
+            request.AddJsonBody(updateRequest);
+            return Response<ClientUpdateDto>.FromRestResponse(await _client.ExecuteAsync<ClientUpdateDto>(request).ConfigureAwait(false));
+        }
+        
+        /// <summary>
         /// Delete a client from a workspace.
         /// </summary>
         public async Task<Response> DeleteClientAsync(string workspaceId, string? clientId)
         {
             var request = new RestRequest($"workspaces/{workspaceId}/clients/{clientId}");
             return Response.FromRestResponse(await _client.ExecuteAsync(request, Method.Delete).ConfigureAwait(false));
+        }
+        
+        /// <summary>
+        /// Delete a client from a workspace.
+        /// </summary>
+        public async Task<Response> ArchiveAndDeleteClientAsync(string workspaceId, string? clientId)
+        {
+            var clientUpdateRequest = new ClientUpdateRequest {Archived = true, Name = Guid.NewGuid().ToString()};
+            var updateClientResponse = await UpdateClientAsync(workspaceId, clientId, clientUpdateRequest).ConfigureAwait(false);
+            if (!updateClientResponse.IsSuccessful) return updateClientResponse;
+            return await this.DeleteClientAsync(workspaceId, clientId).ConfigureAwait(false);
         }
     }
 }
