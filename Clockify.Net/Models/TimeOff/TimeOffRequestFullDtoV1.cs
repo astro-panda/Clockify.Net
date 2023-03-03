@@ -4,11 +4,11 @@ namespace Clockify.Net.Models.TimeOff
 {
     public class TimeOffRequestFullDtoV1
     {
-        public int Balance { get; set; }
-        public int BalanceDiff { get; set; }
+        public double Balance { get; set; }
+        public double BalanceDiff { get; set; }
         public DateTime CreatedAt { get; set; }
         public string Id { get; set; }
-        public string Note { get; set; }
+        public string? Note { get; set; }
         public string PolicyId { get; set; }
         public string PolicyName { get; set; }
         public string RequesterUserId { get; set; }
