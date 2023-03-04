@@ -13,15 +13,17 @@ namespace Clockify.Net {
 		private const string ApiUrl = "https://api.clockify.me/api/v1";
 		private const string ExperimentalApiUrl = "https://api.clockify.me/api/";
 		private const string ReportsApiUrl = "https://reports.api.clockify.me/v1";
+		private const string PtoApiUrl = "https://pto.api.clockify.me/v1";
 		private const string ApiKeyHeaderName = "X-Api-Key";
 		private const string ApiKeyVariableName = "CAPI_KEY";
 		private RestClient _client;
 		private RestClient _experimentalClient;
+		private RestClient _ptoClient;
 		private RestClient _reportsClient;
 
 		public ClockifyClient(string apiKey, string apiUrl = ApiUrl, string experimentalApiUrl = ExperimentalApiUrl,
-		                      string reportsApiUrl = ReportsApiUrl) {
-			InitClients(apiKey, apiUrl, experimentalApiUrl, reportsApiUrl);
+		                      string reportsApiUrl = ReportsApiUrl, string ptoApiUrl = PtoApiUrl) {
+			InitClients(apiKey, apiUrl, experimentalApiUrl, reportsApiUrl, ptoApiUrl);
 		}
 
 		/// <summary>
@@ -41,7 +43,7 @@ namespace Clockify.Net {
 			return apiKey;
 		}
 
-		private void InitClients(string apiKey, string apiUrl, string experimentalApiUrl, string reportsApi) {
+		private void InitClients(string apiKey, string apiUrl, string experimentalApiUrl, string reportsApi, string ptoApi) {
 			var jsonSerializerSettings = new JsonSerializerSettings() {
 				NullValueHandling = NullValueHandling.Ignore,
 
@@ -65,6 +67,10 @@ namespace Clockify.Net {
 			_reportsClient = new RestClient(reportsApi);
 			_reportsClient.AddDefaultHeader(ApiKeyHeaderName, apiKey);
 			_reportsClient.UseNewtonsoftJson(jsonSerializerSettings);
+			
+			_ptoClient = new RestClient(ptoApi);
+			_ptoClient.AddDefaultHeader(ApiKeyHeaderName, apiKey);
+			_ptoClient.UseNewtonsoftJson(jsonSerializerSettings);
 		}
 
 		#endregion
