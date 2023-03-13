@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Description>.Net Client for Clockify</Description>
     <PackageProjectUrl>https://github.com/Morasiu/Clockify.Net</PackageProjectUrl>
@@ -14,6 +13,7 @@
     <PackageVersion>2.2.0</PackageVersion>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
+    <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

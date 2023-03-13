@@ -1,4 +1,4 @@
-namespace Clockify.Net.Models.Holiday;
+namespace Clockify.Net.Models.Enums;
 
 public enum ContainsEnum
 {
