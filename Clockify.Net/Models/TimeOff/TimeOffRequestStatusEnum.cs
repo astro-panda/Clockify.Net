@@ -1,6 +1,6 @@
 namespace Clockify.Net.Models.TimeOff
 {
-    public enum TimeOffRequestStatusType
+    public enum TimeOffRequestStatusEnum
     {
         PENDING,
         APPROVED,
