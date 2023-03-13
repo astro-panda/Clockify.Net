@@ -14,10 +14,8 @@ public partial class ClockifyClient
 	/// <summary>
 	/// Get all Policies
 	/// </summary>
-	public async Task<Response<IEnumerable<PolicyDto>>> GetPoliciesOnWorkspaceAsync(string workspaceId, GetPoliciesRequest policy)
+	public async Task<Response<IEnumerable<PolicyDto>>> GetPoliciesAsync(string workspaceId, GetPoliciesRequest policy)
 	{
-		if (policy == null) throw new ArgumentNullException(nameof(policy));
-		
 		var request = new RestRequest($"workspaces/{workspaceId}/policies");
 		request.AddJsonBody(policy);
 		return Response<IEnumerable<PolicyDto>>.FromRestResponse(await _ptoClient.ExecuteGetAsync<IEnumerable<PolicyDto>>(request).ConfigureAwait(false));
@@ -31,10 +29,6 @@ public partial class ClockifyClient
 		if (policy == null) throw new ArgumentNullException(nameof(policy));
 		if (policy.Approve == null) throw new ArgumentNullException(nameof(policy.Approve));
 		if (policy.Name == null) throw new ArgumentNullException(nameof(policy.Name));
-		if (policy.UserGroups != null && !Enum.IsDefined(typeof(ContainsFilter), policy.UserGroups.Contains))
-			throw new ArgumentOutOfRangeException(nameof(policy.UserGroups));
-		if (policy.Users != null && !Enum.IsDefined(typeof(ContainsFilter), policy.Users.Contains))
-			throw new ArgumentOutOfRangeException(nameof(policy.UserGroups));
 
 		var request = new RestRequest($"workspaces/{workspaceId}/policies", Method.Post);
 		request.AddJsonBody(policy);
@@ -87,11 +81,7 @@ public partial class ClockifyClient
 		if (policy.EveryoneIncludingNew == null) throw new ArgumentNullException(nameof(policy.EveryoneIncludingNew));
 		if (policy.Name == null) throw new ArgumentNullException(nameof(policy.Name));
 		if (policy.UserGroups == null) throw new ArgumentNullException(nameof(policy.UserGroups));
-		if (policy.UserGroups != null && !Enum.IsDefined(typeof(ContainsFilter), policy.UserGroups.Contains))
-			throw new ArgumentOutOfRangeException(nameof(policy.UserGroups));
 		if (policy.Users == null) throw new ArgumentNullException(nameof(policy.Users));
-		if (policy.Users != null && !Enum.IsDefined(typeof(ContainsFilter), policy.Users.Contains))
-			throw new ArgumentOutOfRangeException(nameof(policy.UserGroups));
 
 		var request = new RestRequest($"workspaces/{workspaceId}/policies/{holidayId}");
 		request.AddJsonBody(policy);

@@ -12,11 +12,8 @@ public partial class ClockifyClient
     /// <summary>
     /// Get all Holidays
     /// </summary>
-    public async Task<Response<IEnumerable<HolidayDto>>> GetHolidaysOnWorkspaceAsync(string workspaceId, GetHolidaysRequest getHolidaysRequest)
+    public async Task<Response<IEnumerable<HolidayDto>>> GetHolidaysAsync(string workspaceId, GetHolidaysRequest getHolidaysRequest)
     {
-        if (getHolidaysRequest == null) throw new ArgumentNullException(nameof(getHolidaysRequest));
-        if (getHolidaysRequest.AssignedTo == null) throw new ArgumentNullException(nameof(getHolidaysRequest.AssignedTo));
-        
         var request = new RestRequest($"workspaces/{workspaceId}/holidays");
         request.AddJsonBody(getHolidaysRequest);
         return Response<IEnumerable<HolidayDto>>.FromRestResponse(await _ptoClient.ExecuteGetAsync<IEnumerable<HolidayDto>>(request).ConfigureAwait(false));
@@ -30,10 +27,6 @@ public partial class ClockifyClient
         if (holiday == null) throw new ArgumentNullException(nameof(holiday));
         if (holiday.DatePeriod == null) throw new ArgumentNullException(nameof(holiday.DatePeriod));
         if (holiday.Name == null) throw new ArgumentNullException(nameof(holiday.Name));
-        if (holiday.UserGroups != null && !Enum.IsDefined(typeof(ContainsFilter), holiday.UserGroups.Contains))
-            throw new ArgumentOutOfRangeException(nameof(holiday.UserGroups));
-        if (holiday.Users != null && !Enum.IsDefined(typeof(ContainsFilter), holiday.Users.Contains))
-            throw new ArgumentOutOfRangeException(nameof(holiday.UserGroups));
 
         var request = new RestRequest($"workspaces/{workspaceId}/holidays", Method.Post);
         request.AddJsonBody(holiday);
@@ -70,12 +63,11 @@ public partial class ClockifyClient
     public async Task<Response<HolidayDto>> UpdateHolidayAsync(string workspaceId, string holidayId, HolidayRequest holiday)
     {
         if (holiday == null) throw new ArgumentNullException(nameof(holiday));
+        if (holiday.DatePeriod == null) throw new ArgumentNullException(nameof(holiday.DatePeriod));
+        if (holiday.DatePeriod.EndDate == null) throw new ArgumentNullException(nameof(holiday.DatePeriod.EndDate));
+        if (holiday.DatePeriod.StartDate == null) throw new ArgumentNullException(nameof(holiday.DatePeriod.StartDate));
         if (holiday.Name == null) throw new ArgumentNullException(nameof(holiday.Name));
         if (holiday.OccursAnnually == null) throw new ArgumentNullException(nameof(holiday.OccursAnnually));
-        if (holiday.UserGroups != null && !Enum.IsDefined(typeof(ContainsFilter), holiday.UserGroups.Contains))
-            throw new ArgumentOutOfRangeException(nameof(holiday.UserGroups));
-        if (holiday.Users != null && !Enum.IsDefined(typeof(ContainsFilter), holiday.Users.Contains))
-            throw new ArgumentOutOfRangeException(nameof(holiday.UserGroups));
 
         var request = new RestRequest($"workspaces/{workspaceId}/holidays/{holidayId}");
         request.AddJsonBody(holiday);
