@@ -7,10 +7,18 @@ public class DatePeriod {
     [JsonIgnore]
     public DateTime? StartDate { get; set; }
     [JsonProperty("startDate")]
-    public string StartDateJson => $"{StartDate:yyyy-MM-dd}";
-        
+    public string StartDateJson
+    {
+        get => $"{StartDate:yyyy-MM-dd}";
+        set => StartDate = DateTime.Parse(value);
+    }
+
     [JsonIgnore]
     public DateTime? EndDate { get; set; }
     [JsonProperty("endDate")]
-    public string EndDateJson => $"{EndDate:yyyy-MM-dd}";
+    public string EndDateJson
+    {
+        get => $"{EndDate:yyyy-MM-dd}";
+        set => EndDate = DateTime.Parse(value);
+    }
 }

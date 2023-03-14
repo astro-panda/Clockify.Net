@@ -4,59 +4,68 @@ using System.Net;
 using System.Threading.Tasks;
 using Clockify.Net;
 using Clockify.Net.Models;
-using Clockify.Net.Models.Clients;
 using Clockify.Net.Models.TimeEntries;
 using Clockify.Net.Models.Workspaces;
 using FluentAssertions;
-using RestSharp;
 
-namespace Clockify.Tests.Helpers {
-	public class SetupHelper {
-		/// <summary>
-		/// Creates or finds workspace and return workspace id
-		/// </summary>
-		public static async Task<string> CreateOrFindWorkspaceAsync(ClockifyClient client, string workspaceName) {
-			var workspaceResponse = await client.CreateWorkspaceAsync(new WorkspaceRequest { Name = workspaceName });
-			string workspaceId;
-			// workspaceResponse.IsSuccessful.Should().BeTrue();
+namespace Clockify.Tests.Helpers;
 
-			if (workspaceResponse.IsSuccessful) {
-				workspaceId = workspaceResponse.Data.Id;
-			}
-			else if (WorkspaceAlreadyExist(workspaceResponse)) {
-				var workspacesResponse = await client.GetWorkspacesAsync();
-				var workspace = workspacesResponse.Data.SingleOrDefault(dto => dto.Name == workspaceName);
-				if (workspace == null)
-					throw new NullReferenceException($"Workspace {workspaceName} do not exist.");
-				return workspace.Id;
-			}
-			else {
-				throw new InvalidOperationException($"Cannot create or find workspace: {workspaceResponse.Content}");
-			}
+public class SetupHelper {
+	/// <summary>
+	/// Creates or finds workspace and return workspace id
+	/// </summary>
+	public static async Task<string> CreateOrFindWorkspaceAsync(ClockifyClient client, string workspaceName) {
+		var workspaceResponse = await client.CreateWorkspaceAsync(new WorkspaceRequest { Name = workspaceName });
+		string workspaceId;
+		// workspaceResponse.IsSuccessful.Should().BeTrue();
 
-			return workspaceId;
+		if (workspaceResponse.IsSuccessful) {
+			workspaceId = workspaceResponse.Data.Id;
+		}
+		else if (WorkspaceAlreadyExist(workspaceResponse)) {
+			var workspacesResponse = await client.GetWorkspacesAsync();
+			var workspace = workspacesResponse.Data.SingleOrDefault(dto => dto.Name == workspaceName);
+			if (workspace == null)
+				throw new NullReferenceException($"Workspace {workspaceName} do not exist.");
+			return workspace.Id;
+		}
+		else {
+			throw new InvalidOperationException($"Cannot create or find workspace: {workspaceResponse.Content}");
 		}
 
-		public static async Task<TimeEntryDtoImpl> CreateTestTimeEntryAsync(ClockifyClient client, string workspaceId, DateTimeOffset start, string projectId) {
-			var timeEntryRequest = new TimeEntryRequest {
-				Start = start,
-				End = start.AddSeconds(30),
-				ProjectId = projectId
-			};
+		return workspaceId;
+	}
 
-			var createResult = await client.CreateTimeEntryAsync(workspaceId, timeEntryRequest);
-			createResult.IsSuccessful.Should().BeTrue();
-			return createResult.Data;
-		}
+	public static async Task<TimeEntryDtoImpl> CreateTestTimeEntryAsync(ClockifyClient client, string workspaceId, DateTimeOffset start, string projectId) {
+		var timeEntryRequest = new TimeEntryRequest {
+			Start = start,
+			End = start.AddSeconds(30),
+			ProjectId = projectId
+		};
+
+		var createResult = await client.CreateTimeEntryAsync(workspaceId, timeEntryRequest);
+		createResult.IsSuccessful.Should().BeTrue();
+		return createResult.Data;
+	}
 		
-		public async Task<string> CreateOrFindWorkspaceAsync(string workspaceName) {
-			return await CreateOrFindWorkspaceAsync(new ClockifyClient(), workspaceName);
-		}
+	public async Task<string> CreateOrFindWorkspaceAsync(string workspaceName) {
+		return await CreateOrFindWorkspaceAsync(new ClockifyClient(), workspaceName);
+	}
 
 
-		private static bool WorkspaceAlreadyExist(Response<WorkspaceDto> workspaceResponse) {
-			return workspaceResponse.StatusCode == HttpStatusCode.BadRequest &&
-			       workspaceResponse.Content.Contains("already exist");
-		}
+	private static bool WorkspaceAlreadyExist(Response<WorkspaceDto> workspaceResponse) {
+		return workspaceResponse.StatusCode == HttpStatusCode.BadRequest &&
+		       workspaceResponse.Content.Contains("already exist");
+	}
+	
+	/// <summary>
+	/// Finds first user in workspace and returns user id
+	/// </summary>
+	public static async Task<string> FindFirstUserIdInWorkspaceAsync(ClockifyClient client, string workspaceId) {
+		var allUsersOnWorkspace = await client.FindAllUsersOnWorkspaceAsync(workspaceId);
+		var firstUser = allUsersOnWorkspace.Data.First();
+		if (firstUser != null)
+			throw new NullReferenceException($"Couldn't find user in workspace with id {workspaceId}.");
+		return firstUser.ID;
 	}
 }

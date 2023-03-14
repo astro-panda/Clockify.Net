@@ -6,14 +6,19 @@ using Clockify.Net.Models;
 using Clockify.Net.Models.Holiday;
 using Clockify.Tests.Helpers;
 using FluentAssertions;
+using FluentAssertions.Extensions;
 using NUnit.Framework;
 
 namespace Clockify.Tests.Tests;
 
+/// <summary>
+/// These tests require a Workspace with at least a standard subscription to pass!
+/// </summary>
 public class HolidayTests
 {
     private readonly ClockifyClient _client;
     private string _workspaceId;
+    private string _firstUserId;
 
     public HolidayTests()
     {
@@ -24,20 +29,12 @@ public class HolidayTests
     public async Task Setup()
     {
         _workspaceId = await SetupHelper.CreateOrFindWorkspaceAsync(_client, "Clockify.NetTestWorkspace");
+        _firstUserId = await SetupHelper.FindFirstUserIdInWorkspaceAsync(_client, _workspaceId);
     }
     
-    [Test]
-    public async Task GetHolidaysAsync_ShouldReturnHolidayList()
+    private HolidayRequest CreateHolidayRequest()
     {
-        var response = await _client.GetHolidaysAsync(_workspaceId);
-        response.IsSuccessful.Should().BeTrue();
-    }
-
-    [Test]
-    public async Task CreateHolidayAsync_ShouldCreateHolidayAndReturnHolidayDto()
-    {
-        var currentUser = await _client.FindAllUsersOnWorkspaceAsync(_workspaceId);
-        var holidayRequest = new HolidayRequest
+        return new HolidayRequest
         {
             Name = "Test holiday " + Guid.NewGuid(),
             DatePeriod = new DatePeriod
@@ -47,13 +44,42 @@ public class HolidayTests
             },
             Users = new ContainsFilter
             {
-                Ids = new [] { currentUser.Data.First().ID }
+                Ids = new[] { _firstUserId }
             }
         };
+    }
+
+    private HolidayRequest CreateUpdateHolidayRequest()
+    {
+        var request = CreateHolidayRequest();
+        request.OccursAnnually = false;
+        return request;
+    }
+    
+    [Test]
+    public async Task GetHolidaysAsync_ShouldReturnHolidayList()
+    {
+        // assign & act
+        var response = await _client.GetHolidaysAsync(_workspaceId);
+        
+        // assert
+        response.IsSuccessful.Should().BeTrue();
+    }
+
+    [Test]
+    public async Task CreateHolidayAsync_ShouldCreateHolidayAndReturnHolidayDto()
+    {
+        // assign
+        var holidayRequest = CreateHolidayRequest();
+        
+        // act
         var createResult = await _client.CreateHolidayAsync(_workspaceId, holidayRequest);
+        
+        // assert
         createResult.IsSuccessful.Should().BeTrue();
         createResult.Data.Should().NotBeNull();
 
+        // cleanup
         var deleteHoliday = await _client.DeleteHolidayAsync(_workspaceId, createResult.Data.Id);
         deleteHoliday.IsSuccessful.Should().BeTrue();
     }
@@ -61,13 +87,17 @@ public class HolidayTests
     [Test]
     public async Task CreateHolidayAsync_WithNullDatePeriod_ShouldThrowArgumentException()
     {
+        // assign
         var holidayRequest = new HolidayRequest
         {
             Name = "Test",
             DatePeriod = null
         };
+        
+        // act
         Func<Task> create = async () => await _client.CreateHolidayAsync(_workspaceId, holidayRequest);
 
+        // assert
         await create.Should().ThrowAsync<ArgumentException>()
             .WithMessage($"Value cannot be null. (Parameter '{nameof(HolidayRequest.DatePeriod)}')");
     }
@@ -75,41 +105,63 @@ public class HolidayTests
     [Test]
     public async Task CreateHolidayAsync_WithNullName_ShouldThrowArgumentException()
     {
+        // assign
         var holidayRequest = new HolidayRequest
         {
             Name = null,
             DatePeriod = new DatePeriod()
         };
+        
+        // act
         Func<Task> create = async () => await _client.CreateHolidayAsync(_workspaceId, holidayRequest);
 
+        // assert
         await create.Should().ThrowAsync<ArgumentException>()
-            .WithMessage($"Value cannot be null. (Parameter '{nameof(HolidayRequest.DatePeriod)}')");
+            .WithMessage($"Value cannot be null. (Parameter '{nameof(HolidayRequest.Name)}')");
     }
 
     [Test]
     public async Task GetHolidayInSpecificPeriodAsync_ShouldReturnHoliday()
     {
+        // assign
+        var firstUser = await _client.FindAllUsersOnWorkspaceAsync(_workspaceId);
+        var createHolidayRequest = CreateHolidayRequest();
+        var createResult = await _client.CreateHolidayAsync(_workspaceId, createHolidayRequest);
+        createResult.IsSuccessful.Should().BeTrue();
+        createResult.Data.Should().NotBeNull();
         var holidayRequest = new GetHolidaysRequest
         {
-            AssignedTo = "test",
-            Start = DateTime.Today,
-            End = DateTime.Today
+            AssignedTo = firstUser.Data.First().ID,
+            Start = DateTime.Today.AsUtc().AddDays(-1),
+            End = DateTime.Today.AsUtc().AddDays(1)
         };
+        
+        // act
         var response = await _client.GetHolidayInSpecificPeriodAsync(_workspaceId, holidayRequest);
+        
+        // assert
         response.IsSuccessful.Should().BeTrue();
+        
+        // cleanup
+        var deleteHoliday = await _client.DeleteHolidayAsync(_workspaceId, createResult.Data.Id);
+        deleteHoliday.IsSuccessful.Should().BeTrue();
     }
 
     [Test]
     public async Task GetHolidayInSpecificPeriodAsync_WithAssignedToNull_ShouldThrowArgumentException()
     {
+        // assign
         var holidayRequest = new GetHolidaysRequest
         {
             AssignedTo = null,
             Start = DateTime.Today,
             End = DateTime.Today
         };
+        
+        // act
         Func<Task> create = async () => await _client.GetHolidayInSpecificPeriodAsync(_workspaceId, holidayRequest);
 
+        // assert
         await create.Should().ThrowAsync<ArgumentException>()
             .WithMessage($"Value cannot be null. (Parameter '{nameof(GetHolidaysRequest.AssignedTo)}')");
     }
@@ -117,14 +169,18 @@ public class HolidayTests
     [Test]
     public async Task GetHolidayInSpecificPeriodAsync_WithStartNull_ShouldThrowArgumentException()
     {
+        // assign
         var holidayRequest = new GetHolidaysRequest
         {
             AssignedTo = "test",
             Start = null,
             End = DateTime.Today
         };
+        
+        // act
         Func<Task> create = async () => await _client.GetHolidayInSpecificPeriodAsync(_workspaceId, holidayRequest);
 
+        // assert
         await create.Should().ThrowAsync<ArgumentException>()
             .WithMessage($"Value cannot be null. (Parameter '{nameof(GetHolidaysRequest.Start)}')");
     }
@@ -132,14 +188,18 @@ public class HolidayTests
     [Test]
     public async Task GetHolidayInSpecificPeriodAsync_WithEndNull_ShouldThrowArgumentException()
     {
+        // assign
         var holidayRequest = new GetHolidaysRequest
         {
             AssignedTo = "test",
             Start = DateTime.Today,
             End = null
         };
+        
+        // act
         Func<Task> create = async () => await _client.GetHolidayInSpecificPeriodAsync(_workspaceId, holidayRequest);
 
+        // assert
         await create.Should().ThrowAsync<ArgumentException>()
             .WithMessage($"Value cannot be null. (Parameter '{nameof(GetHolidaysRequest.End)}')");
     }
@@ -147,17 +207,14 @@ public class HolidayTests
     [Test]
     public async Task DeleteHolidayAsync_ShouldDeleteHoliday()
     {
-        var holidayRequest = new HolidayRequest
-        {
-            Name = "Test holiday " + Guid.NewGuid(),
-            DatePeriod = new DatePeriod
-            {
-                StartDate = DateTime.Today,
-                EndDate = DateTime.Today
-            }
-        };
+        // assign
+        var holidayRequest = CreateHolidayRequest();
         var createResult = await _client.CreateHolidayAsync(_workspaceId, holidayRequest);
+        
+        // act
         var deleteHoliday = await _client.DeleteHolidayAsync(_workspaceId, createResult.Data.Id);
+        
+        // assert
         deleteHoliday.IsSuccessful.Should().BeTrue();
     }
 
@@ -165,22 +222,10 @@ public class HolidayTests
     public async Task UpdateHolidayAsync_ShouldUpdateHoliday()
     {
         // assign
-        var holidayRequest = new HolidayRequest
-        {
-            Name = "Test holiday " + Guid.NewGuid(),
-            DatePeriod = new DatePeriod
-            {
-                StartDate = DateTime.Today,
-                EndDate = DateTime.Today
-            }
-        };
+        var holidayRequest = CreateHolidayRequest();
         var createResult = await _client.CreateHolidayAsync(_workspaceId, holidayRequest);
-        var updateRequest = new HolidayRequest
-        {
-            DatePeriod = createResult.Data.DatePeriod,
-            Name = "New test holiday " + Guid.NewGuid(),
-            OccursAnnually = createResult.Data.OccursAnnually
-        };
+        var updateRequest = CreateUpdateHolidayRequest();
+        updateRequest.Name = "Upd holiday " + Guid.NewGuid();
 
         // act
         var updateResult = await _client.UpdateHolidayAsync(_workspaceId, createResult.Data.Id, updateRequest);
@@ -193,27 +238,14 @@ public class HolidayTests
         deleteHoliday.IsSuccessful.Should().BeTrue();
     }
 
-
     [Test]
     public async Task UpdateHolidayAsync_WithDatePeriodNull_ShouldThrowArgumentException()
     {
         // assign
-        var holidayRequest = new HolidayRequest
-        {
-            Name = "Test holiday " + Guid.NewGuid(),
-            DatePeriod = new DatePeriod
-            {
-                StartDate = DateTime.Today,
-                EndDate = DateTime.Today
-            }
-        };
+        var holidayRequest = CreateHolidayRequest();
         var createResult = await _client.CreateHolidayAsync(_workspaceId, holidayRequest);
-        var updateRequest = new HolidayRequest
-        {
-            DatePeriod = null,
-            Name = "New test holiday " + Guid.NewGuid(),
-            OccursAnnually = createResult.Data.OccursAnnually
-        };
+        var updateRequest = CreateUpdateHolidayRequest();
+        updateRequest.DatePeriod = null;
 
         // act
         var update = async () => await _client.UpdateHolidayAsync(_workspaceId, createResult.Data.Id, updateRequest);
@@ -231,22 +263,9 @@ public class HolidayTests
     public async Task UpdateHolidayAsync_WithDatePeriodEndDateNull_ShouldThrowArgumentException()
     {
         // assign
-        var holidayRequest = new HolidayRequest
-        {
-            Name = "Test holiday " + Guid.NewGuid(),
-            DatePeriod = new DatePeriod
-            {
-                StartDate = DateTime.Today,
-                EndDate = DateTime.Today
-            }
-        };
+        var holidayRequest = CreateHolidayRequest();
         var createResult = await _client.CreateHolidayAsync(_workspaceId, holidayRequest);
-        var updateRequest = new HolidayRequest
-        {
-            DatePeriod = createResult.Data.DatePeriod,
-            Name = "New test holiday " + Guid.NewGuid(),
-            OccursAnnually = createResult.Data.OccursAnnually
-        };
+        var updateRequest = CreateUpdateHolidayRequest();
         updateRequest.DatePeriod.EndDate = null;
         
         // act
@@ -264,24 +283,10 @@ public class HolidayTests
     [Test]
     public async Task UpdateHolidayAsync_WithDatePeriodStartDateNull_ShouldThrowArgumentException()
     {
-        
         // assign
-        var holidayRequest = new HolidayRequest
-        {
-            Name = "Test holiday " + Guid.NewGuid(),
-            DatePeriod = new DatePeriod
-            {
-                StartDate = DateTime.Today,
-                EndDate = DateTime.Today
-            }
-        };
+        var holidayRequest = CreateHolidayRequest();
         var createResult = await _client.CreateHolidayAsync(_workspaceId, holidayRequest);
-        var updateRequest = new HolidayRequest
-        {
-            DatePeriod = createResult.Data.DatePeriod,
-            Name = "New test holiday " + Guid.NewGuid(),
-            OccursAnnually = createResult.Data.OccursAnnually
-        };
+        var updateRequest = CreateUpdateHolidayRequest();
         updateRequest.DatePeriod.StartDate = null;
         
         // act
@@ -300,22 +305,10 @@ public class HolidayTests
     public async Task UpdateHolidayAsync_WithNameNull_ShouldThrowArgumentException()
     {
         // assign
-        var holidayRequest = new HolidayRequest
-        {
-            Name = "Test holiday " + Guid.NewGuid(),
-            DatePeriod = new DatePeriod
-            {
-                StartDate = DateTime.Today,
-                EndDate = DateTime.Today
-            }
-        };
+        var holidayRequest = CreateHolidayRequest();
         var createResult = await _client.CreateHolidayAsync(_workspaceId, holidayRequest);
-        var updateRequest = new HolidayRequest
-        {
-            DatePeriod = createResult.Data.DatePeriod,
-            Name = null,
-            OccursAnnually = createResult.Data.OccursAnnually
-        };
+        var updateRequest = CreateUpdateHolidayRequest();
+        updateRequest.Name = null;
         
         // act
         var update = async () => await _client.UpdateHolidayAsync(_workspaceId, createResult.Data.Id, updateRequest);
@@ -335,22 +328,10 @@ public class HolidayTests
     {
         
         // assign
-        var holidayRequest = new HolidayRequest
-        {
-            Name = "Test holiday " + Guid.NewGuid(),
-            DatePeriod = new DatePeriod
-            {
-                StartDate = DateTime.Today,
-                EndDate = DateTime.Today
-            }
-        };
+        var holidayRequest = CreateHolidayRequest();
         var createResult = await _client.CreateHolidayAsync(_workspaceId, holidayRequest);
-        var updateRequest = new HolidayRequest
-        {
-            DatePeriod = createResult.Data.DatePeriod,
-            Name = "New test holiday " + Guid.NewGuid(),
-            OccursAnnually = null
-        };
+        var updateRequest = CreateUpdateHolidayRequest();
+        updateRequest.OccursAnnually = null;
         
         // act
         var update = async () => await _client.UpdateHolidayAsync(_workspaceId, createResult.Data.Id, updateRequest);

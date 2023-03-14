@@ -16,7 +16,8 @@ public partial class ClockifyClient
     public async Task<Response<IEnumerable<HolidayDto>>> GetHolidaysAsync(string workspaceId, GetHolidaysRequest? getHolidaysRequest = null)
     {
         var request = new RestRequest($"workspaces/{workspaceId}/holidays");
-        if (getHolidaysRequest != null) request.AddJsonBody(getHolidaysRequest);
+        if (getHolidaysRequest?.AssignedTo != null)
+            request.AddQueryParameter("assigned-to", getHolidaysRequest.AssignedTo);
         return Response<IEnumerable<HolidayDto>>.FromRestResponse(await _ptoClient.ExecuteGetAsync<IEnumerable<HolidayDto>>(request).ConfigureAwait(false));
     }
     
@@ -46,12 +47,14 @@ public partial class ClockifyClient
     {
         if (holiday == null) throw new ArgumentNullException(nameof(holiday));
         if (holiday.AssignedTo == null) throw new ArgumentNullException(nameof(holiday.AssignedTo));
-        if (holiday.Start == null) throw new ArgumentNullException(nameof(holiday.Start));
-        if (holiday.End == null) throw new ArgumentNullException(nameof(holiday.End));
+        if (holiday.Start is not { } holidayStart) throw new ArgumentNullException(nameof(holiday.Start));
+        if (holiday.End is not { } holidayEnd) throw new ArgumentNullException(nameof(holiday.End));
         
         var request = new RestRequest($"workspaces/{workspaceId}/holidays/in-period");
-        request.AddJsonBody(holiday);
-        return Response.FromRestResponse(await _ptoClient.ExecuteAsync(request, Method.Get).ConfigureAwait(false));
+        request.AddQueryParameter("assigned-to", holiday.AssignedTo);
+        request.AddQueryParameter("start", holidayStart.ToUniversalTime().ToString("o"));
+        request.AddQueryParameter("end", holidayEnd.ToUniversalTime().ToString("o"));
+        return Response.FromRestResponse(await _ptoClient.ExecuteGetAsync(request).ConfigureAwait(false));
     }
     
     /// <summary>
@@ -74,6 +77,11 @@ public partial class ClockifyClient
         if (holiday.DatePeriod.StartDate == null) throw new ArgumentNullException(nameof(holiday.DatePeriod.StartDate));
         if (holiday.Name == null) throw new ArgumentNullException(nameof(holiday.Name));
         if (holiday.OccursAnnually == null) throw new ArgumentNullException(nameof(holiday.OccursAnnually));
+        if ((holiday.UserGroups?.Ids == null || !holiday.UserGroups.Ids.Any()) &&
+            (holiday.Users?.Ids == null || !holiday.Users.Ids.Any()))
+        {
+            throw new ArgumentOutOfRangeException("At least one user or user group must be assigned");
+        }
 
         var request = new RestRequest($"workspaces/{workspaceId}/holidays/{holidayId}");
         request.AddJsonBody(holiday);

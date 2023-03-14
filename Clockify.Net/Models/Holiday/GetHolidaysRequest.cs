@@ -5,8 +5,10 @@ namespace Clockify.Net.Models.Holiday;
 
 public class GetHolidaysRequest
 {
-    [JsonProperty("assigned-to")]
-    public string AssignedTo { get; set; }
+    /// <summary>
+    /// Assigned to User (ID)
+    /// </summary>
+    public string? AssignedTo { get; set; }
     public DateTime? Start { get; set; }
     public DateTime? End { get; set; }
 }
