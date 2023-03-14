@@ -12,10 +12,10 @@ public partial class ClockifyClient
     /// <summary>
     /// Get all Holidays
     /// </summary>
-    public async Task<Response<IEnumerable<HolidayDto>>> GetHolidaysAsync(string workspaceId, GetHolidaysRequest getHolidaysRequest)
+    public async Task<Response<IEnumerable<HolidayDto>>> GetHolidaysAsync(string workspaceId, GetHolidaysRequest? getHolidaysRequest = null)
     {
         var request = new RestRequest($"workspaces/{workspaceId}/holidays");
-        request.AddJsonBody(getHolidaysRequest);
+        if (getHolidaysRequest != null) request.AddJsonBody(getHolidaysRequest);
         return Response<IEnumerable<HolidayDto>>.FromRestResponse(await _ptoClient.ExecuteGetAsync<IEnumerable<HolidayDto>>(request).ConfigureAwait(false));
     }
     

@@ -57,13 +57,13 @@ public partial class ClockifyClient
 	/// <summary>
 	/// Change Policy status on workspace.
 	/// </summary>
-	public async Task<Response<PolicyDto>> ChangePolicyStatusAsync(string workspaceId, string holidayId, ChangePolicyStatusRequest policy)
+	public async Task<Response<PolicyDto>> ChangePolicyStatusAsync(string workspaceId, string policyId, ChangePolicyStatusRequest policy)
 	{
 		if (policy == null) throw new ArgumentNullException(nameof(policy));
 		if (!Enum.IsDefined(typeof(StatusEnum), policy.Status))
 			throw new ArgumentOutOfRangeException(nameof(policy.Status));
 
-		var request = new RestRequest($"workspaces/{workspaceId}/policies/{holidayId}");
+		var request = new RestRequest($"workspaces/{workspaceId}/policies/{policyId}");
 		request.AddJsonBody(policy);
 		return Response<PolicyDto>.FromRestResponse(await _ptoClient.ExecuteAsync<PolicyDto>(request, Method.Patch).ConfigureAwait(false));
 	}
@@ -71,7 +71,7 @@ public partial class ClockifyClient
 	/// <summary>
 	/// Update Policy on workspace.
 	/// </summary>
-	public async Task<Response<HolidayDto>> UpdatePolicyAsync(string workspaceId, string holidayId, PolicyRequest policy)
+	public async Task<Response<HolidayDto>> UpdatePolicyAsync(string workspaceId, string policyId, PolicyRequest policy)
 	{
 		if (policy == null) throw new ArgumentNullException(nameof(policy));
 		if (policy.AllowHalfDay == null) throw new ArgumentNullException(nameof(policy.AllowHalfDay));
@@ -83,7 +83,7 @@ public partial class ClockifyClient
 		if (policy.UserGroups == null) throw new ArgumentNullException(nameof(policy.UserGroups));
 		if (policy.Users == null) throw new ArgumentNullException(nameof(policy.Users));
 
-		var request = new RestRequest($"workspaces/{workspaceId}/policies/{holidayId}");
+		var request = new RestRequest($"workspaces/{workspaceId}/policies/{policyId}");
 		request.AddJsonBody(policy);
 		return Response<HolidayDto>.FromRestResponse(await _ptoClient.ExecuteAsync<HolidayDto>(request, Method.Put).ConfigureAwait(false));
 	}
