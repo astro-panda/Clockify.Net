@@ -13,7 +13,7 @@ public class PolicyDto
 	public bool EveryoneIncludingNew { get; set; }
 	public string Id { get; set; }
 	public string Name { get; set; }
-	public NegativeBalance NegativeBalance { get; set; }
+	public NegativeBalanceRequest NegativeBalanceRequest { get; set; }
 	public TimeUnitEnum TimeUnit { get; set; }
 	public IEnumerable<string> UserGroupIds { get; set; }
 	public IEnumerable<string> UserIds { get; set; }

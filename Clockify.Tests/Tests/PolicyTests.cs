@@ -9,6 +9,9 @@ using NUnit.Framework;
 namespace Clockify.Tests.Tests;
 
 // TODO: Implement test cases
+/// <summary>
+/// These tests require a Workspace with at least a standard subscription to pass!
+/// </summary>
 public class PolicyTests
 {
     private readonly ClockifyClient _client;

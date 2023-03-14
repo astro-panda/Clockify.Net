@@ -2,6 +2,6 @@
 
 public class TimeOffRequestRequest
 {
-	public string Note { get; set; }
+	public string? Note { get; set; }
 	public TimeOffRequestPeriodV1Request? TimeOffPeriod { get; set; }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Clockify.Net.Models;
 using Clockify.Net.Models.Enums;
@@ -14,10 +15,16 @@ public partial class ClockifyClient
 	/// <summary>
 	/// Get all Policies
 	/// </summary>
-	public async Task<Response<IEnumerable<PolicyDto>>> GetPoliciesAsync(string workspaceId, GetPoliciesRequest policy)
+	public async Task<Response<IEnumerable<PolicyDto>>> GetPoliciesAsync(string workspaceId, GetPoliciesRequest? policy = null)
 	{
 		var request = new RestRequest($"workspaces/{workspaceId}/policies");
-		request.AddJsonBody(policy);
+		if (policy != null)
+		{
+			if (policy.Page is {} policyPage) request.AddQueryParameter("page", policyPage);
+			if (policy.PageSize is {} policyPageSize) request.AddQueryParameter("page-size", policyPageSize);
+			if (policy.Name != null) request.AddQueryParameter("name", policy.Name);
+			if (policy.Status != null) request.AddQueryParameter("status", policy.Status.ToString());
+		}
 		return Response<IEnumerable<PolicyDto>>.FromRestResponse(await _ptoClient.ExecuteGetAsync<IEnumerable<PolicyDto>>(request).ConfigureAwait(false));
 	}
 	
@@ -29,6 +36,13 @@ public partial class ClockifyClient
 		if (policy == null) throw new ArgumentNullException(nameof(policy));
 		if (policy.Approve == null) throw new ArgumentNullException(nameof(policy.Approve));
 		if (policy.Name == null) throw new ArgumentNullException(nameof(policy.Name));
+		if (policy.TimeUnit != null && !Enum.IsDefined(typeof(TimeUnitEnum), policy.TimeUnit))
+			throw new ArgumentOutOfRangeException(nameof(policy.TimeUnit));
+		if ((policy.UserGroups?.Ids == null || !policy.UserGroups.Ids.Any()) &&
+		    (policy.Users?.Ids == null || !policy.Users.Ids.Any()))
+		{
+			throw new ArgumentOutOfRangeException("At least one user or user group must be assigned");
+		}
 
 		var request = new RestRequest($"workspaces/{workspaceId}/policies", Method.Post);
 		request.AddJsonBody(policy);

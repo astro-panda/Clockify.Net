@@ -8,7 +8,7 @@ public class TimeOffRequestFullDtoV1
     public double BalanceDiff { get; set; }
     public DateTime CreatedAt { get; set; }
     public string Id { get; set; }
-    public string? Note { get; set; }
+    public string Note { get; set; }
     public string PolicyId { get; set; }
     public string PolicyName { get; set; }
     public string RequesterUserId { get; set; }
@@ -17,7 +17,7 @@ public class TimeOffRequestFullDtoV1
     public TimeOffRequestPeriod TimeOffPeriod { get; set; }
     public string TimeUnit { get; set; }
     public string UserEmail { get; set; }
+    public string UserId { get; set; }
     public string UserName { get; set; }
     public string WorkspaceId { get; set; }
-
 }

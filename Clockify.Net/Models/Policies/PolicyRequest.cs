@@ -11,7 +11,7 @@ public class PolicyRequest
 	public AutomaticAccrual? AutomaticAccrual { get; set; }
 	public bool? EveryoneIncludingNew { get; set; }
 	public string? Name { get; set; }
-	public NegativeBalance? NegativeBalance { get; set; }
+	public NegativeBalanceRequest? NegativeBalance { get; set; }
 	public TimeUnitEnum? TimeUnit { get; set; }
 	public ContainsFilter? UserGroups { get; set; }
 	public ContainsFilter? Users { get; set; }

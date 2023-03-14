@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Clockify.Net.Models;
 using Clockify.Net.Models.TimeOff;
@@ -53,9 +54,16 @@ public partial class ClockifyClient
 		string policyId, string userId, TimeOffRequestRequest timeOffRequest)
 	{
 		if (timeOffRequest == null) throw new ArgumentNullException(nameof(timeOffRequest));
+		if (timeOffRequest.Note == null) throw new ArgumentNullException(nameof(timeOffRequest.Note));
 		if (timeOffRequest.TimeOffPeriod == null) throw new ArgumentNullException(nameof(timeOffRequest.TimeOffPeriod));
 		if (timeOffRequest.TimeOffPeriod is {Period: null})
 			throw new ArgumentNullException(nameof(timeOffRequest.TimeOffPeriod.Period));
+		if (timeOffRequest.TimeOffPeriod.Period.Days < 1)
+			throw new ArgumentOutOfRangeException(nameof(timeOffRequest.TimeOffPeriod.Period.Days));
+		if (timeOffRequest.TimeOffPeriod.Period.Start == null)
+			throw new ArgumentNullException(nameof(timeOffRequest.TimeOffPeriod.Period.Start));
+		if (timeOffRequest.TimeOffPeriod.Period.End == null)
+			throw new ArgumentNullException(nameof(timeOffRequest.TimeOffPeriod.Period.End));
 
 		var request = new RestRequest($"workspaces/{workspaceId}/policies/{policyId}/users/{userId}/requests", Method.Post);
 		request.AddJsonBody(timeOffRequest);
@@ -66,8 +74,18 @@ public partial class ClockifyClient
 	/// <summary>
 	///   Get all Time Off requests.
 	/// </summary>
-	public async Task<Response<TimeOffRequestResponse>> GetAllTimeOffRequests(string workspaceId, GetAllTimeOffRequestsRequest timeOffRequest)
+	public async Task<Response<TimeOffRequestResponse>> GetAllTimeOffRequestsAsync(string workspaceId,
+		GetAllTimeOffRequestsRequest timeOffRequest)
 	{
+		if (timeOffRequest == null) throw new ArgumentNullException(nameof(timeOffRequest));
+		if (timeOffRequest.Statuses == null || !timeOffRequest.Statuses.Any())
+			throw new ArgumentOutOfRangeException(nameof(timeOffRequest.Statuses));
+		if ((timeOffRequest.UserGroups == null || !timeOffRequest.UserGroups.Any()) &&
+		    (timeOffRequest.Users == null || !timeOffRequest.Users.Any()))
+		{
+			throw new ArgumentOutOfRangeException("At least one user or user group must be defined");
+		}
+		
 		var request = new RestRequest($"workspaces/{workspaceId}/requests");
 		request.AddJsonBody(timeOffRequest);
 		return Response<TimeOffRequestResponse>.FromRestResponse(await _ptoClient
