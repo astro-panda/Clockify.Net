@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Clockify.Net.Models;
 using Clockify.Net.Models.Holiday;
@@ -27,6 +28,11 @@ public partial class ClockifyClient
         if (holiday == null) throw new ArgumentNullException(nameof(holiday));
         if (holiday.DatePeriod == null) throw new ArgumentNullException(nameof(holiday.DatePeriod));
         if (holiday.Name == null) throw new ArgumentNullException(nameof(holiday.Name));
+        if ((holiday.UserGroups?.Ids == null || !holiday.UserGroups.Ids.Any()) &&
+            (holiday.Users?.Ids == null || !holiday.Users.Ids.Any()))
+        {
+            throw new ArgumentOutOfRangeException("At least one user or user group must be assigned");
+        }
 
         var request = new RestRequest($"workspaces/{workspaceId}/holidays", Method.Post);
         request.AddJsonBody(holiday);

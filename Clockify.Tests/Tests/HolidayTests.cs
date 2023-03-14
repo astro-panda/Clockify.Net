@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Clockify.Net;
+using Clockify.Net.Models;
 using Clockify.Net.Models.Holiday;
 using Clockify.Tests.Helpers;
 using FluentAssertions;
@@ -34,6 +36,7 @@ public class HolidayTests
     [Test]
     public async Task CreateHolidayAsync_ShouldCreateHolidayAndReturnHolidayDto()
     {
+        var currentUser = await _client.FindAllUsersOnWorkspaceAsync(_workspaceId);
         var holidayRequest = new HolidayRequest
         {
             Name = "Test holiday " + Guid.NewGuid(),
@@ -41,6 +44,10 @@ public class HolidayTests
             {
                 StartDate = DateTime.Today,
                 EndDate = DateTime.Today
+            },
+            Users = new ContainsFilter
+            {
+                Ids = new [] { currentUser.Data.First().ID }
             }
         };
         var createResult = await _client.CreateHolidayAsync(_workspaceId, holidayRequest);
