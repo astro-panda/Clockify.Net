@@ -27,6 +27,21 @@ public class PolicyRequest
 	{
 		Approve = approve;
 	}
+
+	/// <summary>
+	/// For <see cref="ClockifyClient.UpdatePolicyAsync"/>
+	/// </summary>
+	public PolicyRequest(bool allowHalfDay, bool allowNegativeBalance, Approve approve, bool archived, bool everyoneIncludingNew, string name, ContainsFilter userGroups, ContainsFilter users)
+	{
+		AllowHalfDay = allowHalfDay;
+		AllowNegativeBalance = allowNegativeBalance;
+		Approve = approve;
+		Archived = archived;
+		EveryoneIncludingNew = everyoneIncludingNew;
+		Name = name;
+		UserGroups = userGroups;
+		Users = users;
+	}
 	
 	public bool? AllowHalfDay { get; set; }
 	public bool? AllowNegativeBalance { get; set; }
