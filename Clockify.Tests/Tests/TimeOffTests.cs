@@ -51,7 +51,7 @@ public class TimeOffTests
 			Note = "Test time off request " + Guid.NewGuid(),
 			TimeOffPeriod = new TimeOffRequestPeriodV1Request
 			{
-				Period = new DatePeriod
+				Period = new PeriodV1Request
 				{
 					Days = 2,
 					Start = DateTime.Today,

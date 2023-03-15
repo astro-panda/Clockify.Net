@@ -1,13 +1,12 @@
 using System;
 
-namespace Clockify.Net.Models.TimeOff
+namespace Clockify.Net.Models.TimeOff;
+
+public class TimeOffRequestStatus
 {
-    public class TimeOffRequestStatus
-    {
-        public DateTime? ChangedAt { get; set; }
-        public string? ChangedByUserName { get; set; }
-        public string? Note { get; set; }
-        //public TimeOffRequestStatusType? StatusType { get; set; }
-        public string? StatusType { get; set; }
-    }
+	public DateTime ChangedAt { get; set; }
+	public string ChangedByUserId { get; set; }
+	public string ChangedByUserName { get; set; }
+	public string Note { get; set; }
+	public string StatusType { get; set; }
 }
