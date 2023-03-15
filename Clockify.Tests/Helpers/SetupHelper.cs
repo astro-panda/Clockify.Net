@@ -77,7 +77,7 @@ public class SetupHelper {
 		{
 			Name = policyName,
 			AllowNegativeBalance = true,
-			Approve = new PolicyApprove(),
+			Approve = new Approve(),
 			TimeUnit = TimeUnitEnum.DAYS,
 			Users = new ContainsFilter
 			{

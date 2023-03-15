@@ -5,7 +5,7 @@ namespace Clockify.Net.Models;
 
 public class ContainsFilter
 {
-	public ContainsEnum Contains { get; set; }
-	public IEnumerable<string> Ids { get; set; }
-	public StatusEnum Status { get; set; }
+	public ContainsEnum? Contains { get; set; }
+	public IEnumerable<string>? Ids { get; set; }
+	public StatusEnum? Status { get; set; }
 }
