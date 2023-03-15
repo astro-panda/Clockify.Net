@@ -1,9 +1,19 @@
-﻿using Clockify.Net.Models.Enums;
-
-namespace Clockify.Net.Models.TimeOff;
+﻿namespace Clockify.Net.Models.TimeOff;
 
 public class ChangeTimeOffRequestStatusRequest
 {
-	public string Note { get; set; }
-	public StatusEnum Status { get; set; }
+	public ChangeTimeOffRequestStatusRequest()
+	{
+	}
+
+	/// <summary>
+	///   For <see cref="ClockifyClient.ChangeTimeOffRequestStatusAsync" />
+	/// </summary>
+	public ChangeTimeOffRequestStatusRequest(TimeOffRequestStatusEnum status)
+	{
+		Status = status;
+	}
+
+	public string? Note { get; set; }
+	public TimeOffRequestStatusEnum? Status { get; set; }
 }

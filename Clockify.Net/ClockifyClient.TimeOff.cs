@@ -41,6 +41,9 @@ public partial class ClockifyClient
 	public async Task<Response<TimeOffRequestFullDtoV1>> ChangeTimeOffRequestStatusAsync(string workspaceId,
 		string policyId, string requestId, ChangeTimeOffRequestStatusRequest timeOffRequest)
 	{
+		if (timeOffRequest == null) throw new ArgumentNullException(nameof(timeOffRequest));
+		if (timeOffRequest.Status == null) throw new ArgumentNullException(nameof(timeOffRequest.Status));
+
 		var request = new RestRequest($"workspaces/{workspaceId}/policies/{policyId}/requests/{requestId}");
 		request.AddJsonBody(timeOffRequest);
 		return Response<TimeOffRequestFullDtoV1>.FromRestResponse(await _ptoClient

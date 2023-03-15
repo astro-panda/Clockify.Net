@@ -98,8 +98,16 @@ public partial class ClockifyClient
 		if (policy.Archived == null) throw new ArgumentNullException(nameof(policy.Archived));
 		if (policy.EveryoneIncludingNew == null) throw new ArgumentNullException(nameof(policy.EveryoneIncludingNew));
 		if (policy.Name == null) throw new ArgumentNullException(nameof(policy.Name));
+		if (policy.NegativeBalance != null)
+		{
+			if (policy.NegativeBalance.Amount == null) throw new ArgumentNullException(nameof(policy.NegativeBalance.Amount));
+			if (policy.NegativeBalance.Amount < 0)
+				throw new ArgumentOutOfRangeException(nameof(policy.NegativeBalance.Amount));
+		}
 		if (policy.UserGroups == null) throw new ArgumentNullException(nameof(policy.UserGroups));
-		if (policy.UserGroups.Status == null) throw new ArgumentNullException(nameof(policy.UserGroups.Status)); // undocumented, but required for the update to succeed
+		if (policy.UserGroups.Status == null)
+			throw new ArgumentNullException(nameof(policy.UserGroups
+				.Status)); // undocumented, but required for the update to succeed
 		if (policy.Users == null) throw new ArgumentNullException(nameof(policy.Users));
 
 		var request = new RestRequest($"workspaces/{workspaceId}/policies/{policyId}");
@@ -107,17 +115,15 @@ public partial class ClockifyClient
 		return Response<PolicyDto>.FromRestResponse(await _ptoClient.ExecuteAsync<PolicyDto>(request, Method.Put)
 			.ConfigureAwait(false));
 	}
-	
+
 	/// <summary>
-	/// Archive and delete Policy on workspace.
+	///   Archive and delete Policy on workspace.
 	/// </summary>
 	public async Task<Response> ArchiveAndDeletePolicyAsync(string workspaceId, string policyId)
 	{
-		var changePolicyStatusRequest = new ChangePolicyStatusRequest
-		{
-			Status = StatusEnum.ARCHIVED
-		};
-		var archivePolicyResponse = await ChangePolicyStatusAsync(workspaceId, policyId, changePolicyStatusRequest).ConfigureAwait(false);
+		var changePolicyStatusRequest = new ChangePolicyStatusRequest(StatusEnum.ARCHIVED);
+		var archivePolicyResponse = await ChangePolicyStatusAsync(workspaceId, policyId, changePolicyStatusRequest)
+			.ConfigureAwait(false);
 		if (!archivePolicyResponse.IsSuccessful) return archivePolicyResponse;
 
 		return await DeletePolicyAsync(workspaceId, policyId).ConfigureAwait(false);

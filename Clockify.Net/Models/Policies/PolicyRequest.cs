@@ -47,7 +47,7 @@ public class PolicyRequest
 	public bool? AllowNegativeBalance { get; set; }
 	public Approve? Approve { get; set; }
 	public bool? Archived { get; set; }
-	public AutomaticAccrual? AutomaticAccrual { get; set; }
+	public AutomaticAccrualRequest? AutomaticAccrual { get; set; }
 	public bool? EveryoneIncludingNew { get; set; }
 	public string? Name { get; set; }
 	public NegativeBalanceRequest? NegativeBalance { get; set; }

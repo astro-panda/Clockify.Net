@@ -118,10 +118,7 @@ public class PolicyTests
 		// assign
 		var policyRequest = CreatePolicyRequest();
 		var createResult = await _client.CreateTimeOffPolicyAsync(_workspaceId, policyRequest);
-		var changePolicyStatusRequest = new ChangePolicyStatusRequest
-		{
-			Status = StatusEnum.ARCHIVED
-		};
+		var changePolicyStatusRequest = new ChangePolicyStatusRequest(StatusEnum.ARCHIVED);
 
 		// act
 		var result = await _client.ChangePolicyStatusAsync(_workspaceId, createResult.Data.Id, changePolicyStatusRequest);
@@ -141,10 +138,8 @@ public class PolicyTests
 		// assign
 		var policyRequest = CreatePolicyRequest();
 		var createResult = await _client.CreateTimeOffPolicyAsync(_workspaceId, policyRequest);
-		var changePolicyStatusRequest = new ChangePolicyStatusRequest
-		{
-			Status = StatusEnum.ARCHIVED
-		};
+		var changePolicyStatusRequest = new ChangePolicyStatusRequest(StatusEnum.ARCHIVED);
+		
 		await _client.ChangePolicyStatusAsync(_workspaceId, createResult.Data.Id, changePolicyStatusRequest);
 
 		// act

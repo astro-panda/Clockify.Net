@@ -34,7 +34,8 @@ public class TimeOffTests
 	{
 		_workspaceId = await SetupHelper.CreateOrFindWorkspaceAsync(_client, "Clockify.NetTestWorkspace");
 		_firstUserId = await SetupHelper.FindFirstUserIdInWorkspaceAsync(_client, _workspaceId);
-		_policyId = await SetupHelper.CreateOrFindPolicy(_client, _workspaceId, _firstUserId, "Test policy " + Guid.NewGuid());
+		_policyId = await SetupHelper.CreateOrFindPolicy(_client, _workspaceId, _firstUserId,
+			"Test policy " + Guid.NewGuid());
 	}
 
 	[OneTimeTearDown]
@@ -59,7 +60,7 @@ public class TimeOffTests
 			}
 		};
 	}
-	
+
 	[Test]
 	public async Task CreateTimeOffRequestAsync_ShouldCreateTimeOffRequestAndReturnDto()
 	{
@@ -76,13 +77,14 @@ public class TimeOffTests
 		// cleanup
 		await _client.DeleteTimeOffRequestAsync(_workspaceId, _policyId, result.Data.Id);
 	}
-	
+
 	[Test]
 	public async Task DeleteTimeOffRequestAsync_ShouldDeleteTimeOffRequest()
 	{
 		// assign
 		var timeOffRequestRequest = CreateTimeOffRequestRequest();
-		var createResult = await _client.CreateTimeOffRequestAsync(_workspaceId, _policyId, _firstUserId, timeOffRequestRequest);
+		var createResult =
+			await _client.CreateTimeOffRequestAsync(_workspaceId, _policyId, _firstUserId, timeOffRequestRequest);
 
 		// act
 		var result = await _client.DeleteTimeOffRequestAsync(_workspaceId, _policyId, createResult.Data.Id);
@@ -136,10 +138,10 @@ public class TimeOffTests
 			},
 			new ContainsFilter
 			{
-				Ids = new []{_firstUserId, apiKeyUserId}
+				Ids = new[] {_firstUserId, apiKeyUserId}
 			});
 		await _client.UpdatePolicyAsync(_workspaceId, _policyId, policyUpdateRequest);
-		
+
 		var timeOffRequestRequest = CreateTimeOffRequestRequest();
 
 		// act
@@ -152,5 +154,43 @@ public class TimeOffTests
 
 		// cleanup
 		await _client.DeleteTimeOffRequestAsync(_workspaceId, _policyId, result.Data.Id);
+	}
+
+	[Test]
+	public async Task ChangeTimeOffRequestStatusAsync_ShouldChangeTimeOffRequestStatusAndReturnUpdatedDto()
+	{
+		// assign
+		var policyResponse = await _client.CreateTimeOffPolicyAsync(_workspaceId, new PolicyRequest
+		{
+			Name = "Test policy " + Guid.NewGuid(),
+			AllowNegativeBalance = true,
+			Approve = new Approve
+			{
+				RequiresApproval = true
+			},
+			TimeUnit = TimeUnitEnum.DAYS,
+			Users = new ContainsFilter
+			{
+				Ids = new[] {_firstUserId}
+			}
+		});
+		var timeOffRequestRequest = CreateTimeOffRequestRequest();
+		var createdResult =
+			await _client.CreateTimeOffRequestAsync(_workspaceId, policyResponse.Data.Id, _firstUserId,
+				timeOffRequestRequest);
+		var changeTimeOffRequestStatusRequest = new ChangeTimeOffRequestStatusRequest(TimeOffRequestStatusEnum.APPROVED);
+
+		// act
+		var result = await _client.ChangeTimeOffRequestStatusAsync(_workspaceId, policyResponse.Data.Id,
+			createdResult.Data.Id, changeTimeOffRequestStatusRequest);
+
+		// assert
+		result.IsSuccessful.Should().BeTrue();
+		result.Data.Should().NotBeNull();
+		result.Data.Status.StatusType.Should().BeEquivalentTo(changeTimeOffRequestStatusRequest.Status.ToString());
+
+		// cleanup
+		await _client.DeleteTimeOffRequestAsync(_workspaceId, policyResponse.Data.Id, result.Data.Id);
+		await _client.ArchiveAndDeletePolicyAsync(_workspaceId, policyResponse.Data.Id);
 	}
 }
