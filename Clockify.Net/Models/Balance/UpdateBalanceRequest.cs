@@ -5,6 +5,19 @@ namespace Clockify.Net.Models.Balance;
 
 public class UpdateBalanceRequest
 {
+	public UpdateBalanceRequest()
+	{
+	}
+
+	/// <summary>
+	/// For <see cref="ClockifyClient.UpdateBalanceAsync"/>
+	/// </summary>
+	public UpdateBalanceRequest(IEnumerable<string> userIds, double value)
+	{
+		UserIds = userIds;
+		Value = value;
+	}
+	
 	public string? Note { get; set; }
 	public IEnumerable<string>? UserIds { get; set; }
 
