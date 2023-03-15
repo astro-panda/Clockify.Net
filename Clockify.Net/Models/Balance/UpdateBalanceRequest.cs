@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Clockify.Net.Extensions;
 
 namespace Clockify.Net.Models.Balance;
 
@@ -25,6 +25,6 @@ public class UpdateBalanceRequest
 	public double? Value
 	{
 		get => _value;
-		set => _value = value == null ? value : Math.Clamp((double)value, -10000, 10000);
+		set => _value = value?.Clamp(-10000, 10000);
 	}
 }
