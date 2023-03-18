@@ -77,7 +77,7 @@ public partial class ClockifyClient
 		ChangePolicyStatusRequest policy)
 	{
 		if (policy == null) throw new ArgumentNullException(nameof(policy));
-		if (!Enum.IsDefined(typeof(StatusEnum), policy.Status))
+		if (policy.Status != null && !Enum.IsDefined(typeof(StatusEnum), policy.Status))
 			throw new ArgumentOutOfRangeException(nameof(policy.Status));
 
 		var request = new RestRequest($"workspaces/{workspaceId}/policies/{policyId}");

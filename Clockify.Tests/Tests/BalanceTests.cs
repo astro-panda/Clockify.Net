@@ -9,10 +9,10 @@ using NUnit.Framework;
 
 namespace Clockify.Tests.Tests;
 
-// TODO: Implement negative test cases
 /// <summary>
 ///   These tests require a Workspace with at least a standard subscription to pass!
 /// </summary>
+[Ignore("Need a Clockify Premium plan")]
 public class BalanceTests
 {
     private readonly ClockifyClient _client;
