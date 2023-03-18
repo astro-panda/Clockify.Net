@@ -24,7 +24,7 @@ public class SetupHelper {
 		if (workspaceResponse.IsSuccessful) {
 			workspaceId = workspaceResponse.Data.Id;
 		}
-		else if (WorkspaceAlreadyExist(workspaceResponse)) {
+		else if (EntityAlreadyExists(workspaceResponse)) {
 			var workspacesResponse = await client.GetWorkspacesAsync();
 			var workspace = workspacesResponse.Data.SingleOrDefault(dto => dto.Name == workspaceName);
 			if (workspace == null)
@@ -52,12 +52,6 @@ public class SetupHelper {
 		
 	public async Task<string> CreateOrFindWorkspaceAsync(string workspaceName) {
 		return await CreateOrFindWorkspaceAsync(new ClockifyClient(), workspaceName);
-	}
-
-
-	private static bool WorkspaceAlreadyExist(Response<WorkspaceDto> workspaceResponse) {
-		return workspaceResponse.StatusCode == HttpStatusCode.BadRequest &&
-		       workspaceResponse.Content.Contains("already exist");
 	}
 
 	/// <summary>
@@ -89,7 +83,7 @@ public class SetupHelper {
 		if (policyResponse.IsSuccessful) {
 			policyId = policyResponse.Data.Id;
 		}
-		else if (PolicyAlreadyExist(policyResponse)) {
+		else if (EntityAlreadyExists(policyResponse)) {
 			var policiesResponse = await client.GetPoliciesAsync(workspaceId);
 			var policy = policiesResponse.Data.SingleOrDefault(dto => dto.Name == policyName);
 			if (policy == null)
@@ -102,9 +96,9 @@ public class SetupHelper {
 
 		return policyId;
 	}
-	
-	private static bool PolicyAlreadyExist(Response<PolicyDto> policyResponse) {
-		return policyResponse.StatusCode == HttpStatusCode.BadRequest &&
-		       policyResponse.Content.Contains("already exist");
+	private static bool EntityAlreadyExists(Response response) {
+		return response.StatusCode == HttpStatusCode.BadRequest &&
+		       response.Content.Contains("already exist");
 	}
+
 }

@@ -32,8 +32,7 @@ public partial class ClockifyClient
 	public async Task<Response> UpdateBalanceAsync(string workspaceId, string policyId, UpdateBalanceRequest balance)
 	{
 		if (balance == null) throw new ArgumentNullException(nameof(balance));
-		if (balance.UserIds == null) throw new ArgumentNullException(nameof(balance.UserIds));
-		if (!balance.UserIds.Any()) throw new ArgumentNullException(nameof(balance.UserIds));
+		if (balance.UserIds == null || !balance.UserIds.Any()) throw new ArgumentNullException(nameof(balance.UserIds));
 		if (balance.Value == null) throw new ArgumentNullException(nameof(balance.Value));
 
 		var request = new RestRequest($"workspaces/{workspaceId}/balance/policy/{policyId}");

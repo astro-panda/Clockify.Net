@@ -14,6 +14,7 @@ namespace Clockify.Tests.Tests;
 /// <summary>
 ///   These tests require a Workspace with at least a standard subscription to pass!
 /// </summary>
+[Ignore("Need a Clockify Premium plan")]
 public class HolidayTests
 {
 	private readonly ClockifyClient _client;
