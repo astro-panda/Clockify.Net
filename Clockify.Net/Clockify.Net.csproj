@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Description>.Net Client for Clockify</Description>
     <PackageProjectUrl>https://github.com/Morasiu/Clockify.Net</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Morasiu/Clockify.Net</RepositoryUrl>
@@ -15,6 +14,7 @@
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -28,11 +28,6 @@
 
   <ItemGroup>
     <None Remove="Models\Reports\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\LICENSE">
-      <Pack>True</Pack>
-    </None>
   </ItemGroup>
 
   <ItemGroup>
