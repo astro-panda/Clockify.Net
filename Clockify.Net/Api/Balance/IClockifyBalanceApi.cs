@@ -10,14 +10,12 @@ public interface IClockifyBalanceApi {
 	/// Get Balance by Policy Id.
 	/// </summary>
 	/// <returns></returns>
-	Task<Response<GetBalanceResponse>> GetBalanceByPolicyAsync(string workspaceId, string policyId, GetBalanceRequest? balance = null);
-
+	Task<Response<GetBalanceResponse>> GetBalanceByPolicyAsync(string workspaceId, string policyId, GetBalanceRequest? getBalanceRequest = null);
 	/// <summary>
 	/// Get Balance by User Id.
 	/// </summary>
 	/// <returns></returns>
 	Task<Response<GetBalanceResponse>> GetBalanceByUserAsync(string workspaceId, string userId, GetBalanceRequest? balance = null);
-
 	/// <summary>
 	/// Update Balance on workspace.
 	/// </summary>

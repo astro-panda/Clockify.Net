@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using Clockify.Net.Models.Memberships;
+using Clockify.Net.Models.Reports;
 
-namespace Clockify.Net.Models.Users; 
+namespace Clockify.Net.Api.User.Responses; 
 
-public class CurrentUserDto
+public record UserDetails
 {
     public string ActiveWorkspace { get; set; }
+    public IEnumerable<UserCustomField> CustomFields { get; set; }
     public string DefaultWorkspace { get; set; }
     public string Email { get; set; }
     public string Id { get; set; }
@@ -13,5 +15,5 @@ public class CurrentUserDto
     public string Name { get; set; }
     public string ProfilePicture { get; set; }
     public UserSettingsDto Settings { get; set; }
-    public UserStatus? Status { get; set; }
+    public UserStatus Status { get; set; }
 }

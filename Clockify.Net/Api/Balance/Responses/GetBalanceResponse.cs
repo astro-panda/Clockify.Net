@@ -2,8 +2,8 @@
 
 namespace Clockify.Net.Api.Balance.Responses; 
 
-public class GetBalanceResponse
+public record GetBalanceResponse
 {
-	public IEnumerable<BalanceDto> Balances { get; set; }
+	public required IEnumerable<BalanceDetails> Balances { get; set; }
 	public int Count { get; set; }
 }

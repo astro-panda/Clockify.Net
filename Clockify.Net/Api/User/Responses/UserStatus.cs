@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Clockify.Net.Models.Users; 
+namespace Clockify.Net.Api.User.Responses; 
 
 public enum UserStatus
 {
@@ -8,12 +8,16 @@ public enum UserStatus
     Active,
     [EnumMember(Value = "PENDING_EMAIL_VERIFICATION")]
     PendingEmailVerification,
-    [EnumMember(Value = "DeleteD")]
+    [EnumMember(Value = "DELETED")]
     Deleted,
     [EnumMember(Value = "DECLINED")]
     Declined,
     [EnumMember(Value = "INACTIVE")]
     Inactive,
     [EnumMember(Value = "NOT_REGISTERED")]
-    NotRegistered
+    NotRegistered,
+    [EnumMember(Value = "LIMITED")]
+    Limited,
+    [EnumMember(Value = "LIMITED_DELETED")]
+    LimitedDeleted
 }

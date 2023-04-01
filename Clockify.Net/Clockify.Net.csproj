@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <Description>.Net Client for Clockify</Description>
     <PackageProjectUrl>https://github.com/Morasiu/Clockify.Net</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Morasiu/Clockify.Net</RepositoryUrl>
@@ -11,7 +11,7 @@
     <Company>Code Hydra</Company>
     <PackageReleaseNotes>See CHANGELOG.md</PackageReleaseNotes>
     <PackageVersion>2.3.0</PackageVersion>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>11</LangVersion>
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -31,7 +31,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Models\Clients" />
     <Folder Include="Models\Reports\" />
+    <Folder Include="Models\Users" />
   </ItemGroup>
 
   <ItemGroup>

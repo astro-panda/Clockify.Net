@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Clockify.Net;
-using Clockify.Net.Models.Clients;
+using Clockify.Net.Api.Client.Requests;
+using Clockify.Net.Api.Client.Responses;
 using Clockify.Tests.Helpers;
 using Clockify.Tests.Setup;
 using FluentAssertions;
@@ -35,7 +36,7 @@ public class ClientsTests {
 
 	[Test]
 	public async Task CreateClientAsync_ShouldCreteClientAndReturnClientDto() {
-		var clientRequest = new ClientRequest { Name = "Test add client " + Guid.NewGuid() };
+		var clientRequest = new CreateClientRequest { Name = "Test add client " + Guid.NewGuid() };
 		var createResult = await _client.CreateClientAsync(_workspaceId, clientRequest);
 		createResult.IsSuccessful.Should().BeTrue();
 		createResult.Data.Should().NotBeNull();
@@ -69,28 +70,13 @@ public class ClientsTests {
 	}
 
 	[Test]
-	public async Task UpdateClientNameOnWorkspace_ShouldReturnClientUpdateDto() {
-		await using var setup = new ClientSetup(_client, _workspaceId);
-		var clientDto = await setup.SetupAsync();
-
-		string updatedClientName = "Test update client " + Guid.NewGuid();
-
-		var updateClientNameRequest = new ClientName { Name = updatedClientName };
-		var updateClientNameResponse =
-			await _client.UpdateClientNameAsync(_workspaceId, clientDto.Id, updateClientNameRequest);
-		updateClientNameResponse.IsSuccessful.Should().BeTrue();
-		updateClientNameResponse.Data.Should().NotBeNull();
-		updateClientNameResponse.Data.Name.Should().Match(updatedClientName);
-	}
-		
-	[Test]
 	public async Task UpdateClient_ShouldReturnClientUpdateDto() {
 		await using var setup = new ClientSetup(_client, _workspaceId);
 		var clientDto = await setup.SetupAsync();
 
 		string updatedClientName = "Test update client " + Guid.NewGuid();
 
-		var updateClientRequest = new ClientUpdateRequest() 
+		var updateClientRequest = new UpdateClientRequest() 
 		{
 			Name = updatedClientName, 
 			Note = "Update note " + Guid.NewGuid(), 
@@ -102,7 +88,7 @@ public class ClientsTests {
 		updateClientResponse.Data.Should().NotBeNull();
 		updateClientResponse.Data.Name.Should().Be(updateClientRequest.Name);
 		updateClientResponse.Data.Note.Should().Be(updateClientRequest.Note);
-		updateClientResponse.Data.Archived.Should().Be(updateClientRequest.Archived);
+		updateClientResponse.Data.Archived.Should().Be(updateClientRequest.Archived.Value);
 	}
 
 	[Test]
@@ -110,7 +96,7 @@ public class ClientsTests {
 		// Setup
 		await using var setup = new ClientSetup(_client, _workspaceId);
 		var clientDto = await setup.SetupAsync();
-		var updateClientRequest = new ClientUpdateRequest() 
+		var updateClientRequest = new UpdateClientRequest() 
 		{
 			Name = clientDto.Name, 
 			Archived = true

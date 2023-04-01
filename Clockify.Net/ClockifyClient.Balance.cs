@@ -14,7 +14,7 @@ public partial class ClockifyClient
 	/// Get Balance by Policy Id.
 	/// </summary>
 	/// <returns></returns>
-	public async Task<Response<BalanceDto>> GetBalanceByPolicyAsync(string workspaceId, string policyId, GetBalanceRequest? balance = null)
+	public async Task<Response<BalanceDetails>> GetBalanceByPolicyAsync(string workspaceId, string policyId, GetBalanceRequest? balance = null)
 	{
 		var request = new RestRequest($"workspaces/{workspaceId}/balance/policy/{policyId}");
 		if (balance != null)
@@ -24,7 +24,7 @@ public partial class ClockifyClient
 			if (balance.Sort != null) request.AddQueryParameter("sort", balance.Sort);
 			if (balance.SortOrder != null) request.AddQueryParameter("sort-order", balance.SortOrder);
 		}
-		return Response<BalanceDto>.FromRestResponse(await _ptoClient.ExecuteGetAsync<BalanceDto>(request).ConfigureAwait(false));
+		return Response<BalanceDetails>.FromRestResponse(await _ptoClient.ExecuteGetAsync<BalanceDetails>(request).ConfigureAwait(false));
 	}
 	
 	/// <summary>

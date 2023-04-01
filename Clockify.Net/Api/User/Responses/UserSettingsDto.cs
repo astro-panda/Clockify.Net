@@ -1,4 +1,4 @@
-﻿namespace Clockify.Net.Models.Users; 
+﻿namespace Clockify.Net.Api.User.Responses; 
 
 public class UserSettingsDto
 {

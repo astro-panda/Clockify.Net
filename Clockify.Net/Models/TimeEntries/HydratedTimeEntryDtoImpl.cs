@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
+using Clockify.Net.Api.User.Responses;
 using Clockify.Net.Models.HourlyRates;
 using Clockify.Net.Models.Projects;
 using Clockify.Net.Models.Tags;
 using Clockify.Net.Models.Tasks;
-using Clockify.Net.Models.Users;
 
 namespace Clockify.Net.Models.TimeEntries; 
 
@@ -12,7 +12,7 @@ public class HydratedTimeEntryDtoImpl
     public string Id { get; set; }
     public string Description { get; set; }
     public List<TagDto> Tags { get; set; }
-    public UserDto User { get; set; }
+    public UserDetails User { get; set; }
     public bool Billable { get; set; }
     public TaskDto Task { get; set; }
     public ProjectDtoImpl Project { get; set; }

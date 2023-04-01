@@ -1,4 +1,4 @@
-﻿using Clockify.Net.Models.Users;
+﻿using Clockify.Net.Api.User.Responses;
 
 namespace Clockify.Net.Models.Workspaces; 
 

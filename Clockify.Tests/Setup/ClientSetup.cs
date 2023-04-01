@@ -3,7 +3,8 @@ using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Clockify.Net;
-using Clockify.Net.Models.Clients;
+using Clockify.Net.Api.Client.Requests;
+using Clockify.Net.Api.Client.Responses;
 using Clockify.Net.Models.HourlyRates;
 using Clockify.Net.Models.Projects;
 using Clockify.Net.Models.Tags;
@@ -24,8 +25,8 @@ public class ClientSetup : IAsyncDisposable {
 		_workspaceId = workspaceId;
 	}
 
-	public async Task<ClientDto> SetupAsync([CallerMemberName] string callerName = "") {
-		var request = new ClientRequest() {
+	public async Task<ClientDetails> SetupAsync([CallerMemberName] string callerName = "") {
+		var request = new CreateClientRequest() {
 			Name = $"Setup client {Guid.NewGuid()}: {callerName}",
 		};
 

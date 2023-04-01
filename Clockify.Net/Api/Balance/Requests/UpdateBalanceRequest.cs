@@ -2,8 +2,8 @@
 
 namespace Clockify.Net.Api.Balance.Requests;
 
-public record UpdateBalanceRequest {
-	public required IEnumerable<string> UserIds { get; init; }
-	public required double Value { get; init; }
+public class UpdateBalanceRequest {
+	public required IEnumerable<string> UserIds { get; set; }
+	public required double Value { get; set; }
 	public string? Note { get; set; }
 }

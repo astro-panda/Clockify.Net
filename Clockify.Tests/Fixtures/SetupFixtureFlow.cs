@@ -1,5 +1,6 @@
-﻿using Clockify.Tests.Fixtures;
-using NUnit.Framework;
+﻿using NUnit.Framework;
+
+namespace Clockify.Tests.Fixtures; 
 
 /// <summary>
 /// If class doesn't have a namespace it is a global Setup class. NUnit.
