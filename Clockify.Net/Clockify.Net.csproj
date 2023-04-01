@@ -11,17 +11,13 @@
     <Authors>Morasiu</Authors>
     <Company>Code Hydra</Company>
     <PackageReleaseNotes>See CHANGELOG.md</PackageReleaseNotes>
-    <PackageVersion>2.2.0</PackageVersion>
+    <PackageVersion>2.3.0</PackageVersion>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile></DocumentationFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile></DocumentationFile>
     <NoWarn>1701;1702;1591;1572;1571;1573;1587;1570;</NoWarn>
   </PropertyGroup>
 
@@ -36,7 +32,6 @@
   <ItemGroup>
     <None Include="..\LICENSE">
       <Pack>True</Pack>
-      <PackagePath></PackagePath>
     </None>
   </ItemGroup>
 
