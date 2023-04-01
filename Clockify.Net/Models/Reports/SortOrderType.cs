@@ -1,12 +1,11 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Clockify.Net.Models.Reports
+namespace Clockify.Net.Models.Reports; 
+
+public enum SortOrderType
 {
-    public enum SortOrderType
-    {
-        [EnumMember(Value = "ASCENDING")]
-        ASCENDING,
-        [EnumMember(Value = "DESCENDING")]
-        DESCENDING
-    }
+    [EnumMember(Value = "ASCENDING")]
+    ASCENDING,
+    [EnumMember(Value = "DESCENDING")]
+    DESCENDING
 }

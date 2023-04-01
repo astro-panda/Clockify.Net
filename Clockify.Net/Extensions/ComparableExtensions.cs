@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Clockify.Net.Extensions;
+namespace Clockify.Net.Extensions; 
 
 public static class ComparableExtensions
 {

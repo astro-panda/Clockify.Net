@@ -1,6 +1,6 @@
 using Clockify.Net.Models.Enums;
 
-namespace Clockify.Net.Models.Policies;
+namespace Clockify.Net.Models.Policies; 
 
 public class AutomaticAccrualRequest
 {

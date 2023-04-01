@@ -1,7 +1,6 @@
-﻿namespace Clockify.Net.Models.Estimates
+﻿namespace Clockify.Net.Models.Estimates; 
+
+public enum ResetOptionType
 {
-    public enum ResetOptionType
-    {
-        Monthly
-    }
+    Monthly
 }

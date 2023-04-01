@@ -1,6 +1,6 @@
 ﻿using Clockify.Net.Models.Enums;
 
-namespace Clockify.Net.Models.Policies;
+namespace Clockify.Net.Models.Policies; 
 
 public class PolicyRequest
 {
@@ -23,7 +23,7 @@ public class PolicyRequest
 	/// For <see cref="ClockifyClient.CreateTimeOffPolicyAsync"/>
 	/// </summary>
 	public PolicyRequest(Approve approve, string name, TimeUnitEnum timeUnit, ContainsFilter? userGroups = null, ContainsFilter? users = null)
-	: this(name, timeUnit, userGroups, users)
+		: this(name, timeUnit, userGroups, users)
 	{
 		Approve = approve;
 	}

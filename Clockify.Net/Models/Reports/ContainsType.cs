@@ -1,12 +1,11 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Clockify.Net.Models.Reports
+namespace Clockify.Net.Models.Reports; 
+
+public enum ContainsType
 {
-    public enum ContainsType
-    {
-        [EnumMember(Value = "CONTAINS")]
-        CONTAINS,
-        [EnumMember(Value = "DOES_NOT_CONTAIN")]
-        DOES_NOT_CONTAIN
-    }
+    [EnumMember(Value = "CONTAINS")]
+    CONTAINS,
+    [EnumMember(Value = "DOES_NOT_CONTAIN")]
+    DOES_NOT_CONTAIN
 }

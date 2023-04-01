@@ -6,7 +6,7 @@ using Clockify.Net.Models;
 using Clockify.Net.Models.Holiday;
 using RestSharp;
 
-namespace Clockify.Net;
+namespace Clockify.Net; 
 
 public partial class ClockifyClient
 {

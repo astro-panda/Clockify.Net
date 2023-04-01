@@ -7,7 +7,7 @@ using Clockify.Net.Models.Enums;
 using Clockify.Net.Models.Policies;
 using RestSharp;
 
-namespace Clockify.Net;
+namespace Clockify.Net; 
 
 public partial class ClockifyClient
 {
@@ -15,7 +15,7 @@ public partial class ClockifyClient
 	///   Get all Policies
 	/// </summary>
 	public async Task<Response<IEnumerable<PolicyDto>>> GetPoliciesAsync(string workspaceId,
-		GetPoliciesRequest? policy = null)
+	                                                                     GetPoliciesRequest? policy = null)
 	{
 		var request = new RestRequest($"workspaces/{workspaceId}/policies");
 		if (policy != null)
@@ -27,7 +27,7 @@ public partial class ClockifyClient
 		}
 
 		return Response<IEnumerable<PolicyDto>>.FromRestResponse(await _ptoClient
-			.ExecuteGetAsync<IEnumerable<PolicyDto>>(request).ConfigureAwait(false));
+		                                                               .ExecuteGetAsync<IEnumerable<PolicyDto>>(request).ConfigureAwait(false));
 	}
 
 	/// <summary>
@@ -47,7 +47,7 @@ public partial class ClockifyClient
 		var request = new RestRequest($"workspaces/{workspaceId}/policies", Method.Post);
 		request.AddJsonBody(policy);
 		return Response<PolicyDto>.FromRestResponse(await _ptoClient.ExecuteAsync<PolicyDto>(request)
-			.ConfigureAwait(false));
+		                                                            .ConfigureAwait(false));
 	}
 
 	/// <summary>
@@ -67,14 +67,14 @@ public partial class ClockifyClient
 	{
 		var request = new RestRequest($"workspaces/{workspaceId}/policies/{policyId}");
 		return Response<PolicyDto>.FromRestResponse(await _ptoClient.ExecuteGetAsync<PolicyDto>(request)
-			.ConfigureAwait(false));
+		                                                            .ConfigureAwait(false));
 	}
 
 	/// <summary>
 	///   Change Policy status on workspace.
 	/// </summary>
 	public async Task<Response<PolicyDto>> ChangePolicyStatusAsync(string workspaceId, string policyId,
-		ChangePolicyStatusRequest policy)
+	                                                               ChangePolicyStatusRequest policy)
 	{
 		if (policy == null) throw new ArgumentNullException(nameof(policy));
 		if (policy.Status != null && !Enum.IsDefined(typeof(StatusEnum), policy.Status))
@@ -83,7 +83,7 @@ public partial class ClockifyClient
 		var request = new RestRequest($"workspaces/{workspaceId}/policies/{policyId}");
 		request.AddJsonBody(policy);
 		return Response<PolicyDto>.FromRestResponse(await _ptoClient.ExecuteAsync<PolicyDto>(request, Method.Patch)
-			.ConfigureAwait(false));
+		                                                            .ConfigureAwait(false));
 	}
 
 	/// <summary>
@@ -107,13 +107,13 @@ public partial class ClockifyClient
 		if (policy.UserGroups == null) throw new ArgumentNullException(nameof(policy.UserGroups));
 		if (policy.UserGroups.Status == null)
 			throw new ArgumentNullException(nameof(policy.UserGroups
-				.Status)); // undocumented, but required for the update to succeed
+			                                             .Status)); // undocumented, but required for the update to succeed
 		if (policy.Users == null) throw new ArgumentNullException(nameof(policy.Users));
 
 		var request = new RestRequest($"workspaces/{workspaceId}/policies/{policyId}");
 		request.AddJsonBody(policy);
 		return Response<PolicyDto>.FromRestResponse(await _ptoClient.ExecuteAsync<PolicyDto>(request, Method.Put)
-			.ConfigureAwait(false));
+		                                                            .ConfigureAwait(false));
 	}
 
 	/// <summary>

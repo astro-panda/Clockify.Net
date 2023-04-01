@@ -1,14 +1,13 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Clockify.Net.Models.Reports
+namespace Clockify.Net.Models.Reports; 
+
+public enum StatusType
 {
-    public enum StatusType
-    {
-        [EnumMember(Value = "ALL")]
-        ALL,
-        [EnumMember(Value = "ACTIVE")]
-        ACTIVE,
-        [EnumMember(Value = "ARCHIVED")]
-        ARCHIVED
-    }
+    [EnumMember(Value = "ALL")]
+    ALL,
+    [EnumMember(Value = "ACTIVE")]
+    ACTIVE,
+    [EnumMember(Value = "ARCHIVED")]
+    ARCHIVED
 }

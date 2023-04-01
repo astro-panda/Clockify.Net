@@ -8,143 +8,142 @@ using Clockify.Tests.Setup;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace Clockify.Tests.Tests
+namespace Clockify.Tests.Tests; 
+
+public class TaskTests
 {
-    public class TaskTests
+    private readonly ClockifyClient _client;
+    private string _workspaceId;
+
+    public TaskTests()
     {
-        private readonly ClockifyClient _client;
-        private string _workspaceId;
+        _client = new ClockifyClient();
+    }
 
-        public TaskTests()
+    [OneTimeSetUp]
+    public async Task Setup()
+    {
+        _workspaceId = await SetupHelper.CreateOrFindWorkspaceAsync(_client, "Clockify.NetTestWorkspace");
+    }
+
+    // TODO Uncomment when Clockify add deleting workspaces again
+
+    // [OneTimeTearDown]
+    // public async Task Cleanup()
+    // {
+    //  var currentUser = await _client.GetCurrentUserAsync();
+    //  var changeResponse =
+    //   await _client.SetActiveWorkspaceFor(currentUser.Data.Id, DefaultWorkspaceFixture.DefaultWorkspaceId);
+    //  changeResponse.IsSuccessful.Should().BeTrue();
+    //     var workspaceResponse = await _client.DeleteWorkspaceAsync(_workspaceId);
+    //     workspaceResponse.IsSuccessful.Should().BeTrue();
+    // }
+
+    [Test]
+    public async Task FindAllTasksAsync_ShouldReturnTaskList()
+    {
+        // Prepare some project
+        await using var projectSetup = new ProjectSetup(_client, _workspaceId);
+        var project = await projectSetup.SetupAsync();
+        var projectId = project.Id;
+
+        var response = await _client.FindAllTasksAsync(_workspaceId, projectId);
+        response.IsSuccessful.Should().BeTrue();
+    }
+
+    [Test]
+    public async Task CreateTagAsync_ShouldCreteTagAndReturnTagDto()
+    {
+        // Prepare some project
+        await using var projectSetup = new ProjectSetup(_client, _workspaceId);
+        var project = await projectSetup.SetupAsync();
+        var projectId = project.Id;
+
+        var taskRequest = new TaskRequest
         {
-            _client = new ClockifyClient();
-        }
+            Name = "Test task",
+        };
+        var createResult = await _client.CreateTaskAsync(_workspaceId, projectId, taskRequest);
+        createResult.IsSuccessful.Should().BeTrue();
+        createResult.Data.Should().NotBeNull();
 
-        [OneTimeSetUp]
-        public async Task Setup()
+        var findResult = await _client.FindAllTasksAsync(_workspaceId, projectId);
+        findResult.IsSuccessful.Should().BeTrue();
+        findResult.Data.Should().ContainEquivalentOf(createResult.Data);
+    }
+
+    [Test]
+    public async Task CreateTaskAsync_NullName_ShouldThrowArgumentException()
+    {
+        var taskRequest = new TaskRequest()
         {
-            _workspaceId = await SetupHelper.CreateOrFindWorkspaceAsync(_client, "Clockify.NetTestWorkspace");
-        }
+            Name = null,
+        };
+        Func<Task> create = async () => await _client.CreateTaskAsync("", "", taskRequest);
 
-        // TODO Uncomment when Clockify add deleting workspaces again
+        await create.Should().ThrowAsync<ArgumentException>()
+                    .WithMessage($"Value cannot be null. (Parameter '{nameof(TaskRequest.Name)}')");
+    }
 
-        // [OneTimeTearDown]
-        // public async Task Cleanup()
-        // {
-	       //  var currentUser = await _client.GetCurrentUserAsync();
-	       //  var changeResponse =
-		      //   await _client.SetActiveWorkspaceFor(currentUser.Data.Id, DefaultWorkspaceFixture.DefaultWorkspaceId);
-	       //  changeResponse.IsSuccessful.Should().BeTrue();
-        //     var workspaceResponse = await _client.DeleteWorkspaceAsync(_workspaceId);
-        //     workspaceResponse.IsSuccessful.Should().BeTrue();
-        // }
+    [Test]
+    public async Task UpdateTaskAsync_ShouldUpdateTask()
+    {
+        // Prepare some project
+        await using var projectSetup = new ProjectSetup(_client, _workspaceId);
+        var project = await projectSetup.SetupAsync();
+        var projectId = project.Id;
 
-        [Test]
-        public async Task FindAllTasksAsync_ShouldReturnTaskList()
+        var taskRequest = new TaskRequest
         {
-            // Prepare some project
-            await using var projectSetup = new ProjectSetup(_client, _workspaceId);
-            var project = await projectSetup.SetupAsync();
-            var projectId = project.Id;
+            Name = "Test task",
+        };
+        var createResult = await _client.CreateTaskAsync(_workspaceId, projectId, taskRequest);
+        createResult.IsSuccessful.Should().BeTrue();
+        createResult.Data.Should().NotBeNull();
 
-            var response = await _client.FindAllTasksAsync(_workspaceId, projectId);
-            response.IsSuccessful.Should().BeTrue();
-        }
+        var findResult = await _client.FindAllTasksAsync(_workspaceId, projectId);
+        findResult.IsSuccessful.Should().BeTrue();
+        findResult.Data.Should().ContainEquivalentOf(createResult.Data);
 
-        [Test]
-        public async Task CreateTagAsync_ShouldCreteTagAndReturnTagDto()
+        var taskRequestUpdate = new TaskRequest
         {
-            // Prepare some project
-            await using var projectSetup = new ProjectSetup(_client, _workspaceId);
-            var project = await projectSetup.SetupAsync();
-            var projectId = project.Id;
+            Id = createResult.Data.Id,
+            Name = "Updated Test task"
+        };
+        var updateResult = await _client.UpdateTaskAsync(_workspaceId, projectId, taskRequestUpdate);
+        updateResult.IsSuccessful.Should().BeTrue();
+        updateResult.Data.Should().NotBeNull();
 
-            var taskRequest = new TaskRequest
-            {
-                Name = "Test task",
-            };
-            var createResult = await _client.CreateTaskAsync(_workspaceId, projectId, taskRequest);
-            createResult.IsSuccessful.Should().BeTrue();
-            createResult.Data.Should().NotBeNull();
+        var findResult2 = await _client.FindAllTasksAsync(_workspaceId, projectId);
+        findResult2.IsSuccessful.Should().BeTrue();
+        findResult2.Data.Should().ContainEquivalentOf(updateResult.Data);
+    }
 
-            var findResult = await _client.FindAllTasksAsync(_workspaceId, projectId);
-            findResult.IsSuccessful.Should().BeTrue();
-            findResult.Data.Should().ContainEquivalentOf(createResult.Data);
-        }
+    [Test]
+    public async Task DeleteTaskAsync_ShouldRemoveTask()
+    {
+        // Prepare some project
+        await using var projectSetup = new ProjectSetup(_client, _workspaceId);
+        var project = await projectSetup.SetupAsync();
+        var projectId = project.Id;
 
-        [Test]
-        public async Task CreateTaskAsync_NullName_ShouldThrowArgumentException()
+        var taskRequest = new TaskRequest
         {
-            var taskRequest = new TaskRequest()
-            {
-                Name = null,
-            };
-            Func<Task> create = async () => await _client.CreateTaskAsync("", "", taskRequest);
+            Name = "Test task",
+        };
+        var createResult = await _client.CreateTaskAsync(_workspaceId, projectId, taskRequest);
+        createResult.IsSuccessful.Should().BeTrue();
+        createResult.Data.Should().NotBeNull();
 
-            await create.Should().ThrowAsync<ArgumentException>()
-                .WithMessage($"Value cannot be null. (Parameter '{nameof(TaskRequest.Name)}')");
-        }
+        var findResult = await _client.FindAllTasksAsync(_workspaceId, projectId);
+        findResult.IsSuccessful.Should().BeTrue();
+        findResult.Data.Should().ContainEquivalentOf(createResult.Data);
 
-        [Test]
-        public async Task UpdateTaskAsync_ShouldUpdateTask()
-        {
-            // Prepare some project
-            await using var projectSetup = new ProjectSetup(_client, _workspaceId);
-            var project = await projectSetup.SetupAsync();
-            var projectId = project.Id;
+        var deleteResult = await _client.DeleteTaskAsync(_workspaceId, projectId, createResult.Data.Id);
+        deleteResult.IsSuccessful.Should().BeTrue();
 
-            var taskRequest = new TaskRequest
-            {
-                Name = "Test task",
-            };
-            var createResult = await _client.CreateTaskAsync(_workspaceId, projectId, taskRequest);
-            createResult.IsSuccessful.Should().BeTrue();
-            createResult.Data.Should().NotBeNull();
-
-            var findResult = await _client.FindAllTasksAsync(_workspaceId, projectId);
-            findResult.IsSuccessful.Should().BeTrue();
-            findResult.Data.Should().ContainEquivalentOf(createResult.Data);
-
-            var taskRequestUpdate = new TaskRequest
-            {
-                Id = createResult.Data.Id,
-                Name = "Updated Test task"
-            };
-            var updateResult = await _client.UpdateTaskAsync(_workspaceId, projectId, taskRequestUpdate);
-            updateResult.IsSuccessful.Should().BeTrue();
-            updateResult.Data.Should().NotBeNull();
-
-            var findResult2 = await _client.FindAllTasksAsync(_workspaceId, projectId);
-            findResult2.IsSuccessful.Should().BeTrue();
-            findResult2.Data.Should().ContainEquivalentOf(updateResult.Data);
-        }
-
-        [Test]
-        public async Task DeleteTaskAsync_ShouldRemoveTask()
-        {
-            // Prepare some project
-            await using var projectSetup = new ProjectSetup(_client, _workspaceId);
-            var project = await projectSetup.SetupAsync();
-            var projectId = project.Id;
-
-            var taskRequest = new TaskRequest
-            {
-                Name = "Test task",
-            };
-            var createResult = await _client.CreateTaskAsync(_workspaceId, projectId, taskRequest);
-            createResult.IsSuccessful.Should().BeTrue();
-            createResult.Data.Should().NotBeNull();
-
-            var findResult = await _client.FindAllTasksAsync(_workspaceId, projectId);
-            findResult.IsSuccessful.Should().BeTrue();
-            findResult.Data.Should().ContainEquivalentOf(createResult.Data);
-
-            var deleteResult = await _client.DeleteTaskAsync(_workspaceId, projectId, createResult.Data.Id);
-            deleteResult.IsSuccessful.Should().BeTrue();
-
-            var findResult2 = await _client.FindAllTasksAsync(_workspaceId, projectId);
-            findResult2.IsSuccessful.Should().BeTrue();
-            findResult2.Data.Should().BeEmpty();
-        }
+        var findResult2 = await _client.FindAllTasksAsync(_workspaceId, projectId);
+        findResult2.IsSuccessful.Should().BeTrue();
+        findResult2.Data.Should().BeEmpty();
     }
 }

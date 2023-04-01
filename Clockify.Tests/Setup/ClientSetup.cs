@@ -12,41 +12,41 @@ using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 
-namespace Clockify.Tests.Setup {
-	public class ClientSetup : IAsyncDisposable {
-		private readonly ClockifyClient _client;
-		private readonly string _workspaceId;
-		private string _id = string.Empty;
+namespace Clockify.Tests.Setup; 
 
-		public ClientSetup(ClockifyClient client, string workspaceId) {
-			this._client = client;
-			_workspaceId = workspaceId;
-		}
+public class ClientSetup : IAsyncDisposable {
+	private readonly ClockifyClient _client;
+	private readonly string _workspaceId;
+	private string _id = string.Empty;
 
-		public async Task<ClientDto> SetupAsync([CallerMemberName] string callerName = "") {
-			var request = new ClientRequest() {
-				Name = $"Setup client {Guid.NewGuid()}: {callerName}",
-			};
+	public ClientSetup(ClockifyClient client, string workspaceId) {
+		this._client = client;
+		_workspaceId = workspaceId;
+	}
 
-			// Tag cannot be longer than 100
-			if (request.Name.Length > 100) request.Name = request.Name.Substring(0, 99);
+	public async Task<ClientDto> SetupAsync([CallerMemberName] string callerName = "") {
+		var request = new ClientRequest() {
+			Name = $"Setup client {Guid.NewGuid()}: {callerName}",
+		};
+
+		// Tag cannot be longer than 100
+		if (request.Name.Length > 100) request.Name = request.Name.Substring(0, 99);
 			
-			var response = await _client.CreateClientAsync(_workspaceId, request);
-			response.IsSuccessful.Should().BeTrue();
-			response.Data.Should().NotBeNull();
+		var response = await _client.CreateClientAsync(_workspaceId, request);
+		response.IsSuccessful.Should().BeTrue();
+		response.Data.Should().NotBeNull();
 
-			_id = response.Data.Id;
-			return response.Data;
+		_id = response.Data.Id;
+		return response.Data;
+	}
+
+
+	public async ValueTask DisposeAsync() {
+		try {
+			await _client.ArchiveAndDeleteClientAsync(_workspaceId, _id);
 		}
-
-
-		public async ValueTask DisposeAsync() {
-			try {
-				await _client.ArchiveAndDeleteClientAsync(_workspaceId, _id);
-			}
-			catch (HttpRequestException) {
-				TestContext.WriteLine($"Deleting client {_id} failed.");
-			}
+		catch (HttpRequestException) {
+			TestContext.WriteLine($"Deleting client {_id} failed.");
 		}
 	}
 }

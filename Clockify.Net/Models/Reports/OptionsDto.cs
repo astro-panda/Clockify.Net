@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Clockify.Net.Models.Reports
+namespace Clockify.Net.Models.Reports; 
+
+public class OptionsDto
 {
-    public class OptionsDto
-    {
-        public TotalsType Totals { get; set; }
-    }
+    public TotalsType Totals { get; set; }
 }

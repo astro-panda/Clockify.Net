@@ -1,4 +1,4 @@
-namespace Clockify.Net.Models.Enums;
+namespace Clockify.Net.Models.Enums; 
 
 public enum ContainsEnum
 {

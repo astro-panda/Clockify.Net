@@ -1,7 +1,6 @@
-﻿namespace Clockify.Net.Models.Workspaces
+﻿namespace Clockify.Net.Models.Workspaces; 
+
+public class WorkspaceAddUserRequest
 {
-    public class WorkspaceAddUserRequest
-    {
-        public string Email { get; set; }
-    }
+    public string Email { get; set; }
 }

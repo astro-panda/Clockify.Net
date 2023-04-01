@@ -1,11 +1,10 @@
-﻿namespace Clockify.Net.Models.Clients
+﻿namespace Clockify.Net.Models.Clients; 
+
+public class ClientUpdateDto
 {
-    public class ClientUpdateDto
-    {
-        public bool? Archived { get; set; }
-        public string? Id { get; set; }
-        public string? Name { get; set; }
-        public string? Note { get; set; }
-        public string? WorkspaceId { get; set; }
-    }
+    public bool? Archived { get; set; }
+    public string? Id { get; set; }
+    public string? Name { get; set; }
+    public string? Note { get; set; }
+    public string? WorkspaceId { get; set; }
 }

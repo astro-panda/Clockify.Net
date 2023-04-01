@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using Clockify.Net.Models.HourlyRates;
 
-namespace Clockify.Net.Models.Memberships
+namespace Clockify.Net.Models.Memberships; 
+
+public class UpdateMembershipsRequest
 {
-    public class UpdateMembershipsRequest
-    {
-        public IReadOnlyCollection<UpdateMembershipRequest>? Memberships { get; set; }
-    }
+    public IReadOnlyCollection<UpdateMembershipRequest>? Memberships { get; set; }
 }

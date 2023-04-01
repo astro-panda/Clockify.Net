@@ -11,7 +11,7 @@ using Clockify.Tests.Helpers;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace Clockify.Tests.Tests;
+namespace Clockify.Tests.Tests; 
 
 // TODO: Implement negative test cases
 /// <summary>

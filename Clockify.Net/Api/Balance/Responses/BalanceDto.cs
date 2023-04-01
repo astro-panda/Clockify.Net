@@ -1,6 +1,6 @@
-﻿namespace Clockify.Net.Models.Balance;
+﻿namespace Clockify.Net.Api.Balance.Responses; 
 
-public class BalanceDtoV1
+public class BalanceDto
 {
 	public double Balance { get; set; }
 	public string Id { get; set; }

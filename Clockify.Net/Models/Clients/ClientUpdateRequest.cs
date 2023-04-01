@@ -1,4 +1,4 @@
-﻿namespace Clockify.Net.Models.Clients;
+﻿namespace Clockify.Net.Models.Clients; 
 
 public class ClientUpdateRequest {
 	public string Name { get; set; }

@@ -10,7 +10,7 @@ using Clockify.Net.Models.TimeEntries;
 using Clockify.Net.Models.Workspaces;
 using FluentAssertions;
 
-namespace Clockify.Tests.Helpers;
+namespace Clockify.Tests.Helpers; 
 
 public class SetupHelper {
 	/// <summary>

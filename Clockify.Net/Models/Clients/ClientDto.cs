@@ -1,9 +1,8 @@
-﻿namespace Clockify.Net.Models.Clients
+﻿namespace Clockify.Net.Models.Clients; 
+
+public class ClientDto
 {
-    public class ClientDto
-    {
-        public string? Id { get; set; }
-        public string? Name { get; set; }
-        public string? WorkspaceId { get; set; }
-    }
+    public string? Id { get; set; }
+    public string? Name { get; set; }
+    public string? WorkspaceId { get; set; }
 }

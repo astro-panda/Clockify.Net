@@ -1,7 +1,6 @@
-﻿namespace Clockify.Net.Models.Tags
+﻿namespace Clockify.Net.Models.Tags; 
+
+public class TagRequest
 {
-    public class TagRequest
-    {
-        public string Name { get; set; }
-    }
+    public string Name { get; set; }
 }

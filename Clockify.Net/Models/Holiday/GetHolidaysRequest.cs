@@ -1,7 +1,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace Clockify.Net.Models.Holiday;
+namespace Clockify.Net.Models.Holiday; 
 
 public class GetHolidaysRequest
 {

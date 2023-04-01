@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Clockify.Net.Models.Holiday;
+namespace Clockify.Net.Models.Holiday; 
 
 public class HolidayRequest
 {
@@ -23,7 +23,7 @@ public class HolidayRequest
 	///  For <see cref="ClockifyClient.UpdateHolidayAsync"/>
 	/// </summary>
 	public HolidayRequest(DatePeriod datePeriod, string name, bool occursAnnually, ContainsFilter? userGroups = null, ContainsFilter? users = null)
-	: this(datePeriod, name, userGroups, users)
+		: this(datePeriod, name, userGroups, users)
 	{
 		OccursAnnually = occursAnnually;
 	}

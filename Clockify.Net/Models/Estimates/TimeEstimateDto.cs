@@ -1,7 +1,6 @@
-﻿namespace Clockify.Net.Models.Estimates
+﻿namespace Clockify.Net.Models.Estimates; 
+
+public class TimeEstimateDto : EstimateDtoBase
 {
-    public class TimeEstimateDto : EstimateDtoBase
-    {
-        public string? Estimate { get; set; }
-    }
+    public string? Estimate { get; set; }
 }

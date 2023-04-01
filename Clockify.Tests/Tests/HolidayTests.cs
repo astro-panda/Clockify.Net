@@ -9,7 +9,7 @@ using FluentAssertions;
 using FluentAssertions.Extensions;
 using NUnit.Framework;
 
-namespace Clockify.Tests.Tests;
+namespace Clockify.Tests.Tests; 
 
 /// <summary>
 ///   These tests require a Workspace with at least a standard subscription to pass!
@@ -105,7 +105,7 @@ public class HolidayTests
 
 		// assert
 		await create.Should().ThrowAsync<ArgumentException>()
-			.WithMessage($"Value cannot be null. (Parameter '{nameof(HolidayRequest.DatePeriod)}')");
+		            .WithMessage($"Value cannot be null. (Parameter '{nameof(HolidayRequest.DatePeriod)}')");
 	}
 
 	[Test]
@@ -123,7 +123,7 @@ public class HolidayTests
 
 		// assert
 		await create.Should().ThrowAsync<ArgumentException>()
-			.WithMessage($"Value cannot be null. (Parameter '{nameof(HolidayRequest.Name)}')");
+		            .WithMessage($"Value cannot be null. (Parameter '{nameof(HolidayRequest.Name)}')");
 	}
 
 	[Test]
@@ -169,7 +169,7 @@ public class HolidayTests
 
 		// assert
 		await create.Should().ThrowAsync<ArgumentException>()
-			.WithMessage($"Value cannot be null. (Parameter '{nameof(GetHolidaysRequest.AssignedTo)}')");
+		            .WithMessage($"Value cannot be null. (Parameter '{nameof(GetHolidaysRequest.AssignedTo)}')");
 	}
 
 	[Test]
@@ -188,7 +188,7 @@ public class HolidayTests
 
 		// assert
 		await create.Should().ThrowAsync<ArgumentException>()
-			.WithMessage($"Value cannot be null. (Parameter '{nameof(GetHolidaysRequest.Start)}')");
+		            .WithMessage($"Value cannot be null. (Parameter '{nameof(GetHolidaysRequest.Start)}')");
 	}
 
 	[Test]
@@ -207,7 +207,7 @@ public class HolidayTests
 
 		// assert
 		await create.Should().ThrowAsync<ArgumentException>()
-			.WithMessage($"Value cannot be null. (Parameter '{nameof(GetHolidaysRequest.End)}')");
+		            .WithMessage($"Value cannot be null. (Parameter '{nameof(GetHolidaysRequest.End)}')");
 	}
 
 	[Test]
@@ -258,7 +258,7 @@ public class HolidayTests
 
 		// assert
 		await update.Should().ThrowAsync<ArgumentException>()
-			.WithMessage($"Value cannot be null. (Parameter '{nameof(HolidayRequest.DatePeriod)}')");
+		            .WithMessage($"Value cannot be null. (Parameter '{nameof(HolidayRequest.DatePeriod)}')");
 
 		// cleanup
 		var deleteHoliday = await _client.DeleteHolidayAsync(_workspaceId, createResult.Data.Id);
@@ -279,7 +279,7 @@ public class HolidayTests
 
 		// assert
 		await update.Should().ThrowAsync<ArgumentException>()
-			.WithMessage($"Value cannot be null. (Parameter '{nameof(HolidayRequest.DatePeriod.EndDate)}')");
+		            .WithMessage($"Value cannot be null. (Parameter '{nameof(HolidayRequest.DatePeriod.EndDate)}')");
 
 		// cleanup
 		var deleteHoliday = await _client.DeleteHolidayAsync(_workspaceId, createResult.Data.Id);
@@ -300,7 +300,7 @@ public class HolidayTests
 
 		// assert
 		await update.Should().ThrowAsync<ArgumentException>()
-			.WithMessage($"Value cannot be null. (Parameter '{nameof(HolidayRequest.DatePeriod.StartDate)}')");
+		            .WithMessage($"Value cannot be null. (Parameter '{nameof(HolidayRequest.DatePeriod.StartDate)}')");
 
 		// cleanup
 		var deleteHoliday = await _client.DeleteHolidayAsync(_workspaceId, createResult.Data.Id);
@@ -321,7 +321,7 @@ public class HolidayTests
 
 		// assert
 		await update.Should().ThrowAsync<ArgumentException>()
-			.WithMessage($"Value cannot be null. (Parameter '{nameof(HolidayRequest.Name)}')");
+		            .WithMessage($"Value cannot be null. (Parameter '{nameof(HolidayRequest.Name)}')");
 
 		// cleanup
 		var deleteHoliday = await _client.DeleteHolidayAsync(_workspaceId, createResult.Data.Id);
@@ -342,7 +342,7 @@ public class HolidayTests
 
 		// assert
 		await update.Should().ThrowAsync<ArgumentException>()
-			.WithMessage($"Value cannot be null. (Parameter '{nameof(HolidayRequest.OccursAnnually)}')");
+		            .WithMessage($"Value cannot be null. (Parameter '{nameof(HolidayRequest.OccursAnnually)}')");
 
 		// cleanup
 		var deleteHoliday = await _client.DeleteHolidayAsync(_workspaceId, createResult.Data.Id);

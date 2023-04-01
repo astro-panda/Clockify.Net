@@ -11,273 +11,272 @@ using Clockify.Tests.Setup;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace Clockify.Tests.Tests
+namespace Clockify.Tests.Tests; 
+
+public class TemplateTests
 {
-    public class TemplateTests
+    private readonly ClockifyClient _client;
+    private string _workspaceId;
+
+    public TemplateTests()
     {
-        private readonly ClockifyClient _client;
-        private string _workspaceId;
+        _client = new ClockifyClient();
+    }
 
-        public TemplateTests()
-        {
-            _client = new ClockifyClient();
-        }
+    [OneTimeSetUp]
+    public async Task Setup()
+    {
+        _workspaceId = await SetupHelper.CreateOrFindWorkspaceAsync(_client, "Clockify.NetTestWorkspace");
+    }
 
-        [OneTimeSetUp]
-        public async Task Setup()
-        {
-            _workspaceId = await SetupHelper.CreateOrFindWorkspaceAsync(_client, "Clockify.NetTestWorkspace");
-        }
+    // TODO Uncomment when Clockify add deleting workspaces again
 
-        // TODO Uncomment when Clockify add deleting workspaces again
+    //[OneTimeTearDown]
+    //public async Task Cleanup()
+    //{
+    // var currentUser = await _client.GetCurrentUserAsync();
+    // var changeResponse =
+    //  await _client.SetActiveWorkspaceFor(currentUser.Data.Id, DefaultWorkspaceFixture.DefaultWorkspaceId);
+    // changeResponse.IsSuccessful.Should().BeTrue();
+    //    var workspaceResponse = await _client.DeleteWorkspaceAsync(_workspaceId);
+    //    workspaceResponse.IsSuccessful.Should().BeTrue();
+    //}
 
-        //[OneTimeTearDown]
-        //public async Task Cleanup()
-        //{
-	       // var currentUser = await _client.GetCurrentUserAsync();
-	       // var changeResponse =
-		      //  await _client.SetActiveWorkspaceFor(currentUser.Data.Id, DefaultWorkspaceFixture.DefaultWorkspaceId);
-	       // changeResponse.IsSuccessful.Should().BeTrue();
-        //    var workspaceResponse = await _client.DeleteWorkspaceAsync(_workspaceId);
-        //    workspaceResponse.IsSuccessful.Should().BeTrue();
-        //}
+    [Test]
+    public async Task FindAllTemplatesOnWorkspaceAsync_ShouldReturnTagsList()
+    {
+        var response = await _client.FindAllTemplatesOnWorkspaceAsync(_workspaceId);
+        response.IsSuccessful.Should().BeTrue();
+    }
 
-        [Test]
-        public async Task FindAllTemplatesOnWorkspaceAsync_ShouldReturnTagsList()
-        {
-            var response = await _client.FindAllTemplatesOnWorkspaceAsync(_workspaceId);
-            response.IsSuccessful.Should().BeTrue();
-        }
+    [Test]
+    public async Task CreateTemplatesAsync_ShouldCreteTemplateAndReturnTemplateDto()
+    {
+        // Create project for test
+        await using var projectSetup = new ProjectSetup(_client, _workspaceId);
+        var project = await projectSetup.SetupAsync();
+        var projectId = project.Id;
+        // Create task
+        var taskRequest = new TaskRequest {Name = "Template create task " + Guid.NewGuid()};
+        var taskResponse = await _client.CreateTaskAsync(_workspaceId, projectId, taskRequest);
+        taskResponse.IsSuccessful.Should().BeTrue();
+        var taskId = taskResponse.Data.Id;
 
-        [Test]
-        public async Task CreateTemplatesAsync_ShouldCreteTemplateAndReturnTemplateDto()
-        {
-            // Create project for test
-            await using var projectSetup = new ProjectSetup(_client, _workspaceId);
-            var project = await projectSetup.SetupAsync();
-            var projectId = project.Id;
-            // Create task
-            var taskRequest = new TaskRequest {Name = "Template create task " + Guid.NewGuid()};
-            var taskResponse = await _client.CreateTaskAsync(_workspaceId, projectId, taskRequest);
-            taskResponse.IsSuccessful.Should().BeTrue();
-            var taskId = taskResponse.Data.Id;
-
-            var templatePatchRequest = new TemplateRequest()
-            { 
-                Name = "Create Test template " + Guid.NewGuid(),
-                ProjectsAndTasks = new List<ProjectsTaskTupleRequest>()
+        var templatePatchRequest = new TemplateRequest()
+        { 
+            Name = "Create Test template " + Guid.NewGuid(),
+            ProjectsAndTasks = new List<ProjectsTaskTupleRequest>()
+            {
+                new ProjectsTaskTupleRequest
                 {
-                    new ProjectsTaskTupleRequest
-                    {
-                        ProjectId = projectId,
-                        TaskId = taskId
-                    }
+                    ProjectId = projectId,
+                    TaskId = taskId
                 }
-            };
+            }
+        };
 
-            var createResult = await _client.CreateTemplatesAsync(_workspaceId, templatePatchRequest);
-            createResult.IsSuccessful.Should().BeTrue();
-            createResult.Data.Should().NotBeNull();
-        }
+        var createResult = await _client.CreateTemplatesAsync(_workspaceId, templatePatchRequest);
+        createResult.IsSuccessful.Should().BeTrue();
+        createResult.Data.Should().NotBeNull();
+    }
 
-        [Test]
-        public async Task GetTemplateAsync_ShouldReturnTemplateDto()
+    [Test]
+    public async Task GetTemplateAsync_ShouldReturnTemplateDto()
+    {
+        // Create project for test
+        await using var projectSetup = new ProjectSetup(_client, _workspaceId);
+        var project = await projectSetup.SetupAsync();
+        var projectId = project.Id;
+        // Create task
+        var taskRequest = new TaskRequest {Name = "Template create task " + Guid.NewGuid()};
+        var taskResponse = await _client.CreateTaskAsync(_workspaceId, projectId, taskRequest);
+        taskResponse.IsSuccessful.Should().BeTrue();
+        var taskId = taskResponse.Data.Id;
+
+        var templatePatchRequest = new TemplateRequest()
         {
-            // Create project for test
-            await using var projectSetup = new ProjectSetup(_client, _workspaceId);
-            var project = await projectSetup.SetupAsync();
-            var projectId = project.Id;
-            // Create task
-            var taskRequest = new TaskRequest {Name = "Template create task " + Guid.NewGuid()};
-            var taskResponse = await _client.CreateTaskAsync(_workspaceId, projectId, taskRequest);
-            taskResponse.IsSuccessful.Should().BeTrue();
-            var taskId = taskResponse.Data.Id;
-
-            var templatePatchRequest = new TemplateRequest()
+            Name = "Get Test template " + Guid.NewGuid(),
+            ProjectsAndTasks = new List<ProjectsTaskTupleRequest>()
             {
-                Name = "Get Test template " + Guid.NewGuid(),
-                ProjectsAndTasks = new List<ProjectsTaskTupleRequest>()
+                new ProjectsTaskTupleRequest
                 {
-                    new ProjectsTaskTupleRequest
-                    {
-                        ProjectId = projectId,
-                        TaskId = taskId
-                    }
+                    ProjectId = projectId,
+                    TaskId = taskId
                 }
-            };
+            }
+        };
 
-            var createResult = await _client.CreateTemplatesAsync(_workspaceId, templatePatchRequest);
-            createResult.IsSuccessful.Should().BeTrue();
-            createResult.Data.Should().NotBeNull();
+        var createResult = await _client.CreateTemplatesAsync(_workspaceId, templatePatchRequest);
+        createResult.IsSuccessful.Should().BeTrue();
+        createResult.Data.Should().NotBeNull();
 
-            var getResponse = await _client.GetTemplateAsync(_workspaceId, createResult.Data.First().Id);
-            getResponse.IsSuccessful.Should().BeTrue();
-            getResponse.Data.Should().BeEquivalentTo(createResult.Data.First());
-        }
+        var getResponse = await _client.GetTemplateAsync(_workspaceId, createResult.Data.First().Id);
+        getResponse.IsSuccessful.Should().BeTrue();
+        getResponse.Data.Should().BeEquivalentTo(createResult.Data.First());
+    }
 
-        [Test]
-        public async Task UpdateTemplateAsync_ShouldReturnTemplateDto()
+    [Test]
+    public async Task UpdateTemplateAsync_ShouldReturnTemplateDto()
+    {
+        // Create project for test
+        await using var projectSetup = new ProjectSetup(_client, _workspaceId);
+        var project = await projectSetup.SetupAsync();
+        var projectId = project.Id;
+        // Create task
+        var taskRequest = new TaskRequest {Name = "Template create task " + Guid.NewGuid()};
+        var taskResponse = await _client.CreateTaskAsync(_workspaceId, projectId, taskRequest);
+        taskResponse.IsSuccessful.Should().BeTrue();
+        var taskId = taskResponse.Data.Id;
+
+        var templatePatchRequest = new TemplateRequest()
         {
-            // Create project for test
-            await using var projectSetup = new ProjectSetup(_client, _workspaceId);
-            var project = await projectSetup.SetupAsync();
-            var projectId = project.Id;
-            // Create task
-            var taskRequest = new TaskRequest {Name = "Template create task " + Guid.NewGuid()};
-            var taskResponse = await _client.CreateTaskAsync(_workspaceId, projectId, taskRequest);
-            taskResponse.IsSuccessful.Should().BeTrue();
-            var taskId = taskResponse.Data.Id;
-
-            var templatePatchRequest = new TemplateRequest()
+            Name = "Update Test template " + Guid.NewGuid(),
+            ProjectsAndTasks = new List<ProjectsTaskTupleRequest>()
             {
-                Name = "Update Test template " + Guid.NewGuid(),
-                ProjectsAndTasks = new List<ProjectsTaskTupleRequest>()
+                new ProjectsTaskTupleRequest
                 {
-                    new ProjectsTaskTupleRequest
-                    {
-                        ProjectId = projectId,
-                        TaskId = taskId
-                    }
+                    ProjectId = projectId,
+                    TaskId = taskId
                 }
-            };
+            }
+        };
 
-            var createResult = await _client.CreateTemplatesAsync(_workspaceId, templatePatchRequest);
-            createResult.IsSuccessful.Should().BeTrue();
-            createResult.Data.Should().NotBeNull();
+        var createResult = await _client.CreateTemplatesAsync(_workspaceId, templatePatchRequest);
+        createResult.IsSuccessful.Should().BeTrue();
+        createResult.Data.Should().NotBeNull();
 
-            var patchRequest = new TemplatePatchRequest {Name = "Updated " + Guid.NewGuid()};
-            var templateDto = createResult.Data.First();
-            templateDto.Name = patchRequest.Name;
-            var getResponse = await _client.UpdateTemplateAsync(_workspaceId, templateDto.Id, patchRequest);
+        var patchRequest = new TemplatePatchRequest {Name = "Updated " + Guid.NewGuid()};
+        var templateDto = createResult.Data.First();
+        templateDto.Name = patchRequest.Name;
+        var getResponse = await _client.UpdateTemplateAsync(_workspaceId, templateDto.Id, patchRequest);
 
-            getResponse.IsSuccessful.Should().BeTrue();
-            getResponse.Data.Should().BeEquivalentTo(templateDto);
-        }
+        getResponse.IsSuccessful.Should().BeTrue();
+        getResponse.Data.Should().BeEquivalentTo(templateDto);
+    }
 
-        [Test]
-        public async Task DeleteTemplateAsync_ShouldReturnTemplateDto()
+    [Test]
+    public async Task DeleteTemplateAsync_ShouldReturnTemplateDto()
+    {
+        // Create project for test
+        await using var projectSetup = new ProjectSetup(_client, _workspaceId);
+        var project = await projectSetup.SetupAsync();
+        var projectId = project.Id;
+        // Create task
+        var taskRequest = new TaskRequest {Name = "Template create task " + Guid.NewGuid()};
+        var taskResponse = await _client.CreateTaskAsync(_workspaceId, projectId, taskRequest);
+        taskResponse.IsSuccessful.Should().BeTrue();
+        var taskId = taskResponse.Data.Id;
+
+        var templatePatchRequest = new TemplateRequest()
         {
-            // Create project for test
-            await using var projectSetup = new ProjectSetup(_client, _workspaceId);
-            var project = await projectSetup.SetupAsync();
-            var projectId = project.Id;
-            // Create task
-            var taskRequest = new TaskRequest {Name = "Template create task " + Guid.NewGuid()};
-            var taskResponse = await _client.CreateTaskAsync(_workspaceId, projectId, taskRequest);
-            taskResponse.IsSuccessful.Should().BeTrue();
-            var taskId = taskResponse.Data.Id;
-
-            var templatePatchRequest = new TemplateRequest()
+            Name = "Delete Test template " + Guid.NewGuid(),
+            ProjectsAndTasks = new List<ProjectsTaskTupleRequest>()
             {
-                Name = "Delete Test template " + Guid.NewGuid(),
-                ProjectsAndTasks = new List<ProjectsTaskTupleRequest>()
+                new ProjectsTaskTupleRequest
                 {
-                    new ProjectsTaskTupleRequest
-                    {
-                        ProjectId = projectId,
-                        TaskId = taskId
-                    }
+                    ProjectId = projectId,
+                    TaskId = taskId
                 }
-            };
+            }
+        };
 
-            var createResult = await _client.CreateTemplatesAsync(_workspaceId, templatePatchRequest);
-            createResult.IsSuccessful.Should().BeTrue();
-            createResult.Data.Should().NotBeNull();
+        var createResult = await _client.CreateTemplatesAsync(_workspaceId, templatePatchRequest);
+        createResult.IsSuccessful.Should().BeTrue();
+        createResult.Data.Should().NotBeNull();
 
-            var deleteResponse = await _client.DeleteTemplateAsync(_workspaceId, createResult.Data.First().Id);
-            deleteResponse.IsSuccessful.Should().BeTrue();
-            deleteResponse.Data.Should().BeEquivalentTo(createResult.Data.First());
-        }
+        var deleteResponse = await _client.DeleteTemplateAsync(_workspaceId, createResult.Data.First().Id);
+        deleteResponse.IsSuccessful.Should().BeTrue();
+        deleteResponse.Data.Should().BeEquivalentTo(createResult.Data.First());
+    }
 
-        [Test]
-        public async Task UpdateTemplateAsync_NullTemplatePatchRequest_ShouldThrowArgumentException()
+    [Test]
+    public async Task UpdateTemplateAsync_NullTemplatePatchRequest_ShouldThrowArgumentException()
+    {
+        Func<Task> create = () => _client.UpdateTemplateAsync(_workspaceId, "", null);
+        await create.Should().ThrowAsync<ArgumentNullException>();
+    }
+
+    [Test]
+    public async Task UpdateTemplateAsync_NullName_ShouldThrowArgumentException()
+    {
+        var templatePatchRequest = new TemplatePatchRequest()
         {
-            Func<Task> create = () => _client.UpdateTemplateAsync(_workspaceId, "", null);
-            await create.Should().ThrowAsync<ArgumentNullException>();
-        }
+            Name = null,
+        };
+        Func<Task> create = () => _client.UpdateTemplateAsync(_workspaceId, "", templatePatchRequest);
+        await create.Should().ThrowAsync<ArgumentException>()
+                    .WithMessage($"Value cannot be null. (Parameter '{nameof(TemplatePatchRequest.Name)}')");
+    }
 
-        [Test]
-        public async Task UpdateTemplateAsync_NullName_ShouldThrowArgumentException()
+    [Test]
+    public async Task CreateTemplatesAsync_NullTemplateRequest_ShouldThrowArgumentException()
+    {
+        Func<Task> create = () => _client.CreateTemplatesAsync(_workspaceId, null);
+        await create.Should().ThrowAsync<ArgumentNullException>();
+    }
+
+    [Test]
+    public async Task CreateTemplatesAsync_NullName_ShouldThrowArgumentException()
+    {
+        var templatePatchRequest = new TemplateRequest()
         {
-            var templatePatchRequest = new TemplatePatchRequest()
+            Name = null,
+        };
+        Func<Task> create = () => _client.CreateTemplatesAsync(_workspaceId, templatePatchRequest);
+        await create.Should().ThrowAsync<ArgumentException>()
+                    .WithMessage($"Value cannot be null. (Parameter '{nameof(TemplateRequest.Name)}')");
+    }
+
+    [Test]
+    public async Task CreateTemplatesAsync_NullProjectsAndTasks_ShouldThrowArgumentException()
+    {
+        var templatePatchRequest = new TemplateRequest()
+        {
+            Name = "Test name " + Guid.NewGuid(),
+            ProjectsAndTasks = null
+        };
+        Func<Task> create = () => _client.CreateTemplatesAsync(_workspaceId, templatePatchRequest);
+        await create.Should().ThrowAsync<ArgumentException>()
+                    .WithMessage($"Value cannot be null. (Parameter '{nameof(TemplateRequest.ProjectsAndTasks)}')");
+    }
+
+    [Test]
+    public async Task CreateTemplatesAsync_NullProjectId_ShouldThrowArgumentException()
+    {
+        var templatePatchRequest = new TemplateRequest()
+        {
+            Name = "Test name " + Guid.NewGuid(),
+            ProjectsAndTasks = new List<ProjectsTaskTupleRequest>
             {
-                Name = null,
-            };
-            Func<Task> create = () => _client.UpdateTemplateAsync(_workspaceId, "", templatePatchRequest);
-            await create.Should().ThrowAsync<ArgumentException>()
-                .WithMessage($"Value cannot be null. (Parameter '{nameof(TemplatePatchRequest.Name)}')");
-        }
-
-        [Test]
-        public async Task CreateTemplatesAsync_NullTemplateRequest_ShouldThrowArgumentException()
-        {
-            Func<Task> create = () => _client.CreateTemplatesAsync(_workspaceId, null);
-            await create.Should().ThrowAsync<ArgumentNullException>();
-        }
-
-        [Test]
-        public async Task CreateTemplatesAsync_NullName_ShouldThrowArgumentException()
-        {
-            var templatePatchRequest = new TemplateRequest()
-            {
-                Name = null,
-            };
-            Func<Task> create = () => _client.CreateTemplatesAsync(_workspaceId, templatePatchRequest);
-            await create.Should().ThrowAsync<ArgumentException>()
-                .WithMessage($"Value cannot be null. (Parameter '{nameof(TemplateRequest.Name)}')");
-        }
-
-        [Test]
-        public async Task CreateTemplatesAsync_NullProjectsAndTasks_ShouldThrowArgumentException()
-        {
-            var templatePatchRequest = new TemplateRequest()
-            {
-                Name = "Test name " + Guid.NewGuid(),
-                ProjectsAndTasks = null
-            };
-            Func<Task> create = () => _client.CreateTemplatesAsync(_workspaceId, templatePatchRequest);
-            await create.Should().ThrowAsync<ArgumentException>()
-                .WithMessage($"Value cannot be null. (Parameter '{nameof(TemplateRequest.ProjectsAndTasks)}')");
-        }
-
-        [Test]
-        public async Task CreateTemplatesAsync_NullProjectId_ShouldThrowArgumentException()
-        {
-            var templatePatchRequest = new TemplateRequest()
-            {
-                Name = "Test name " + Guid.NewGuid(),
-                ProjectsAndTasks = new List<ProjectsTaskTupleRequest>
+                new ProjectsTaskTupleRequest
                 {
-                    new ProjectsTaskTupleRequest
-                    {
-                        ProjectId = null,
-                        TaskId = "Test"
-                    }
+                    ProjectId = null,
+                    TaskId = "Test"
                 }
-            };
-            Func<Task> create = () => _client.CreateTemplatesAsync(_workspaceId, templatePatchRequest);
-            await create.Should().ThrowAsync<ArgumentException>()
-                .WithMessage($"Value cannot be null. (Parameter '{nameof(ProjectsTaskTupleRequest.ProjectId)}')");
-        }
+            }
+        };
+        Func<Task> create = () => _client.CreateTemplatesAsync(_workspaceId, templatePatchRequest);
+        await create.Should().ThrowAsync<ArgumentException>()
+                    .WithMessage($"Value cannot be null. (Parameter '{nameof(ProjectsTaskTupleRequest.ProjectId)}')");
+    }
 
-        [Test]
-        public async Task CreateTemplatesAsync_NullTaskId_ShouldThrowArgumentException()
+    [Test]
+    public async Task CreateTemplatesAsync_NullTaskId_ShouldThrowArgumentException()
+    {
+        var templatePatchRequest = new TemplateRequest()
         {
-            var templatePatchRequest = new TemplateRequest()
+            Name = "Test name " + Guid.NewGuid(),
+            ProjectsAndTasks = new List<ProjectsTaskTupleRequest>
             {
-                Name = "Test name " + Guid.NewGuid(),
-                ProjectsAndTasks = new List<ProjectsTaskTupleRequest>
+                new ProjectsTaskTupleRequest
                 {
-                    new ProjectsTaskTupleRequest
-                    {
-                        ProjectId = "Test",
-                        TaskId = null
-                    }
+                    ProjectId = "Test",
+                    TaskId = null
                 }
-            };
-            Func<Task> create = () => _client.CreateTemplatesAsync(_workspaceId, templatePatchRequest);
-            await create.Should().ThrowAsync<ArgumentException>()
-                .WithMessage($"Value cannot be null. (Parameter '{nameof(ProjectsTaskTupleRequest.TaskId)}')");
-        }
+            }
+        };
+        Func<Task> create = () => _client.CreateTemplatesAsync(_workspaceId, templatePatchRequest);
+        await create.Should().ThrowAsync<ArgumentException>()
+                    .WithMessage($"Value cannot be null. (Parameter '{nameof(ProjectsTaskTupleRequest.TaskId)}')");
     }
 }

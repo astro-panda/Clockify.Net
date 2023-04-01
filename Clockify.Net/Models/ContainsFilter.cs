@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Clockify.Net.Models.Enums;
 
-namespace Clockify.Net.Models;
+namespace Clockify.Net.Models; 
 
 public class ContainsFilter
 {

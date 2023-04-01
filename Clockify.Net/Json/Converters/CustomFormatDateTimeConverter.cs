@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Converters;
 
-namespace Clockify.Net.Json.Converters;
+namespace Clockify.Net.Json.Converters; 
 
 public class CustomFormatDateTimeConverter : IsoDateTimeConverter
 {

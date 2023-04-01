@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Clockify.Net.Models.Policies;
+namespace Clockify.Net.Models.Policies; 
 
 public class Approve
 {

@@ -1,10 +1,9 @@
-namespace Clockify.Net.Models.TimeOff
+namespace Clockify.Net.Models.TimeOff; 
+
+public enum TimeOffRequestStatusEnum
 {
-    public enum TimeOffRequestStatusEnum
-    {
-        PENDING,
-        APPROVED,
-        REJECTED,
-        ALL    
-    }
+    PENDING,
+    APPROVED,
+    REJECTED,
+    ALL    
 }

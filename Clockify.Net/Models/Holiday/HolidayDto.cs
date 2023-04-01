@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Clockify.Net.Models.Holiday;
+namespace Clockify.Net.Models.Holiday; 
 
 public class HolidayDto
 {

@@ -1,4 +1,4 @@
-﻿namespace Clockify.Net.Models.TimeOff;
+﻿namespace Clockify.Net.Models.TimeOff; 
 
 public class TimeOffRequestRequest
 {

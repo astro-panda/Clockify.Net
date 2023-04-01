@@ -1,8 +1,7 @@
-﻿namespace Clockify.Net.Models.Users
+﻿namespace Clockify.Net.Models.Users; 
+
+public class SummaryReportSettingsDto
 {
-    public class SummaryReportSettingsDto
-    {
-        public string Group { get; set; }
-        public string Subgroup { get; set; }
-    }
+    public string Group { get; set; }
+    public string Subgroup { get; set; }
 }

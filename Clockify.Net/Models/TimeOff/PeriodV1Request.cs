@@ -2,7 +2,7 @@
 using Clockify.Net.Json.Converters;
 using Newtonsoft.Json;
 
-namespace Clockify.Net.Models.TimeOff;
+namespace Clockify.Net.Models.TimeOff; 
 
 public class PeriodV1Request
 {

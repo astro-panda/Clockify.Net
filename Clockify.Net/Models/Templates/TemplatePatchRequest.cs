@@ -1,7 +1,6 @@
-﻿namespace Clockify.Net.Models.Templates
+﻿namespace Clockify.Net.Models.Templates; 
+
+public class TemplatePatchRequest
 {
-    public class TemplatePatchRequest
-    {
-        public string Name { get; set; }
-    }
+    public string Name { get; set; }
 }

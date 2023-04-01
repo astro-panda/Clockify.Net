@@ -2,31 +2,31 @@
 using Clockify.Net.Json.Converters;
 using Newtonsoft.Json;
 
-namespace Clockify.Net.Models.Reports {
-	public class SummaryGroup {
-		[JsonProperty("duration")]
-		public long Duration { get; set; }
+namespace Clockify.Net.Models.Reports; 
 
-		[JsonProperty("amounts")]
-		[JsonConverter(typeof(SingleOrArrayConverter<decimal>))]
-		public List<decimal> Amounts { get; set; }
+public class SummaryGroup {
+	[JsonProperty("duration")]
+	public long Duration { get; set; }
 
-		[JsonProperty("_id")]
-		[JsonConverter(typeof(SingleOrArrayConverter<string>))]
-		public List<string> Id { get; set; }
+	[JsonProperty("amounts")]
+	[JsonConverter(typeof(SingleOrArrayConverter<decimal>))]
+	public List<decimal> Amounts { get; set; }
 
-		[JsonProperty("name")]
-		public string Name { get; set; }
+	[JsonProperty("_id")]
+	[JsonConverter(typeof(SingleOrArrayConverter<string>))]
+	public List<string> Id { get; set; }
 
-		[JsonProperty("nameLowerCase")]
-		public string NameLowerCase { get; set; }
+	[JsonProperty("name")]
+	public string Name { get; set; }
 
-		[JsonProperty("color")]
-		public string Color { get; set; }
+	[JsonProperty("nameLowerCase")]
+	public string NameLowerCase { get; set; }
 
-		[JsonProperty("clientName")]
-		public string ClientName { get; set; }
+	[JsonProperty("color")]
+	public string Color { get; set; }
 
-		public List<SummaryGroup> Children { get; set; }
-	}
+	[JsonProperty("clientName")]
+	public string ClientName { get; set; }
+
+	public List<SummaryGroup> Children { get; set; }
 }

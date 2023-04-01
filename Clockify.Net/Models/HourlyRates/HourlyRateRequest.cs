@@ -1,7 +1,6 @@
-﻿namespace Clockify.Net.Models.HourlyRates
+﻿namespace Clockify.Net.Models.HourlyRates; 
+
+public class HourlyRateRequest
 {
-    public class HourlyRateRequest
-    {
-        public int? Amount { get; set; }
-    }
+    public int? Amount { get; set; }
 }

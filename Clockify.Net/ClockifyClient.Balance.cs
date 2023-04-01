@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Clockify.Net.Api.Balance.Requests;
+using Clockify.Net.Api.Balance.Responses;
 using Clockify.Net.Models;
-using Clockify.Net.Models.Balance;
 using RestSharp;
 
-namespace Clockify.Net;
+namespace Clockify.Net; 
 
 public partial class ClockifyClient
 {
@@ -13,7 +14,7 @@ public partial class ClockifyClient
 	/// Get Balance by Policy Id.
 	/// </summary>
 	/// <returns></returns>
-	public async Task<Response<BalanceDtoV1>> GetBalanceByPolicyAsync(string workspaceId, string policyId, BalanceRequest? balance = null)
+	public async Task<Response<BalanceDto>> GetBalanceByPolicyAsync(string workspaceId, string policyId, GetBalanceRequest? balance = null)
 	{
 		var request = new RestRequest($"workspaces/{workspaceId}/balance/policy/{policyId}");
 		if (balance != null)
@@ -23,7 +24,7 @@ public partial class ClockifyClient
 			if (balance.Sort != null) request.AddQueryParameter("sort", balance.Sort);
 			if (balance.SortOrder != null) request.AddQueryParameter("sort-order", balance.SortOrder);
 		}
-		return Response<BalanceDtoV1>.FromRestResponse(await _ptoClient.ExecuteGetAsync<BalanceDtoV1>(request).ConfigureAwait(false));
+		return Response<BalanceDto>.FromRestResponse(await _ptoClient.ExecuteGetAsync<BalanceDto>(request).ConfigureAwait(false));
 	}
 	
 	/// <summary>
@@ -44,7 +45,7 @@ public partial class ClockifyClient
 	/// Get Balance by User Id.
 	/// </summary>
 	/// <returns></returns>
-	public async Task<Response<BalancesDto>> GetBalanceByUserAsync(string workspaceId, string userId, BalanceRequest? balance = null)
+	public async Task<Response<GetBalanceResponse>> GetBalanceByUserAsync(string workspaceId, string userId, GetBalanceRequest? balance = null)
 	{
 		var request = new RestRequest($"workspaces/{workspaceId}/balance/user/{userId}");
 		if (balance != null)
@@ -54,6 +55,6 @@ public partial class ClockifyClient
 			if (balance.Sort != null) request.AddQueryParameter("sort", balance.Sort);
 			if (balance.SortOrder != null) request.AddQueryParameter("sort-order", balance.SortOrder);
 		}
-		return Response<BalancesDto>.FromRestResponse(await _ptoClient.ExecuteGetAsync<BalancesDto>(request).ConfigureAwait(false));
+		return Response<GetBalanceResponse>.FromRestResponse(await _ptoClient.ExecuteGetAsync<GetBalanceResponse>(request).ConfigureAwait(false));
 	}
 }

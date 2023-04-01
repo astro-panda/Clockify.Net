@@ -1,7 +1,7 @@
 ﻿using Clockify.Net.Extensions;
 using Clockify.Net.Models.Enums;
 
-namespace Clockify.Net.Models.Policies;
+namespace Clockify.Net.Models.Policies; 
 
 public class GetPoliciesRequest
 {

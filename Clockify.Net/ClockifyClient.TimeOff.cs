@@ -5,7 +5,7 @@ using Clockify.Net.Models;
 using Clockify.Net.Models.TimeOff;
 using RestSharp;
 
-namespace Clockify.Net;
+namespace Clockify.Net; 
 
 public partial class ClockifyClient
 {
@@ -23,7 +23,7 @@ public partial class ClockifyClient
 		var request = new RestRequest($"workspaces/{workspaceId}/policies/{policyId}/requests", Method.Post);
 		request.AddJsonBody(timeOffRequest);
 		return Response<TimeOffRequestFullDtoV1>.FromRestResponse(await _ptoClient
-			.ExecuteAsync<TimeOffRequestFullDtoV1>(request).ConfigureAwait(false));
+		                                                                .ExecuteAsync<TimeOffRequestFullDtoV1>(request).ConfigureAwait(false));
 	}
 
 	/// <summary>
@@ -47,7 +47,7 @@ public partial class ClockifyClient
 		var request = new RestRequest($"workspaces/{workspaceId}/policies/{policyId}/requests/{requestId}");
 		request.AddJsonBody(timeOffRequest);
 		return Response<TimeOffRequestFullDtoV1>.FromRestResponse(await _ptoClient
-			.ExecuteAsync<TimeOffRequestFullDtoV1>(request, Method.Patch).ConfigureAwait(false));
+		                                                                .ExecuteAsync<TimeOffRequestFullDtoV1>(request, Method.Patch).ConfigureAwait(false));
 	}
 
 	/// <summary>
@@ -71,7 +71,7 @@ public partial class ClockifyClient
 		var request = new RestRequest($"workspaces/{workspaceId}/policies/{policyId}/users/{userId}/requests", Method.Post);
 		request.AddJsonBody(timeOffRequest);
 		return Response<TimeOffRequestFullDtoV1>.FromRestResponse(await _ptoClient
-			.ExecuteAsync<TimeOffRequestFullDtoV1>(request).ConfigureAwait(false));
+		                                                                .ExecuteAsync<TimeOffRequestFullDtoV1>(request).ConfigureAwait(false));
 	}
 
 	/// <summary>
@@ -92,6 +92,6 @@ public partial class ClockifyClient
 		var request = new RestRequest($"workspaces/{workspaceId}/requests");
 		request.AddJsonBody(timeOffRequest);
 		return Response<TimeOffRequestResponse>.FromRestResponse(await _ptoClient
-			.ExecutePostAsync<TimeOffRequestResponse>(request).ConfigureAwait(false));
+		                                                               .ExecutePostAsync<TimeOffRequestResponse>(request).ConfigureAwait(false));
 	}
 }

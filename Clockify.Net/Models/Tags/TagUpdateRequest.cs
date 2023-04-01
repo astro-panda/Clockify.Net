@@ -1,4 +1,4 @@
-﻿namespace Clockify.Net.Models.Tags;
+﻿namespace Clockify.Net.Models.Tags; 
 
 public class TagUpdateRequest 
 {

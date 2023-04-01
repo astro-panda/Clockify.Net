@@ -1,10 +1,9 @@
-﻿namespace Clockify.Net.Models.Memberships
+﻿namespace Clockify.Net.Models.Memberships; 
+
+public enum MembershipStatus
 {
-    public enum MembershipStatus
-    {
-        Pending,
-        Active,
-        Declined,
-        Inactive
-    }
+    Pending,
+    Active,
+    Declined,
+    Inactive
 }

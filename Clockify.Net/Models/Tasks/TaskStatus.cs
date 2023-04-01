@@ -1,8 +1,7 @@
-﻿namespace Clockify.Net.Models.Tasks
+﻿namespace Clockify.Net.Models.Tasks; 
+
+public enum TaskStatus
 {
-    public enum TaskStatus
-    {
-        Active,
-        Done
-    }
+    Active,
+    Done
 }

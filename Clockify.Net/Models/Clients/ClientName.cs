@@ -1,7 +1,6 @@
-﻿namespace Clockify.Net.Models.Clients
+﻿namespace Clockify.Net.Models.Clients; 
+
+public class ClientName
 {
-    public class ClientName
-    {
-        public string? Name { get; set; }
-    }
+    public string? Name { get; set; }
 }

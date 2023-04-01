@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Clockify.Net.Models.TimeOff;
+namespace Clockify.Net.Models.TimeOff; 
 
 public class GetAllTimeOffRequestsRequest
 {
@@ -13,7 +13,7 @@ public class GetAllTimeOffRequestsRequest
 	///   For <see cref="ClockifyClient.GetAllTimeOffRequestsAsync" />
 	/// </summary>
 	public GetAllTimeOffRequestsRequest(IEnumerable<TimeOffRequestStatusEnum> statuses,
-		IEnumerable<string>? userGroups = null, IEnumerable<string>? users = null)
+	                                    IEnumerable<string>? userGroups = null, IEnumerable<string>? users = null)
 	{
 		Statuses = statuses;
 		UserGroups = userGroups;
