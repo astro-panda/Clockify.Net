@@ -3,12 +3,6 @@
 [![GitHub issues](https://img.shields.io/github/issues/Morasiu/Clockify.Net)](https://GitHub.com/Morasiu/Clockify.Net/issues/)
 [![GitHub license](https://img.shields.io/github/license/Morasiu/Clockify.Net.svg)](https://github.com/Morasiu/Clockify.Net/blob/master/LICENSE)
 
-> ⚠⚠⚠ Announcement ⚠⚠⚠ 
-
-> I'm looking for a new owner to transfer project. 
-
-> See https://github.com/Morasiu/Clockify.Net/issues/70
-
 # <img src="https://clockify.me/assets/images/clockify-logo.png" width="25"> Clockify.Net
 Clockify C# Client. 
 
