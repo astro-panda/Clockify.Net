@@ -1,0 +1,48 @@
+name: Clockify.NET build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  release:
+    types:
+    - published
+
+env:
+  project: Clockify.Net/Clockify.Net.csproj
+  test_project: Clockify.Tests/Clockify.Tests.csproj
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Add GitHub Packages Source
+      run:  |-
+        dotnet nuget add source https://nuget.pkg.github.com/astro-panda/index.json --name github --username ${{ github.repository_owner }} --password ${{ github.token }} --store-password-in-clear-text 
+
+    - name: 🏥 Restore dependencies
+      run: dotnet restore ${{ env.project }}
+    
+    - name: 🛠 Build
+      run: dotnet build ${{ env.project }} --no-restore
+    
+    - name: 🧪 Test
+      run: dotnet test ${{ env.test_project }} --no-build --verbosity normal
+      
+    - name: 📦 Package
+      if: github.event_name == 'release'
+      run: dotnet pack ${{ env.project }} --no-build -p:Version=${{ github.ref_name }} --output "${{ runner.temp }}"
+
+    - name: Publish to GitHub Packages
+      if: github.event_name == 'release'
+      run: |-        
+        dotnet nuget push ${{ runner.temp }}/*.nupkg -s github
+
+    - name: Publish to NuGet
+      if: github.event_name == 'release' && always()
+      run: |-        
+        dotnet nuget push ${{ runner.temp }}/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json  
