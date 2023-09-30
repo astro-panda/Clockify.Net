@@ -1,16 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Description>.Net Client for Clockify</Description>
-    <PackageProjectUrl>https://github.com/Morasiu/Clockify.Net</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/Morasiu/Clockify.Net</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/astro-panda/Clockify.Net</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/astro-panda/Clockify.Net</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>clockify, client, httpclient</PackageTags>
     <Authors>Morasiu</Authors>
-    <Company>Code Hydra</Company>
-    <PackageReleaseNotes>See CHANGELOG.md</PackageReleaseNotes>
-    <PackageVersion>2.3.0</PackageVersion>
+    <Company>Astro Panda Studios, LLC</Company>
+    <PackageReleaseNotes>See CHANGELOG.md</PackageReleaseNotes>    
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -22,6 +20,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
     <PackageReference Include="RestSharp" Version="107.3.0" />
     <PackageReference Include="RestSharp.Serializers.NewtonsoftJson" Version="107.3.0" />
   </ItemGroup>
