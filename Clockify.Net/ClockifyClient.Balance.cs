@@ -13,6 +13,7 @@ public partial class ClockifyClient
 	/// Get Balance by Policy Id.
 	/// </summary>
 	/// <returns></returns>
+	[Obsolete("Use the Paid Time Off client instead")]
 	public async Task<Response<BalanceDtoV1>> GetBalanceByPolicyAsync(string workspaceId, string policyId, BalanceRequest? balance = null)
 	{
 		var request = new RestRequest($"workspaces/{workspaceId}/balance/policy/{policyId}");
@@ -25,11 +26,12 @@ public partial class ClockifyClient
 		}
 		return Response<BalanceDtoV1>.FromRestResponse(await _ptoClient.ExecuteGetAsync<BalanceDtoV1>(request).ConfigureAwait(false));
 	}
-	
-	/// <summary>
-	/// Update Balance on workspace.
-	/// </summary>
-	public async Task<Response> UpdateBalanceAsync(string workspaceId, string policyId, UpdateBalanceRequest balance)
+
+    /// <summary>
+    /// Update Balance on workspace.
+    /// </summary>
+    [Obsolete("Use the Paid Time Off client instead")]
+    public async Task<Response> UpdateBalanceAsync(string workspaceId, string policyId, UpdateBalanceRequest balance)
 	{
 		if (balance == null) throw new ArgumentNullException(nameof(balance));
 		if (balance.UserIds == null || !balance.UserIds.Any()) throw new ArgumentNullException(nameof(balance.UserIds));
@@ -39,12 +41,13 @@ public partial class ClockifyClient
 		request.AddJsonBody(balance);
 		return Response.FromRestResponse(await _ptoClient.ExecuteAsync(request, Method.Patch).ConfigureAwait(false));
 	}
-	
-	/// <summary>
-	/// Get Balance by User Id.
-	/// </summary>
-	/// <returns></returns>
-	public async Task<Response<BalancesDto>> GetBalanceByUserAsync(string workspaceId, string userId, BalanceRequest? balance = null)
+
+    /// <summary>
+    /// Get Balance by User Id.
+    /// </summary>
+    /// <returns></returns>
+    [Obsolete("Use the Paid Time Off client instead")]
+    public async Task<Response<BalancesDto>> GetBalanceByUserAsync(string workspaceId, string userId, BalanceRequest? balance = null)
 	{
 		var request = new RestRequest($"workspaces/{workspaceId}/balance/user/{userId}");
 		if (balance != null)
