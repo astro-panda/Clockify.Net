@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Clockify.Net.Clients
 {
-    internal class ClockifyPTOClient
+    public class ClockifyPTOClient
     {
         /// <summary>
         /// Get Balance by Policy Id.
@@ -25,7 +25,9 @@ namespace Clockify.Net.Clients
                 if (balance.Sort != null) request.AddQueryParameter("sort", balance.Sort);
                 if (balance.SortOrder != null) request.AddQueryParameter("sort-order", balance.SortOrder);
             }
-            return Response<BalanceDtoV1>.FromRestResponse(await _ptoClient.ExecuteGetAsync<BalanceDtoV1>(request).ConfigureAwait(false));
+            throw new NotImplementedException();
+
+            //return Response<BalanceDtoV1>.FromRestResponse(await _ptoClient.ExecuteGetAsync<BalanceDtoV1>(request).ConfigureAwait(false));
         }
 
         /// <summary>
@@ -39,7 +41,8 @@ namespace Clockify.Net.Clients
 
             var request = new RestRequest($"workspaces/{workspaceId}/balance/policy/{policyId}");
             request.AddJsonBody(balance);
-            return Response.FromRestResponse(await _ptoClient.ExecuteAsync(request, Method.Patch).ConfigureAwait(false));
+            throw new NotImplementedException();
+            //return Response.FromRestResponse(await _ptoClient.ExecuteAsync(request, Method.Patch).ConfigureAwait(false));
         }
 
         public async Task<Response<BalancesDto>> GetBalanceByUserAsync(string workspaceId, string userId, BalanceRequest? balance = null)
@@ -52,7 +55,9 @@ namespace Clockify.Net.Clients
                 if (balance.Sort != null) request.AddQueryParameter("sort", balance.Sort);
                 if (balance.SortOrder != null) request.AddQueryParameter("sort-order", balance.SortOrder);
             }
-            return Response<BalancesDto>.FromRestResponse(await _ptoClient.ExecuteGetAsync<BalancesDto>(request).ConfigureAwait(false));
+
+            throw new NotImplementedException();
+            //return Response<BalancesDto>.FromRestResponse(await _ptoClient.ExecuteGetAsync<BalancesDto>(request).ConfigureAwait(false));
         }
     }
 }
