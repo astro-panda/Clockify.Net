@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Clockify.Net.Models;
 using Clockify.Net.Models.Users;
-using Clockify.Net.Models.Workspaces;
 using RestSharp;
 
 namespace Clockify.Net
