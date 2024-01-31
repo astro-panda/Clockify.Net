@@ -14,5 +14,6 @@ namespace Clockify.Net.Models.Users
         public string ProfilePicture { get; set; }
         public UserSettingsDto Settings { get; set; }
         public UserStatus? Status { get; set; }
+        public List<UserRolesDto> Roles { get; set; }
     }
 }
