@@ -1,7 +1,10 @@
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Clockify.Net;
+using Clockify.Net.Models.Users;
 using Clockify.Tests.Helpers;
+using Clockify.Tests.Setup;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -21,7 +24,6 @@ namespace Clockify.Tests.Tests
         public async Task Setup()
         {
             _workspaceId = await SetupHelper.CreateOrFindWorkspaceAsync(_client, "Clockify.NetTestWorkspace");
-
         }
 
         // TODO Uncomment when Clockify add deleting workspaces again
@@ -70,6 +72,39 @@ namespace Clockify.Tests.Tests
         {
             var maxPageSize = 5000;
             var response = await _client.FindAllUsersOnWorkspaceAsync(_workspaceId,1,maxPageSize);
+            response.IsSuccessful.Should().BeTrue();
+            response.Data.Should().NotBeNullOrEmpty();
+        }
+
+        [Test]
+        public async Task FilterWorkspaceUsers_ShouldReturnAllUsersOnWorkspace()
+        {
+            // Create project to be found
+            await using var projectSetup = new ProjectSetup(_client, _workspaceId);
+            var projectResponse = await projectSetup.SetupAsync();
+            var projectId = projectResponse.Id;
+
+            var userResponse = await _client.GetCurrentUserAsync();
+            userResponse.IsSuccessful.Should().BeTrue();
+
+
+            var request = new WorkspaceUsersRequest()
+            {
+                Email = userResponse.Data.Email,
+                IncludeRoles = true,
+                Memberships = "ALL",
+                Name = userResponse.Data.Name,
+                Page = 1,
+                PageSize = 50,
+                ProjectId = projectId,
+                Roles = new List<RoleType>() { RoleType.WORKSPACE_ADMIN, RoleType.OWNER, RoleType.TEAM_MANAGER, RoleType.PROJECT_MANAGER },
+                SortColumn = SortColumnType.NAME,
+                SortOrder = Net.Models.Reports.SortOrderType.ASCENDING,
+                Status = StatusType.ACTIVE
+            };
+
+            var response = await _client.FilterWorkspaceUsers(_workspaceId, request);
+
             response.IsSuccessful.Should().BeTrue();
             response.Data.Should().NotBeNullOrEmpty();
         }
