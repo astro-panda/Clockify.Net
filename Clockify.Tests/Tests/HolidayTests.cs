@@ -23,8 +23,8 @@ public class HolidayTests
 
 	public HolidayTests()
 	{
-		_client = new ClockifyClient();
-	}
+		_client = new ClockifyClient(string.Empty);
+    }
 
 	[OneTimeSetUp]
 	public async Task Setup()

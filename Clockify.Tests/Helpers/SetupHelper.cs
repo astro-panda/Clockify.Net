@@ -51,7 +51,7 @@ public class SetupHelper {
 	}
 		
 	public async Task<string> CreateOrFindWorkspaceAsync(string workspaceName) {
-		return await CreateOrFindWorkspaceAsync(new ClockifyClient(), workspaceName);
+		return await CreateOrFindWorkspaceAsync(new ClockifyClient(string.Empty), workspaceName);
 	}
 
 	/// <summary>

@@ -14,7 +14,7 @@ namespace Clockify.Tests.Tests {
 		private string _workspaceId;
 
 		public ReportTests() {
-			_client = new ClockifyClient();
+			_client = new ClockifyClient(string.Empty);
 		}
 
 		[OneTimeSetUp]

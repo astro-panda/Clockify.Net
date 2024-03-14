@@ -28,14 +28,14 @@ jobs:
       run: dotnet restore ${{ env.project }}
     
     - name: 🛠 Build
-      run: dotnet build ${{ env.project }} --no-restore
+      run: dotnet build ${{ env.project }} -c Release --no-restore
     
     - name: 🧪 Test
-      run: dotnet test ${{ env.test_project }} --no-build --verbosity normal
+      run: dotnet test ${{ env.test_project }} -c Release --no-build --verbosity normal
       
     - name: 📦 Package
       if: github.event_name == 'release'
-      run: dotnet pack ${{ env.project }} --no-build -p:Version=${{ github.ref_name }} --output "${{ runner.temp }}"
+      run: dotnet pack ${{ env.project }} -c Release --no-build -p:Version=${{ github.ref_name }} --output "${{ runner.temp }}"
 
     - name: Publish to GitHub Packages
       if: github.event_name == 'release'

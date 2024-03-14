@@ -16,7 +16,7 @@ namespace Clockify.Tests.Tests
 
         public TagTests()
         {
-            _client = new ClockifyClient();
+            _client = new ClockifyClient(string.Empty);
         }
 
         [OneTimeSetUp]
