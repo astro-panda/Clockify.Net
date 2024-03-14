@@ -6,7 +6,8 @@ models:
 - Clockify.Net/Models/**
 
 client:
-- **ClockifyClient**
+- Clockify.Net/ClockifyClient**
+- Clockify.Net/Clients/**
 
 tests:
 - Clockify.Tests/**
