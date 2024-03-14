@@ -21,7 +21,7 @@ namespace Clockify.Tests.Tests
 
         public ProjectTests()
         {
-            _client = new ClockifyClient();
+            _client = new ClockifyClient(string.Empty);
         }
 
         [OneTimeSetUp]

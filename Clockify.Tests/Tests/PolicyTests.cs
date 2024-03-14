@@ -24,7 +24,7 @@ public class PolicyTests
 
 	public PolicyTests()
 	{
-		_client = new ClockifyClient();
+		_client = new ClockifyClient(string.Empty);
 	}
 
 	[OneTimeSetUp]

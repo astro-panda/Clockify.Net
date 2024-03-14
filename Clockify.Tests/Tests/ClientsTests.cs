@@ -13,7 +13,7 @@ namespace Clockify.Tests.Tests {
 		private string _workspaceId;
 
 		public ClientsTests() {
-			_client = new ClockifyClient();
+			_client = new ClockifyClient(string.Empty);
 		}
 
 		[OneTimeSetUp]

@@ -22,7 +22,7 @@ public class BalanceTests
 
     public BalanceTests()
     {
-        _client = new ClockifyClient();
+        _client = new ClockifyClient(string.Empty);
     }
 
     [OneTimeSetUp]
@@ -60,8 +60,8 @@ public class BalanceTests
         var response = await _client.UpdateBalanceAsync(_workspaceId, _policyId, updateBalanceRequest);
         
         // assert
-        response.IsSuccessful.Should().BeTrue();
-        response.StatusCode.Should().BeEquivalentTo(HttpStatusCode.NoContent);
+        response.IsSuccessful.Should().BeTrue();        
+        response.StatusCode.Should().Be(HttpStatusCode.NoContent);
         
         // cleanup
         updateBalanceRequest.Value = -1;

@@ -1,0 +1,12 @@
+
+startup:
+- Clockify.Net/Extensions/ServiceCollectionExtensions.cs
+
+models:
+- Clockify.Net/Models/**
+
+client:
+- **ClockifyClient**
+
+tests:
+- Clockify.Tests/**

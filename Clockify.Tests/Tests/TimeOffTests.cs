@@ -27,7 +27,7 @@ public class TimeOffTests
 
 	public TimeOffTests()
 	{
-		_client = new ClockifyClient();
+		_client = new ClockifyClient(string.Empty);
 	}
 
 	[OneTimeSetUp]
