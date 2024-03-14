@@ -9,7 +9,7 @@ namespace Clockify.Net.Models.Users
         public string FormatterRoleName { get; set; }
         public string Role { get; set; }
 
-        public List<Entities> Entities { get; set; }
+        public List<Entities> Entities { get; set; } = [];
 
     }
 

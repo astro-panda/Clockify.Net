@@ -23,7 +23,7 @@ namespace Clockify.Net.Models.Users
 
         public string ProjectId { get; set; }
 
-        public List<RoleType> Roles { get; set; }
+        public List<RoleType> Roles { get; set; } = [];
 
         public SortColumnType SortColumn { get; set; }
 
@@ -31,7 +31,6 @@ namespace Clockify.Net.Models.Users
 
         public StatusType Status { get; set; }
 
-        public List<string> UserGroups { get; set; }
-
+        public List<string> UserGroups { get; set; } = [];
     }
 }
