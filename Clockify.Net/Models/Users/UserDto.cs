@@ -9,11 +9,11 @@ namespace Clockify.Net.Models.Users
         public string DefaultWorkspace { get; set; }
         public string Email { get; set; }
         public string ID { get; set; }
-        public List<MembershipDto> Memberships { get; set; }
+        public List<MembershipDto> Memberships { get; set; } = [];
         public string Name { get; set; }
         public string ProfilePicture { get; set; }
         public UserSettingsDto Settings { get; set; }
         public UserStatus? Status { get; set; }
-        public List<UserRolesDto> Roles { get; set; }
+        public List<UserRolesDto> Roles { get; set; } = [];
     }
 }
