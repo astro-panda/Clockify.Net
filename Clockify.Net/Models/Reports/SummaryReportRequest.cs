@@ -3,11 +3,32 @@ using System.Collections.Generic;
 
 namespace Clockify.Net.Models.Reports
 {
+    /// <summary>
+    /// Request to get a time summary report and configures the response format.
+    /// 
+    /// <para>
+    /// Requires calues for <see cref="DateRangeStart"/>, <see cref="DateRangeEnd"/>, and <see cref="SummaryFilter"/>
+    /// </para>
+    /// </summary>
     public class SummaryReportRequest
     {
         // REQUIRED
+        /// <summary>
+        /// The start of the date range in view for the summary report. REQUIRED
+        /// </summary>
         public DateTimeOffset? DateRangeStart { get; set; }
+
+        /// <summary>
+        /// The end of the date range in view for the summary report. REQUIRED.
+        /// 
+        /// (This value will be transformed to the end of the date provided.)
+        /// </summary>
         public DateTimeOffset? DateRangeEnd { get; set; }
+
+        /// <summary>
+        /// The filter object with information to control how the response is 
+        /// grouped and displayed.
+        /// </summary>
         public SummaryFilterDto SummaryFilter { get; set; }
 
         // SETTINGS (OPTIONAL)
