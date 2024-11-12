@@ -49,17 +49,29 @@ public partial class ClockifyClient : IClockifyClient {
 			ContractResolver = new CamelCasePropertyNamesContractResolver(),
 		};
 
-		_client = new RestClient(apiUrl, configureSerialization: config => config.UseNewtonsoftJson(jsonSerializerSettings));
-		_client.AddDefaultHeader(Constants.ApiKeyHeaderName, apiKey);		
+		_client = 
+			new RestClient(
+				new Uri(apiUrl),
+				configureSerialization: config => config.UseNewtonsoftJson(jsonSerializerSettings));
+		_client.AddDefaultHeader(Constants.ApiKeyHeaderName, apiKey);
 
-		_experimentalClient = new RestClient(experimentalApiUrl, configureSerialization: config => config.UseNewtonsoftJson(jsonSerializerSettings));
-		_experimentalClient.AddDefaultHeader(Constants.ApiKeyHeaderName, apiKey);		
+		_experimentalClient =
+			new RestClient(
+				new Uri(experimentalApiUrl),
+				configureSerialization: config => config.UseNewtonsoftJson(jsonSerializerSettings));
+		_experimentalClient.AddDefaultHeader(Constants.ApiKeyHeaderName, apiKey);
 
-		_reportsClient = new RestClient(reportsApi, configureSerialization: config => config.UseNewtonsoftJson(jsonSerializerSettings));
-		_reportsClient.AddDefaultHeader(Constants.ApiKeyHeaderName, apiKey);		
-		
-		_ptoClient = new RestClient(ptoApi, configureSerialization: config => config.UseNewtonsoftJson(jsonSerializerSettings));
-		_ptoClient.AddDefaultHeader(Constants.ApiKeyHeaderName, apiKey);		
+		_reportsClient =
+			new RestClient(
+				new Uri(reportsApi),
+				configureSerialization: config => config.UseNewtonsoftJson(jsonSerializerSettings));
+		_reportsClient.AddDefaultHeader(Constants.ApiKeyHeaderName, apiKey);
+
+		_ptoClient =
+			new RestClient(
+				new Uri(ptoApi),
+				configureSerialization: config => config.UseNewtonsoftJson(jsonSerializerSettings));
+		_ptoClient.AddDefaultHeader(Constants.ApiKeyHeaderName, apiKey);
 	}
 	#endregion
 }
