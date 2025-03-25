@@ -30,7 +30,7 @@ namespace Clockify.Tests.Tests
         public async Task Setup()
         {
             string workspaceName = "Clockify.NetTestWorkspace";
-            //string workspaceName = "gemelo gmbh";
+            //string workspaceName = "gemelo gmbh";.
             var workspacesResponse = await _client.GetWorkspacesAsync();
             var workspace = workspacesResponse.Data.SingleOrDefault(dto => dto.Name.Contains(workspaceName));
             if (workspace == null)
