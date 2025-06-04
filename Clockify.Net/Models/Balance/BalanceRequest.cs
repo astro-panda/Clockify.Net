@@ -1,4 +1,5 @@
 ﻿using Clockify.Net.Extensions;
+using Clockify.Net.Models.Enums;
 
 namespace Clockify.Net.Models.Balance;
 
@@ -13,6 +14,6 @@ public class BalanceRequest
 		set => _pageSize = value?.Clamp(0, 200);
 	}
 
-	public string? Sort { get; set; }
-	public string? SortOrder { get; set; } 
+	public SortEnum? Sort { get; set; }
+	public SortOrderEnum? SortOrder { get; set; }
 }

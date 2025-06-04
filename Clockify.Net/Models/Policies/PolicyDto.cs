@@ -7,13 +7,15 @@ public class PolicyDto
 {
 	public bool AllowHalfDay { get; set; }
 	public bool AllowNegativeBalance { get; set; }
-	public Approve Approve { get; set; }
+	public ApproveDto Approve { get; set; }
 	public bool Archived { get; set; }
-	public AutomaticAccrualRequest AutomaticAccrual { get; set; }
+	public AutomaticAccrualDto AutomaticAccrual { get; set; }
+	public AutomaticTimeEntryCreationDto AutomaticTimeEntryCreation { get; set; }
 	public bool EveryoneIncludingNew { get; set; }
 	public string Id { get; set; }
 	public string Name { get; set; }
-	public NegativeBalanceRequest NegativeBalanceRequest { get; set; }
+	public NegativeBalanceDto NegativeBalance { get; set; }
+	public string ProjectId { get; set; }
 	public TimeUnitEnum TimeUnit { get; set; }
 	public IEnumerable<string> UserGroupIds { get; set; }
 	public IEnumerable<string> UserIds { get; set; }

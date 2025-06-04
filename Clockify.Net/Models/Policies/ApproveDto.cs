@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Clockify.Net.Models.Policies;
 
-public class Approve
+public class ApproveDto
 {
 	public bool? RequiresApproval { get; set; }
 	public bool? SpecificMembers { get; set; }

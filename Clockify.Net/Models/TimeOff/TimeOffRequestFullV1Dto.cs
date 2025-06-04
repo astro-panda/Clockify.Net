@@ -1,8 +1,9 @@
 using System;
+using Clockify.Net.Models.Enums;
 
 namespace Clockify.Net.Models.TimeOff;
 
-public class TimeOffRequestFullDtoV1
+public class TimeOffRequestFullV1Dto
 {
     public double Balance { get; set; }
     public double BalanceDiff { get; set; }
@@ -14,10 +15,11 @@ public class TimeOffRequestFullDtoV1
     public string RequesterUserId { get; set; }
     public string RequesterUserName { get; set; }
     public TimeOffRequestStatus Status { get; set; }
-    public TimeOffRequestPeriod TimeOffPeriod { get; set; }
-    public string TimeUnit { get; set; }
+    public TimeOffRequestPeriodDto TimeOffPeriod { get; set; }
+    public TimeUnitEnum TimeUnit { get; set; }
     public string UserEmail { get; set; }
     public string UserId { get; set; }
     public string UserName { get; set; }
+    public string UserTimeZone { get; set; }
     public string WorkspaceId { get; set; }
 }
