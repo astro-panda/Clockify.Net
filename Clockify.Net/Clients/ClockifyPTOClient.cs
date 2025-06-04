@@ -22,8 +22,8 @@ namespace Clockify.Net.Clients
             {
                 if (balance.Page is { } balancePage) request.AddQueryParameter("page", balancePage);
                 if (balance.PageSize is { } balancePageSize) request.AddQueryParameter("page-size", balancePageSize);
-                if (balance.Sort != null) request.AddQueryParameter("sort", balance.Sort);
-                if (balance.SortOrder != null) request.AddQueryParameter("sort-order", balance.SortOrder);
+                if (balance.Sort != null) request.AddQueryParameter("sort", balance.Sort.ToString());
+                if (balance.SortOrder != null) request.AddQueryParameter("sort-order", balance.SortOrder.ToString());
             }
             throw new NotImplementedException();
 
@@ -52,8 +52,8 @@ namespace Clockify.Net.Clients
             {
                 if (balance.Page is { } balancePage) request.AddQueryParameter("page", balancePage);
                 if (balance.PageSize is { } balancePageSize) request.AddQueryParameter("page-size", balancePageSize);
-                if (balance.Sort != null) request.AddQueryParameter("sort", balance.Sort);
-                if (balance.SortOrder != null) request.AddQueryParameter("sort-order", balance.SortOrder);
+                if (balance.Sort != null) request.AddQueryParameter("sort", balance.Sort.ToString());
+                if (balance.SortOrder != null) request.AddQueryParameter("sort-order", balance.SortOrder.ToString());
             }
 
             throw new NotImplementedException();

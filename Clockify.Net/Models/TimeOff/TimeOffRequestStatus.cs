@@ -8,5 +8,5 @@ public class TimeOffRequestStatus
 	public string ChangedByUserId { get; set; }
 	public string ChangedByUserName { get; set; }
 	public string Note { get; set; }
-	public string StatusType { get; set; }
+	public TimeOffRequestStatusEnum StatusType { get; set; }
 }

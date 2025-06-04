@@ -1,4 +1,6 @@
-﻿namespace Clockify.Net.Models.Balance;
+﻿using Clockify.Net.Models.Enums;
+
+namespace Clockify.Net.Models.Balance;
 
 public class BalanceDtoV1
 {
@@ -9,7 +11,7 @@ public class BalanceDtoV1
 	public bool PolicyArchived { get; set; }
 	public string PolicyId { get; set; }
 	public string PolicyName { get; set; }
-	public string PolicyTimeUnit { get; set; }
+	public TimeUnitEnum PolicyTimeUnit { get; set; }
 	public double Total { get; set; }
 	public double Used { get; set; }
 	public string UserId { get; set; }

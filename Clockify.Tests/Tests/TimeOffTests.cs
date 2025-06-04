@@ -128,7 +128,7 @@ public class TimeOffTests
 		var policyUpdateRequest = new PolicyRequest(
 			false,
 			true,
-			new Approve(),
+			new ApproveDto(),
 			false,
 			false,
 			"Test changed " + Guid.NewGuid(),
@@ -165,7 +165,7 @@ public class TimeOffTests
 		{
 			Name = "Test policy " + Guid.NewGuid(),
 			AllowNegativeBalance = true,
-			Approve = new Approve
+			Approve = new ApproveDto
 			{
 				RequiresApproval = true
 			},
@@ -188,7 +188,7 @@ public class TimeOffTests
 		// assert
 		result.IsSuccessful.Should().BeTrue();
 		result.Data.Should().NotBeNull();
-		result.Data.Status.StatusType.Should().BeEquivalentTo(changeTimeOffRequestStatusRequest.Status.ToString());
+		result.Data.Status.StatusType.Should().Be(changeTimeOffRequestStatusRequest.Status);
 
 		// cleanup
 		await _client.DeleteTimeOffRequestAsync(_workspaceId, policyResponse.Data.Id, result.Data.Id);

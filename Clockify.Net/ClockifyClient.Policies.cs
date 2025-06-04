@@ -17,7 +17,7 @@ public partial class ClockifyClient
 	public async Task<Response<IEnumerable<PolicyDto>>> GetPoliciesAsync(string workspaceId,
 		GetPoliciesRequest? policy = null)
 	{
-		var request = new RestRequest($"workspaces/{workspaceId}/policies");
+		var request = new RestRequest($"workspaces/{workspaceId}/time-off/policies");
 		if (policy != null)
 		{
 			if (policy.Page is { } policyPage) request.AddQueryParameter("page", policyPage);
@@ -26,7 +26,7 @@ public partial class ClockifyClient
 			if (policy.Status != null) request.AddQueryParameter("status", policy.Status.ToString());
 		}
 
-		return Response<IEnumerable<PolicyDto>>.FromRestResponse(await _ptoClient
+		return Response<IEnumerable<PolicyDto>>.FromRestResponse(await _client
 			.ExecuteGetAsync<IEnumerable<PolicyDto>>(request).ConfigureAwait(false));
 	}
 
@@ -44,9 +44,9 @@ public partial class ClockifyClient
 		    (policy.Users?.Ids == null || !policy.Users.Ids.Any()))
 			throw new ArgumentOutOfRangeException("At least one user or user group must be assigned");
 
-		var request = new RestRequest($"workspaces/{workspaceId}/policies", Method.Post);
+		var request = new RestRequest($"workspaces/{workspaceId}/time-off/policies", Method.Post);
 		request.AddJsonBody(policy);
-		return Response<PolicyDto>.FromRestResponse(await _ptoClient.ExecuteAsync<PolicyDto>(request)
+		return Response<PolicyDto>.FromRestResponse(await _client.ExecuteAsync<PolicyDto>(request)
 			.ConfigureAwait(false));
 	}
 
@@ -55,8 +55,8 @@ public partial class ClockifyClient
 	/// </summary>
 	public async Task<Response> DeletePolicyAsync(string workspaceId, string policyId)
 	{
-		var request = new RestRequest($"workspaces/{workspaceId}/policies/{policyId}");
-		return Response.FromRestResponse(await _ptoClient.ExecuteAsync(request, Method.Delete).ConfigureAwait(false));
+		var request = new RestRequest($"workspaces/{workspaceId}/time-off/policies/{policyId}");
+		return Response.FromRestResponse(await _client.ExecuteAsync(request, Method.Delete).ConfigureAwait(false));
 	}
 
 	/// <summary>
@@ -65,8 +65,8 @@ public partial class ClockifyClient
 	/// <returns></returns>
 	public async Task<Response<PolicyDto>> GetPolicyAsync(string workspaceId, string policyId)
 	{
-		var request = new RestRequest($"workspaces/{workspaceId}/policies/{policyId}");
-		return Response<PolicyDto>.FromRestResponse(await _ptoClient.ExecuteGetAsync<PolicyDto>(request)
+		var request = new RestRequest($"workspaces/{workspaceId}/time-off/policies/{policyId}");
+		return Response<PolicyDto>.FromRestResponse(await _client.ExecuteGetAsync<PolicyDto>(request)
 			.ConfigureAwait(false));
 	}
 
@@ -80,9 +80,9 @@ public partial class ClockifyClient
 		if (policy.Status != null && !Enum.IsDefined(typeof(StatusEnum), policy.Status))
 			throw new ArgumentOutOfRangeException(nameof(policy.Status));
 
-		var request = new RestRequest($"workspaces/{workspaceId}/policies/{policyId}");
+		var request = new RestRequest($"workspaces/{workspaceId}/time-off/policies/{policyId}");
 		request.AddJsonBody(policy);
-		return Response<PolicyDto>.FromRestResponse(await _ptoClient.ExecuteAsync<PolicyDto>(request, Method.Patch)
+		return Response<PolicyDto>.FromRestResponse(await _client.ExecuteAsync<PolicyDto>(request, Method.Patch)
 			.ConfigureAwait(false));
 	}
 
@@ -110,9 +110,9 @@ public partial class ClockifyClient
 				.Status)); // undocumented, but required for the update to succeed
 		if (policy.Users == null) throw new ArgumentNullException(nameof(policy.Users));
 
-		var request = new RestRequest($"workspaces/{workspaceId}/policies/{policyId}");
+		var request = new RestRequest($"workspaces/{workspaceId}/time-off/policies/{policyId}");
 		request.AddJsonBody(policy);
-		return Response<PolicyDto>.FromRestResponse(await _ptoClient.ExecuteAsync<PolicyDto>(request, Method.Put)
+		return Response<PolicyDto>.FromRestResponse(await _client.ExecuteAsync<PolicyDto>(request, Method.Put)
 			.ConfigureAwait(false));
 	}
 

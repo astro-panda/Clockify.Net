@@ -36,7 +36,7 @@ public class PolicyTests
 	
 	private PolicyRequest CreatePolicyRequest()
 	{
-		return new PolicyRequest(new Approve(),
+		return new PolicyRequest(new ApproveDto(),
 			"Test policy " + Guid.NewGuid(),
 			TimeUnitEnum.DAYS,
 			users: new ContainsFilter
@@ -160,7 +160,7 @@ public class PolicyTests
 		{
 			AllowHalfDay = createResult.Data.AllowHalfDay,
 			AllowNegativeBalance = createResult.Data.AllowNegativeBalance,
-			Approve = new Approve(),
+			Approve = new ApproveDto(),
 			Archived = createResult.Data.Archived,
 			EveryoneIncludingNew = createResult.Data.EveryoneIncludingNew,
 			Name = "Test policy " + Guid.NewGuid(),

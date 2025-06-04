@@ -18,7 +18,7 @@ public partial class ClockifyClient
         var request = new RestRequest($"workspaces/{workspaceId}/holidays");
         if (getHolidaysRequest?.AssignedTo != null)
             request.AddQueryParameter("assigned-to", getHolidaysRequest.AssignedTo);
-        return Response<IEnumerable<HolidayDto>>.FromRestResponse(await _ptoClient.ExecuteGetAsync<IEnumerable<HolidayDto>>(request).ConfigureAwait(false));
+        return Response<IEnumerable<HolidayDto>>.FromRestResponse(await _client.ExecuteGetAsync<IEnumerable<HolidayDto>>(request).ConfigureAwait(false));
     }
     
     /// <summary>
@@ -37,7 +37,7 @@ public partial class ClockifyClient
 
         var request = new RestRequest($"workspaces/{workspaceId}/holidays", Method.Post);
         request.AddJsonBody(holiday);
-        return Response<HolidayDto>.FromRestResponse(await _ptoClient.ExecuteAsync<HolidayDto>(request).ConfigureAwait(false));
+        return Response<HolidayDto>.FromRestResponse(await _client.ExecuteAsync<HolidayDto>(request).ConfigureAwait(false));
     }
 
     /// <summary>
@@ -54,7 +54,7 @@ public partial class ClockifyClient
         request.AddQueryParameter("assigned-to", holiday.AssignedTo);
         request.AddQueryParameter("start", holidayStart.ToUniversalTime().ToString("o"));
         request.AddQueryParameter("end", holidayEnd.ToUniversalTime().ToString("o"));
-        return Response.FromRestResponse(await _ptoClient.ExecuteGetAsync(request).ConfigureAwait(false));
+        return Response.FromRestResponse(await _client.ExecuteGetAsync(request).ConfigureAwait(false));
     }
     
     /// <summary>
@@ -63,7 +63,7 @@ public partial class ClockifyClient
     public async Task<Response> DeleteHolidayAsync(string workspaceId, string holidayId)
     {
         var request = new RestRequest($"workspaces/{workspaceId}/holidays/{holidayId}");
-        return Response.FromRestResponse(await _ptoClient.ExecuteAsync(request, Method.Delete).ConfigureAwait(false));
+        return Response.FromRestResponse(await _client.ExecuteAsync(request, Method.Delete).ConfigureAwait(false));
     }
     
     /// <summary>
@@ -85,6 +85,6 @@ public partial class ClockifyClient
 
         var request = new RestRequest($"workspaces/{workspaceId}/holidays/{holidayId}");
         request.AddJsonBody(holiday);
-        return Response<HolidayDto>.FromRestResponse(await _ptoClient.ExecuteAsync<HolidayDto>(request, Method.Put).ConfigureAwait(false));
+        return Response<HolidayDto>.FromRestResponse(await _client.ExecuteAsync<HolidayDto>(request, Method.Put).ConfigureAwait(false));
     }
 }

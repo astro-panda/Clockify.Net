@@ -12,7 +12,7 @@ public partial class ClockifyClient
 	/// <summary>
 	///   Create a Time Off request for day policies.
 	/// </summary>
-	public async Task<Response<TimeOffRequestFullDtoV1>> CreateTimeOffRequestForDayPoliciesAsync(string workspaceId,
+	public async Task<Response<TimeOffRequestFullV1Dto>> CreateTimeOffRequestForDayPoliciesAsync(string workspaceId,
 		string policyId, TimeOffRequestRequest timeOffRequest)
 	{
 		if (timeOffRequest == null) throw new ArgumentNullException(nameof(timeOffRequest));
@@ -20,10 +20,10 @@ public partial class ClockifyClient
 		if (timeOffRequest.TimeOffPeriod is {Period: null})
 			throw new ArgumentNullException(nameof(timeOffRequest.TimeOffPeriod.Period));
 
-		var request = new RestRequest($"workspaces/{workspaceId}/policies/{policyId}/requests", Method.Post);
+		var request = new RestRequest($"workspaces/{workspaceId}/time-off/policies/{policyId}/requests", Method.Post);
 		request.AddJsonBody(timeOffRequest);
-		return Response<TimeOffRequestFullDtoV1>.FromRestResponse(await _ptoClient
-			.ExecuteAsync<TimeOffRequestFullDtoV1>(request).ConfigureAwait(false));
+		return Response<TimeOffRequestFullV1Dto>.FromRestResponse(await _client
+			.ExecuteAsync<TimeOffRequestFullV1Dto>(request).ConfigureAwait(false));
 	}
 
 	/// <summary>
@@ -31,29 +31,29 @@ public partial class ClockifyClient
 	/// </summary>
 	public async Task<Response> DeleteTimeOffRequestAsync(string workspaceId, string policyId, string requestId)
 	{
-		var request = new RestRequest($"workspaces/{workspaceId}/policies/{policyId}/requests/{requestId}");
-		return Response.FromRestResponse(await _ptoClient.ExecuteAsync(request, Method.Delete).ConfigureAwait(false));
+		var request = new RestRequest($"workspaces/{workspaceId}/time-off/policies/{policyId}/requests/{requestId}");
+		return Response.FromRestResponse(await _client.ExecuteAsync(request, Method.Delete).ConfigureAwait(false));
 	}
 
 	/// <summary>
 	///   Change Time Off Request status on workspace.
 	/// </summary>
-	public async Task<Response<TimeOffRequestFullDtoV1>> ChangeTimeOffRequestStatusAsync(string workspaceId,
+	public async Task<Response<TimeOffRequestFullV1Dto>> ChangeTimeOffRequestStatusAsync(string workspaceId,
 		string policyId, string requestId, ChangeTimeOffRequestStatusRequest timeOffRequest)
 	{
 		if (timeOffRequest == null) throw new ArgumentNullException(nameof(timeOffRequest));
 		if (timeOffRequest.Status == null) throw new ArgumentNullException(nameof(timeOffRequest.Status));
 
-		var request = new RestRequest($"workspaces/{workspaceId}/policies/{policyId}/requests/{requestId}");
+		var request = new RestRequest($"workspaces/{workspaceId}/time-off/policies/{policyId}/requests/{requestId}");
 		request.AddJsonBody(timeOffRequest);
-		return Response<TimeOffRequestFullDtoV1>.FromRestResponse(await _ptoClient
-			.ExecuteAsync<TimeOffRequestFullDtoV1>(request, Method.Patch).ConfigureAwait(false));
+		return Response<TimeOffRequestFullV1Dto>.FromRestResponse(await _client
+			.ExecuteAsync<TimeOffRequestFullV1Dto>(request, Method.Patch).ConfigureAwait(false));
 	}
 
 	/// <summary>
 	///   Create a Time Off request.
 	/// </summary>
-	public async Task<Response<TimeOffRequestFullDtoV1>> CreateTimeOffRequestAsync(string workspaceId,
+	public async Task<Response<TimeOffRequestFullV1Dto>> CreateTimeOffRequestAsync(string workspaceId,
 		string policyId, string userId, TimeOffRequestRequest timeOffRequest)
 	{
 		if (timeOffRequest == null) throw new ArgumentNullException(nameof(timeOffRequest));
@@ -68,10 +68,10 @@ public partial class ClockifyClient
 		if (timeOffRequest.TimeOffPeriod.Period.End == null)
 			throw new ArgumentNullException(nameof(timeOffRequest.TimeOffPeriod.Period.End));
 
-		var request = new RestRequest($"workspaces/{workspaceId}/policies/{policyId}/users/{userId}/requests", Method.Post);
+		var request = new RestRequest($"workspaces/{workspaceId}/time-off/policies/{policyId}/users/{userId}/requests", Method.Post);
 		request.AddJsonBody(timeOffRequest);
-		return Response<TimeOffRequestFullDtoV1>.FromRestResponse(await _ptoClient
-			.ExecuteAsync<TimeOffRequestFullDtoV1>(request).ConfigureAwait(false));
+		return Response<TimeOffRequestFullV1Dto>.FromRestResponse(await _client
+			.ExecuteAsync<TimeOffRequestFullV1Dto>(request).ConfigureAwait(false));
 	}
 
 	/// <summary>
@@ -88,10 +88,10 @@ public partial class ClockifyClient
 		{
 			throw new ArgumentOutOfRangeException("At least one user or user group must be defined");
 		}
-		
-		var request = new RestRequest($"workspaces/{workspaceId}/requests");
+
+		var request = new RestRequest($"workspaces/{workspaceId}/time-off/requests");
 		request.AddJsonBody(timeOffRequest);
-		return Response<TimeOffRequestResponse>.FromRestResponse(await _ptoClient
+		return Response<TimeOffRequestResponse>.FromRestResponse(await _client
 			.ExecutePostAsync<TimeOffRequestResponse>(request).ConfigureAwait(false));
 	}
 }

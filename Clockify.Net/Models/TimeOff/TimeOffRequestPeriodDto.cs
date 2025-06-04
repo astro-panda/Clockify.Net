@@ -1,6 +1,6 @@
 namespace Clockify.Net.Models.TimeOff
 {
-    public class TimeOffRequestPeriod
+    public class TimeOffRequestPeriodDto
     {
         public bool HalfDay { get; set; }
         public Period? HalfDayHours { get; set; }

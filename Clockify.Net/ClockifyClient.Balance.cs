@@ -14,17 +14,17 @@ public partial class ClockifyClient
 	/// </summary>
 	/// <returns></returns>
 	[Obsolete("Use the Paid Time Off client instead")]
-	public async Task<Response<BalanceDtoV1>> GetBalanceByPolicyAsync(string workspaceId, string policyId, BalanceRequest? balance = null)
+	public async Task<Response<BalancesDto>> GetBalanceByPolicyAsync(string workspaceId, string policyId, BalanceRequest? balance = null)
 	{
-		var request = new RestRequest($"workspaces/{workspaceId}/balance/policy/{policyId}");
+		var request = new RestRequest($"workspaces/{workspaceId}/time-off/balance/policy/{policyId}");
 		if (balance != null)
 		{
 			if (balance.Page is {} balancePage) request.AddQueryParameter("page", balancePage);
 			if (balance.PageSize is { } balancePageSize) request.AddQueryParameter("page-size", balancePageSize);
-			if (balance.Sort != null) request.AddQueryParameter("sort", balance.Sort);
-			if (balance.SortOrder != null) request.AddQueryParameter("sort-order", balance.SortOrder);
+			if (balance.Sort != null) request.AddQueryParameter("sort", balance.Sort.ToString());
+			if (balance.SortOrder != null) request.AddQueryParameter("sort-order", balance.SortOrder.ToString());
 		}
-		return Response<BalanceDtoV1>.FromRestResponse(await _ptoClient.ExecuteGetAsync<BalanceDtoV1>(request).ConfigureAwait(false));
+		return Response<BalancesDto>.FromRestResponse(await _client.ExecuteGetAsync<BalancesDto>(request).ConfigureAwait(false));
 	}
 
     /// <summary>
@@ -37,9 +37,9 @@ public partial class ClockifyClient
 		if (balance.UserIds == null || !balance.UserIds.Any()) throw new ArgumentNullException(nameof(balance.UserIds));
 		if (balance.Value == null) throw new ArgumentNullException(nameof(balance.Value));
 
-		var request = new RestRequest($"workspaces/{workspaceId}/balance/policy/{policyId}");
+		var request = new RestRequest($"workspaces/{workspaceId}/time-off/balance/policy/{policyId}");
 		request.AddJsonBody(balance);
-		return Response.FromRestResponse(await _ptoClient.ExecuteAsync(request, Method.Patch).ConfigureAwait(false));
+		return Response.FromRestResponse(await _client.ExecuteAsync(request, Method.Patch).ConfigureAwait(false));
 	}
 
     /// <summary>
@@ -49,14 +49,14 @@ public partial class ClockifyClient
     [Obsolete("Use the Paid Time Off client instead")]
     public async Task<Response<BalancesDto>> GetBalanceByUserAsync(string workspaceId, string userId, BalanceRequest? balance = null)
 	{
-		var request = new RestRequest($"workspaces/{workspaceId}/balance/user/{userId}");
+		var request = new RestRequest($"workspaces/{workspaceId}/time-off/balance/user/{userId}");
 		if (balance != null)
 		{
 			if (balance.Page is {} balancePage) request.AddQueryParameter("page", balancePage);
 			if (balance.PageSize is { } balancePageSize) request.AddQueryParameter("page-size", balancePageSize);
-			if (balance.Sort != null) request.AddQueryParameter("sort", balance.Sort);
-			if (balance.SortOrder != null) request.AddQueryParameter("sort-order", balance.SortOrder);
+			if (balance.Sort != null) request.AddQueryParameter("sort", balance.Sort.ToString());
+			if (balance.SortOrder != null) request.AddQueryParameter("sort-order", balance.SortOrder.ToString());
 		}
-		return Response<BalancesDto>.FromRestResponse(await _ptoClient.ExecuteGetAsync<BalancesDto>(request).ConfigureAwait(false));
+		return Response<BalancesDto>.FromRestResponse(await _client.ExecuteGetAsync<BalancesDto>(request).ConfigureAwait(false));
 	}
 }
