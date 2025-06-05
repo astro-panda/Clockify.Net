@@ -46,12 +46,6 @@ public static class ServiceCollectionExtensions
             httpClient.DefaultRequestHeaders.Add(Constants.ApiKeyHeaderName, finalApiKey);
         });
 
-        services.AddHttpClient<IClockifyPTOClient>(Constants.PTOClientName, httpClient =>
-        {
-            httpClient.BaseAddress = new Uri(Constants.PTOApiUrl);
-            httpClient.DefaultRequestHeaders.Add(Constants.ApiKeyHeaderName, finalApiKey);
-        });
-
         services.AddHttpClient<IClockifyClient>(Constants.ClockifyClientName, httpClient =>
         {
             httpClient.BaseAddress = new Uri(Constants.ApiUrl);

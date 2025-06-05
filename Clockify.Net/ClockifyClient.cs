@@ -25,8 +25,6 @@ public partial class ClockifyClient : IClockifyClient {
 
     public IClockifyReportsClient Reports => throw new NotImplementedException();
 
-    public IClockifyPTOClient PaidTimeOff => throw new NotImplementedException();
-
     /// <summary>
     /// Creates new <see cref="ClockifyClient"/>.
     /// Uses value from environment variable named "CAPI_KEY"

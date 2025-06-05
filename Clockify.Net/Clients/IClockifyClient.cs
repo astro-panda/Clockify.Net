@@ -18,9 +18,4 @@ public interface IClockifyClient
     /// Access to Reporting features of the Clockify API
     /// </summary>
     public IClockifyReportsClient Reports { get; }
-
-    /// <summary>
-    /// Access to Paid Time Off features of the Clockify API
-    /// </summary>
-    public IClockifyPTOClient PaidTimeOff { get; }
 }

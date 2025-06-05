@@ -23,11 +23,6 @@ public class Constants
     public const string ReportsApiUrl = "https://reports.api.clockify.me/v1";
 
     /// <summary>
-    /// The base URL of the PTO API
-    /// </summary>
-    public const string PTOApiUrl = "https://pto.api.clockify.me/v1";
-
-    /// <summary>
     /// The name of the API Key header for authenticating requests against Clockify APIs
     /// </summary>
     public const string ApiKeyHeaderName = "X-Api-Key";
@@ -56,9 +51,4 @@ public class Constants
     /// The name of the Reports Clockify HTTP client
     /// </summary>
     public const string ReportsClientName = "ClockifyReports";
-
-    /// <summary>
-    /// The name of the PTO Clockify HTTP client
-    /// </summary>
-    public const string PTOClientName = "ClockifyPTO";
 }
