@@ -32,6 +32,7 @@ public static class ServiceCollectionExtensions
 
 
         services.AddTransient<IClockifyClient, ClockifyClient>();
+        services.AddTransient<IClockifyService, ClockifyService>();
 
 
         services.AddHttpClient<IClockifyExperimentalClient>(Constants.ExperimentalClientName, httpClient =>
