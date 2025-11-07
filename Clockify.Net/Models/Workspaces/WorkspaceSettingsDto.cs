@@ -5,7 +5,7 @@ namespace Clockify.Net.Models.Workspaces
     public class WorkspaceSettingsDto
     {
         public List<AdminOnlyPages>? AdminOnlyPages { get; set; }
-        public AutomaticClockDto? AutomaticLock { get; set; }
+        public AutomaticLockDto? AutomaticLock { get; set; }
         public bool? CanSeeTimeSheet { get; set; }
         public bool? DefaultBillableProjects { get; set; }
         public bool? ForceDescription { get; set; }
