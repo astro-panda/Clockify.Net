@@ -2,21 +2,21 @@
 
 namespace Clockify.Net.Models.Workspaces
 {
-    public class AutomaticClockDto
+    public class AutomaticLockDto
     {
         public Week? ChangeDay { get; set; }
         public int? DayOfMonth { get; set; }
         public Week? FirstDay { get; set; }
         public OlderThanPeriod? OlderThanPeriod { get; set; }
         public int? OlderThanValue { get; set; }
-        public AutomaticClockType Type { get; set; }
+        public AutomaticLockType Type { get; set; }
     }
 
-    public enum AutomaticClockType
+    public enum AutomaticLockType
     {
         Weekly,
         Monthly,
-        OlderThan
+        Older_Than
     }
 
     public enum OlderThanPeriod
