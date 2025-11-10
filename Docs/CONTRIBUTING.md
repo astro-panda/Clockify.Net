@@ -4,8 +4,8 @@
 
 ## How can you contribute?
 
-* 📖 Contribute to our [Wiki](https://github.com/Morasiu/Clockify.Net/wiki).
-* ✅ Go on our [Project tab](https://github.com/Morasiu/Clockify.Net/projects) and pick some tasks.
+* 📖 Contribute to our [Wiki](https://github.com/astro-panda/Clockify.Net/wiki).
+* ✅ Go on our [Project tab](https://github.com/astro-panda/Clockify.Net/projects) and pick some tasks.
 * 🎤 Spread the news. Share our project!
 
 ## Developing 💻
@@ -41,12 +41,12 @@ Short instruction:
     * `git checkout develop`
     * `git checkout -b feature/myFeatureName`
 1. Now setup upstream using
-    * `git remote add upstream https://github.com/Morasiu/Clockify.Net`
+    * `git remote add upstream https://github.com/astro-panda/Clockify.Net`
 1. Now is time to code (my favorite).
 1. After you done commit your changes
     * `git add .`
     * `git commit -m "Your commit message"`
-1. Now go to https://github.com/Morasiu/Clockify.Net and click **Compare & pull request**.
+1. Now go to https://github.com/astro-panda/Clockify.Net and click **Compare & pull request**.
 1. Confirm creating `Create pull request`
 1. DONE!
 
