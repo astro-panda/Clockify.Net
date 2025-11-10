@@ -3,6 +3,12 @@ using System.Net.Http.Headers;
 
 namespace Clockify.Net;
 
+public class ClockifyRequestBuilder<TRequest> : ClockifyRequestBuilder where TRequest : class
+{
+    public TRequest Request { get; private set; } = null!;
+}
+
+
 public class ClockifyRequestBuilder
 {
     public ClockifyRequestBuilder() { }
@@ -16,6 +22,8 @@ public class ClockifyRequestBuilder
     public string Version { get; private set; } = "v1";
 
     public string Path { get; private set; } = string.Empty;
+
+    public string FullRequestPath => $"https://{string.Join(".", Subdomain, BaseHost)}/{Version}/{(string.IsNullOrWhiteSpace(WorkspaceId) ? string.Empty : $"workspaces/{WorkspaceId}/")}{Path}";
 
     public ClockifyRequestBuilder WithPath(string path)
     {
