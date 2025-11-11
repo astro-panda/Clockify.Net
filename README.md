@@ -1,7 +1,7 @@
 [![https://www.nuget.org/packages/Clockify.Net/](https://img.shields.io/nuget/v/Clockify.Net)](https://www.nuget.org/packages/Clockify.Net/)
 [![https://www.nuget.org/packages/Clockify.Net/](https://img.shields.io/nuget/dt/Clockify.net)](https://www.nuget.org/packages/Clockify.Net/)
-[![GitHub issues](https://img.shields.io/github/issues/Morasiu/Clockify.Net)](https://GitHub.com/Morasiu/Clockify.Net/issues/)
-[![GitHub license](https://img.shields.io/github/license/Morasiu/Clockify.Net.svg)](https://github.com/Morasiu/Clockify.Net/blob/master/LICENSE)
+[![GitHub issues](https://img.shields.io/github/issues/Morasiu/Clockify.Net)](https://GitHub.com/astro-panda/Clockify.Net/issues/)
+[![GitHub license](https://img.shields.io/github/license/astro-panda/Clockify.Net.svg)](https://github.com/astro-panda/Clockify.Net/blob/master/LICENSE)
 
 # <img src="https://clockify.me/assets/images/clockify-logo.png" width="25"> Clockify.Net
 Clockify C# Client. 
@@ -11,7 +11,7 @@ Made as .Net Standard 2.0 library.
 Stable API docs:
 > Every endpoint from that url is implemented.
 
-https://clockify.me/developers-api
+https://docs.clockify.me
 
 Also check [CHANGELOG](CHANGELOG.md).
 
@@ -25,7 +25,7 @@ Also check [CHANGELOG](CHANGELOG.md).
 
 ### 2. Get your Clockify API Key.
 
-> See [API docs](https://clockify.me/developers-api) for instruction about how to get **Clockify API Key**.
+> See [API docs](https://docs.clockify.me/#section/Authentication) for instruction about how to get **Clockify API Key**.
 
 ### 3. Create your client.
 
@@ -47,9 +47,9 @@ var response = await clockify.GetWorkspacesAsync();
 
 Do you want to help? Great!
 
-See [CONTRIBUTING](https://github.com/Morasiu/Clockify.Net/blob/master/Docs/CONTRIBUTING.md) 👍
+See [CONTRIBUTING](https://github.com/astro-panda/Clockify.Net/blob/main/Docs/CONTRIBUTING.md) 👍
 
-Also check our [Project tab](https://github.com/Morasiu/Clockify.Net/projects/) ✅ and pick a task!
+Also check our [Project tab](https://github.com/astro-panda/Clockify.Net/projects/) ✅ and pick a task!
 
 ## Authors
 
