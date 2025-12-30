@@ -1,7 +1,7 @@
 [![https://www.nuget.org/packages/Clockify.Net/](https://img.shields.io/nuget/v/Clockify.Net)](https://www.nuget.org/packages/Clockify.Net/)
 [![https://www.nuget.org/packages/Clockify.Net/](https://img.shields.io/nuget/dt/Clockify.net)](https://www.nuget.org/packages/Clockify.Net/)
-[![GitHub issues](https://img.shields.io/github/issues/Morasiu/Clockify.Net)](https://GitHub.com/astro-panda/Clockify.Net/issues/)
-[![GitHub license](https://img.shields.io/github/license/astro-panda/Clockify.Net.svg)](https://github.com/astro-panda/Clockify.Net/blob/master/LICENSE)
+[![GitHub issues](https://img.shields.io/github/issues/astro-panda/Clockify.Net)](https://GitHub.com/astro-panda/Clockify.Net/issues/)
+[![GitHub license](https://img.shields.io/github/license/astro-panda/Clockify.Net.svg)](https://github.com/astro-panda/Clockify.Net/blob/main/LICENSE)
 
 # <img src="https://clockify.me/assets/images/clockify-logo.png" width="25"> Clockify.Net
 Clockify C# Client. 

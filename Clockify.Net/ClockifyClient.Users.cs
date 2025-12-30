@@ -26,7 +26,7 @@ namespace Clockify.Net
         /// <summary>
         /// Get currently logged in user's info
         /// </summary>
-        public async Task<Response<CurrentUserDto>> GetCurrentUserAsync(bool includeMemberships = false)
+        public async Task<Response<MemberCurrentUserResponse>> GetCurrentUserAsync(bool includeMemberships = false)
         {
             var request = new RestRequest("user");
 
@@ -35,7 +35,7 @@ namespace Clockify.Net
                  request.AddQueryParameter("include-memberships", true) ;
             };
 
-            return Response<CurrentUserDto>.FromRestResponse(await _client.ExecuteGetAsync<CurrentUserDto>(request).ConfigureAwait(false));
+            return Response<MemberCurrentUserResponse>.FromRestResponse(await _client.ExecuteGetAsync<MemberCurrentUserResponse>(request).ConfigureAwait(false));
         }
 
         /// <summary>
