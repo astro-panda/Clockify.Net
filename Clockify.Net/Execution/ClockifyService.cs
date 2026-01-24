@@ -3,9 +3,9 @@ using Clockify.Net;
 
 namespace Clockify.Net;
 
-public class ClockifyService : IClockifyService
+public class ClockifyService(IMemberService members) : IClockifyService
 {
-    public MemberRequestBuilder Members { get; set; } = new MemberRequestBuilder();
+    public IMemberService Members => members;
 
-    public MemberRequestBuilder Users { get; set; } = new MemberRequestBuilder();
+    public IMemberService Users => members;
 }

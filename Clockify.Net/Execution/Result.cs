@@ -14,5 +14,5 @@ public class Result<TValue> where TValue : class
 
     public bool IsFailure => !IsSuccess;
 
-    public Exception? Exception => Response?.ErrorException;
+    public Exception? Exception => Response?.ErrorException;    
 }
