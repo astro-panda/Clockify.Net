@@ -1,5 +1,4 @@
-﻿using Clockify.Net.Clients;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using RestSharp;
@@ -8,22 +7,14 @@ using System;
 using System.Collections.Generic;
 
 namespace Clockify.Net;
-public partial class ClockifyClient : IClockifyClient {
+public partial class ClockifyClient 
+{
 	
 	private RestClient _client;
-	private RestClient _experimentalClient;
-	private RestClient _reportsClient;
-
 	public ClockifyClient(string apiKey,
-                        string apiUrl = Constants.ApiUrl,
-                        string experimentalApiUrl = Constants.ExperimentalApiUrl,
-                        string reportsApiUrl = Constants.ReportsApiUrl) {
-		InitClients(apiKey, apiUrl, experimentalApiUrl, reportsApiUrl);
+                        string apiUrl = Constants.ApiUrl) {
+		InitClients(apiKey, apiUrl);
 	}
-
-    public IClockifyExperimentalClient Experimental => throw new NotImplementedException();
-
-    public IClockifyReportsClient Reports => throw new NotImplementedException();
 
     /// <summary>
     /// Creates new <see cref="ClockifyClient"/>.
@@ -32,7 +23,7 @@ public partial class ClockifyClient : IClockifyClient {
 
 
     #region Private methods
-    private void InitClients(string apiKey, string apiUrl, string experimentalApiUrl, string reportsApi) {
+    private void InitClients(string apiKey, string apiUrl) {
 		var jsonSerializerSettings = new JsonSerializerSettings() {
 			NullValueHandling = NullValueHandling.Ignore,
 
@@ -46,13 +37,7 @@ public partial class ClockifyClient : IClockifyClient {
 		};
 
 		_client = new RestClient(apiUrl, configureSerialization: config => config.UseNewtonsoftJson(jsonSerializerSettings));
-		_client.AddDefaultHeader(Constants.ApiKeyHeaderName, apiKey);		
-
-		_experimentalClient = new RestClient(experimentalApiUrl, configureSerialization: config => config.UseNewtonsoftJson(jsonSerializerSettings));
-		_experimentalClient.AddDefaultHeader(Constants.ApiKeyHeaderName, apiKey);		
-
-		_reportsClient = new RestClient(reportsApi, configureSerialization: config => config.UseNewtonsoftJson(jsonSerializerSettings));
-		_reportsClient.AddDefaultHeader(Constants.ApiKeyHeaderName, apiKey);
+		_client.AddDefaultHeader(Constants.ApiKeyHeaderName, apiKey);
 	}
 	#endregion
 }

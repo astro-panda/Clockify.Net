@@ -17,7 +17,7 @@ namespace Clockify.Net
             var request = new RestRequest($"workspaces/{workspaceId}/reports/detailed", Method.Post);
             request.AddJsonBody(detailedReportRequest);
 
-            return Response<DetailedReportDto>.FromRestResponse(await _reportsClient.ExecutePostAsync<DetailedReportDto>(request).ConfigureAwait(false));
+            return Response<DetailedReportDto>.FromRestResponse(await _client.ExecutePostAsync<DetailedReportDto>(request).ConfigureAwait(false));
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Clockify.Net
             var request = new RestRequest($"workspaces/{workspaceId}/reports/summary", Method.Post);
             request.AddJsonBody(summaryReportRequest);
             
-            return Response<SummaryReportDto>.FromRestResponse(await _reportsClient.ExecuteAsync<SummaryReportDto>(request).ConfigureAwait(false));
+            return Response<SummaryReportDto>.FromRestResponse(await _client.ExecuteAsync<SummaryReportDto>(request).ConfigureAwait(false));
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Clockify.Net
             var request = new RestRequest($"workspaces/{workspaceId}/reports/weekly", Method.Post);
             request.AddJsonBody(weeklyReportRequest);
 
-            return Response<WeeklyReportDto>.FromRestResponse(await _reportsClient.ExecuteAsync<WeeklyReportDto>(request, Method.Post).ConfigureAwait(false));
+            return Response<WeeklyReportDto>.FromRestResponse(await _client.ExecuteAsync<WeeklyReportDto>(request, Method.Post).ConfigureAwait(false));
         }
     }
 }

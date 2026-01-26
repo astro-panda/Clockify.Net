@@ -251,7 +251,7 @@ namespace Clockify.Net {
             // Find project
             var requestProject = new RestRequest($"workspaces/{workspaceId}/projects/{projectId}");
             var projectResponse =
-                await _experimentalClient.ExecuteAsync(requestProject, Method.Get).ConfigureAwait(false);
+                await _client.ExecuteAsync(requestProject, Method.Get).ConfigureAwait(false);
 
             var project = JsonConvert.DeserializeObject<ProjectDtoImpl>(projectResponse.Content);
 
