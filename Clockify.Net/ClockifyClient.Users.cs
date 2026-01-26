@@ -45,7 +45,7 @@ namespace Clockify.Net
         public async Task<Response<UserDto>> SetActiveWorkspaceFor(string userId, string workspaceId)
         {
             var request = new RestRequest($"users/{userId}/activeWorkspace/{workspaceId}");
-            return Response<UserDto>.FromRestResponse(await _experimentalClient.ExecutePostAsync<UserDto>(request).ConfigureAwait(false));
+            return Response<UserDto>.FromRestResponse(await _client.ExecutePostAsync<UserDto>(request).ConfigureAwait(false));
         }
 
         public async Task<Response<List<UserDto>>> FilterWorkspaceUsers(string workspaceId, WorkspaceUsersRequest requestBody)

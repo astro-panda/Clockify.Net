@@ -87,7 +87,7 @@ namespace Clockify.Net
         public async Task<Response> FindProjectByIdAsync(string workspaceId, string id)
         {
             var request = new RestRequest($"workspaces/{workspaceId}/projects/{id}");
-            return Response.FromRestResponse(await _experimentalClient.ExecuteAsync(request, Method.Get).ConfigureAwait(false));
+            return Response.FromRestResponse(await _client.ExecuteAsync(request, Method.Get).ConfigureAwait(false));
         }
         
         /// <summary>

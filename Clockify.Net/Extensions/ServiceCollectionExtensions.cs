@@ -1,7 +1,8 @@
 ﻿using Clockify.Net;
-using Clockify.Net.Clients;
 using Clockify.Net.Exceptions;
+
 using Microsoft.Extensions.Configuration;
+
 using System;
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -30,27 +31,13 @@ public static class ServiceCollectionExtensions
         if (string.IsNullOrWhiteSpace(finalApiKey))
             throw new InvalidClockifyConfigurationException($"Cannot a configuration value for the Environment Variable {Constants.ApiKeyVariableName} or the config key {Constants.ApiKeyConfigurationKey}");
 
+        services.AddTransient<ClockifyClient>();
 
-        services.AddTransient<IClockifyClient, ClockifyClient>();
-
-
-        services.AddHttpClient<IClockifyExperimentalClient>(Constants.ExperimentalClientName, httpClient =>
-        {
-            httpClient.BaseAddress = new Uri(Constants.ExperimentalApiUrl);
-            httpClient.DefaultRequestHeaders.Add(Constants.ApiKeyHeaderName, finalApiKey);
-        });
-
-        services.AddHttpClient<IClockifyReportsClient>(Constants.ReportsClientName, httpClient =>
-        {
-            httpClient.BaseAddress = new Uri(Constants.ReportsApiUrl);
-            httpClient.DefaultRequestHeaders.Add(Constants.ApiKeyHeaderName, finalApiKey);
-        });
-
-        services.AddHttpClient<IClockifyClient>(Constants.ClockifyClientName, httpClient =>
-        {
-            httpClient.BaseAddress = new Uri(Constants.ApiUrl);
-            httpClient.DefaultRequestHeaders.Add(Constants.ApiKeyHeaderName, finalApiKey);
-        });
+        services.AddHttpClient<ClockifyClient>(Constants.ClockifyClientName, httpClient =>
+         {
+             httpClient.BaseAddress = new Uri(Constants.ApiUrl);
+             httpClient.DefaultRequestHeaders.Add(Constants.ApiKeyHeaderName, finalApiKey);
+         });
 
         return services;
     }

@@ -35,7 +35,7 @@ namespace Clockify.Net
         public async Task<Response> DeleteWorkspaceAsync(string id)
         {
             var request = new RestRequest($"workspaces/{id}");
-            return Response.FromRestResponse(await _experimentalClient.ExecuteAsync(request, Method.Delete).ConfigureAwait(false));
+            return Response.FromRestResponse(await _client.ExecuteAsync(request, Method.Delete).ConfigureAwait(false));
         }
 
         /// <summary>
